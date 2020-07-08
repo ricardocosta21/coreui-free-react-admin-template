@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import './scss/style.scss';
+import { connect } from "react-redux";
 
 const loading = (
   <div className="pt-3 text-center">

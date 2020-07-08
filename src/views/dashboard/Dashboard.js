@@ -1,4 +1,4 @@
-import React, { lazy } from 'react'
+import React, { Component , lazy} from 'react';
 import {
   CBadge,
   CButton,
@@ -10,49 +10,66 @@ import {
   CCol,
   CProgress,
   CRow,
-  CCallout
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+  CCallout,
+} from "@coreui/react";
+import CIcon from "@coreui/icons-react";
 
-import MainChartExample from '../charts/MainChartExample.js'
+import MainChartExample from "../charts/MainChartExample.js";
 
-const WidgetsDropdown = lazy(() => import('../widgets/WidgetsDropdown.js'))
-const WidgetsBrand = lazy(() => import('../widgets/WidgetsBrand.js'))
+import { connect } from "react-redux";
+import ProjectList from "../../containers/ProjectList";
 
-const Dashboard = () => {
-  return (
-    <>
-      <WidgetsDropdown />
-      <CCard>
-        <CCardBody>
-          <CRow>
-            <CCol sm="5">
-              <h4 id="traffic" className="card-title mb-0">Traffic</h4>
-              <div className="small text-muted">November 2017</div>
-            </CCol>
-            <CCol sm="7" className="d-none d-md-block">
-              <CButton color="primary" className="float-right">
-                <CIcon name="cil-cloud-download"/>
-              </CButton>
-              <CButtonGroup className="float-right mr-3">
-                {
-                  ['Day', 'Month', 'Year'].map(value => (
+const WidgetsDropdown = lazy(() => import("../widgets/WidgetsDropdown.js"));
+const WidgetsBrand = lazy(() => import("../widgets/WidgetsBrand.js"));
+
+class Dashboard extends Component {
+  render() {
+    const { projects } = this.props;
+    // console.log(this.props);
+    
+    return (
+      <>
+
+       <div className="dashboard container">
+          <div className="row">
+            <div className="col s12 m6">
+              <ProjectList projects={projects} />
+            </div>
+          </div>
+        </div>
+
+        <WidgetsDropdown />   
+
+        {/* <CCard>
+          <CCardBody>
+            <CRow>
+              <CCol sm="5">
+                <h4 id="traffic" className="card-title mb-0">
+                  Traffic
+                </h4>
+                <div className="small text-muted">November 2017</div>
+              </CCol>
+              <CCol sm="7" className="d-none d-md-block">
+                <CButton color="primary" className="float-right">
+                  <CIcon name="cil-cloud-download" />
+                </CButton>
+                <CButtonGroup className="float-right mr-3">
+                  {["Day", "Month", "Year"].map((value) => (
                     <CButton
                       color="outline-secondary"
                       key={value}
                       className="mx-0"
-                      active={value === 'Month'}
+                      active={value === "Month"}
                     >
                       {value}
                     </CButton>
-                  ))
-                }
-              </CButtonGroup>
-            </CCol>
-          </CRow>
-          <MainChartExample style={{height: '300px', marginTop: '40px'}}/>
-        </CCardBody>
-        <CCardFooter>
+                  ))}
+                </CButtonGroup>
+              </CCol>
+            </CRow>
+            <MainChartExample style={{ height: "300px", marginTop: "40px" }} />
+          </CCardBody> */}
+          {/* <CCardFooter>
           <CRow className="text-center">
             <CCol md sm="12" className="mb-sm-2 mb-0">
               <div className="text-muted">Visits</div>
@@ -104,12 +121,12 @@ const Dashboard = () => {
               />
             </CCol>
           </CRow>
-        </CCardFooter>
-      </CCard>
+        </CCardFooter> */}
+        {/* </CCard> */}
 
-      <WidgetsBrand withCharts/>
+        {/* <WidgetsBrand withCharts/> */}
 
-      <CRow>
+        {/* <CRow>
         <CCol>
           <CCard>
             <CCardHeader>
@@ -549,9 +566,18 @@ const Dashboard = () => {
             </CCardBody>
           </CCard>
         </CCol>
-      </CRow>
-    </>
-  )
+      </CRow> */}
+      </>
+    );
+
+  }
 }
 
-export default Dashboard
+const mapStateToProps = (state) => {
+  return {
+    projects: state.project.projects
+  }
+}
+
+export default connect(mapStateToProps)(Dashboard)
+ 

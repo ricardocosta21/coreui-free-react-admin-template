@@ -34,14 +34,18 @@
     "core-js": "^3.6.5",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "firebase": "^7.15.5",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",
     "react-dom": "^16.13.1",
     "react-redux": "7.2.0",
+    "react-redux-firebase": "^3.6.0",
     "react-router-dom": "^5.2.0",
-    "redux": "4.0.5"
+    "redux": "4.0.5",
+    "redux-firestore": "^0.13.0",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "react-scripts": "^3.4.1"
