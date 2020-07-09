@@ -1,6 +1,6 @@
 import React, { useState, Component } from "react";
 import { Link } from "react-router-dom";
-// import { auth, signInWithGoogle } from "../../../config/firebase";
+
 import {
   CButton,
   CCard,
@@ -24,7 +24,7 @@ import { signIn } from "../../../actions/authActions";
 //     alert('Hello!');
 //   };
 
-class Login extends Component {
+class SignIn extends Component {
   //  const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
   // const [error, setError] = useState(null);
@@ -34,14 +34,6 @@ class Login extends Component {
     password: "",
   };
 
-  // signInWithEmailAndPasswordHandler = (event, email, password) => {
-  //   event.preventDefault();
-  //   auth.signInWithEmailAndPassword(email, password).catch((error) => {
-  //     //setError("Error signing in with password and email!");
-  //     console.error("Error signing in with password and email", error);
-  //   });
-  // };
-
   onChangeHandler = (e) => {
     this.setState({
       [e.target.id]: e.target.value,
@@ -50,11 +42,12 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    //console.log(this.state);
     this.props.signIn(this.state);
   };
 
   render() {
-    const {authError} = this.props;
+    const { authError } = this.props;
 
     return (
       <div className="c-app c-default-layout flex-row align-items-center">
@@ -65,7 +58,7 @@ class Login extends Component {
                 <CCard className="p-4">
                   <CCardBody>
                     <CForm>
-                      <h1>Login</h1>
+                      <h1>SignIn</h1>
                       <p className="text-muted">Sign In to your account</p>
                       <CInputGroup className="mb-3">
                         <CInputGroupPrepend>
@@ -104,7 +97,11 @@ class Login extends Component {
                           >
                             Login
                           </CButton>
+                           <div className="center red-text">
+                          {authError ? <p>{authError}</p> : null}
+                        </div>
                         </CCol>
+                       
                         <CCol xs="6" className="text-right">
                           <CButton color="link" className="px-0">
                             Forgot password?
@@ -143,9 +140,7 @@ class Login extends Component {
             </CCol>
           </CRow>
         </CContainer>
-        <div className="red-text center">
-          { authError ? <p>{authError}</p> : null}
-        </div>
+        <div className="red-text center"></div>
       </div>
     );
   }
@@ -153,14 +148,14 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    authError: state.auth.authError
+    authError: state.auth.authError,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signIn: (creds) => dispatch(signIn(creds))
+    signIn: (creds) => dispatch(signIn(creds)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

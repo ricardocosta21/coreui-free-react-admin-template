@@ -1,16 +1,13 @@
-import { auth, signInWithGoogle } from "../config/firebase";
-import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
+import firebase from "firebase/app";
+import "firebase/auth";
 
-
-export const signIn = (e, credentials) => {
+export const signIn = (credentials) => {
   return (dispatch, getState) => {
-     const firebase = getFirebase();
     
-     e.preventDefault();
-    auth.signInWithEmailAndPassword(credentials.email, credentials.password).catch((error) => {
-      // setError("Error signing in with password and email!");
-      console.error("Error signing in with password and email", error);
-    }).then(() => {
+    firebase.auth().signInWithEmailAndPassword(
+      credentials.email,
+      credentials.password
+    ).then(() => {
       dispatch({ type: 'LOGIN_SUCCESS' });
     }).catch((err) => {
       dispatch({ type: 'LOGIN_ERROR', err });

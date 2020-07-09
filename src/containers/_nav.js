@@ -231,8 +231,8 @@ export default [
     _children: [
       {
         _tag: 'CSidebarNavItem',
-        name: 'Login',
-        to: '/login',
+        name: 'SignIn',
+        to: '/signIn',
       },
       {
         _tag: 'CSidebarNavItem',

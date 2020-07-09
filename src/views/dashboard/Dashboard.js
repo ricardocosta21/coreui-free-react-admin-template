@@ -13,11 +13,15 @@ import {
   CCallout,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-
 import MainChartExample from "../charts/MainChartExample.js";
 
 import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+
 import ProjectList from "../../containers/ProjectList";
+import CreateProject from "../../containers/CreateProject";
+
 
 const WidgetsDropdown = lazy(() => import("../widgets/WidgetsDropdown.js"));
 const WidgetsBrand = lazy(() => import("../widgets/WidgetsBrand.js"));
@@ -29,6 +33,8 @@ class Dashboard extends Component {
     
     return (
       <>
+        <CreateProject/>
+
 
        <div className="dashboard container">
           <div className="row">
@@ -574,10 +580,14 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
+  // console.log(state);
   return {
-    projects: state.project.projects
-  }
-}
+    projects: state.firestore.ordered.projects,
+  };
+};
 
-export default connect(mapStateToProps)(Dashboard)
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect([{ collection: "projects" }])
+)(Dashboard);
  

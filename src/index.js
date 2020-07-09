@@ -1,35 +1,57 @@
 import "react-app-polyfill/ie11"; // For IE 11 support
 import "react-app-polyfill/stable";
 import "./polyfill";
+
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-import { icons } from "./assets/icons";
-import { createStore, applyMiddleware, compose } from 'redux'
-import { Provider } from "react-redux";
-import { reduxFirestore, getFirestore } from 'redux-firestore';
-import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
-import fbConfig from './config/firebase'
-import thunk from 'redux-thunk'
-// import store from './store'
 import rootReducer from "./reducers/rootReducer";
 
-// React.icons = icons;
+import thunk from 'redux-thunk'
 
-const store = createStore(rootReducer,
-  compose(
-    applyMiddleware(thunk)
-    // reactReduxFirebase(fbConfig), // redux binding for firebase
-    // reduxFirestore(fbConfig) // redux bindings for firestore
-  )
-);
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import { ReactReduxFirebaseProvider } from "react-redux-firebase";
+import { createFirestoreInstance} from "redux-firestore";
+import { BrowserRouter } from "react-router-dom";
+
+import fbConfig from "./config/firebase";
+
+const rrfConfig = {
+  userProfile: "users",
+  useFirestoreForProfile: true,
+};
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(fbConfig);
+}
+
+firebase.firestore();
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+const rrfProps = {
+  firebase,
+  config: rrfConfig,
+  dispatch: store.dispatch
+  // createFirestoreInstance,
+};
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <ReactReduxFirebaseProvider {...rrfProps}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ReactReduxFirebaseProvider>
+    </Provider>
+  </React.StrictMode>,
   document.getElementById("root")
 );
 

@@ -16,6 +16,17 @@ var config = {
 firebase.initializeApp(config);
 firebase.firestore().settings({ timestampsInSnapshots: true });
 
+//
+// export const auth = firebase.auth();
+// // export const firestore = firebase.firestore();
+
+// const provider = new firebase.auth.GoogleAuthProvider();
+// export const signInWithGoogle = () => {
+//   auth.signInWithPopup(provider);
+// };
+
+//
+
 export default firebase;
 
 // import firebase from "firebase/app";
@@ -36,13 +47,13 @@ export default firebase;
 // // Initialize Firebase
 // firebase.initializeApp(firebaseConfig);
 
-export const auth = firebase.auth();
-// export const firestore = firebase.firestore();
+// export const auth = firebase.auth();
+// // export const firestore = firebase.firestore();
 
-const provider = new firebase.auth.GoogleAuthProvider();
-export const signInWithGoogle = () => {
-  auth.signInWithPopup(provider);
-};
+// const provider = new firebase.auth.GoogleAuthProvider();
+// export const signInWithGoogle = () => {
+//   auth.signInWithPopup(provider);
+// };
 
 // export const generateUserDocument = async (user, additionalData) => {
 //   if (!user) return;
