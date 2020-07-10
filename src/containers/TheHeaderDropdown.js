@@ -8,8 +8,11 @@ import {
   CImg
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import { connect } from 'react-redux'
+import { signOut } from '../actions/authActions'
 
-const TheHeaderDropdown = () => {
+const TheHeaderDropdown = (props) => {
+  const { auth } = props;
   return (
     <CDropdown
       inNav
@@ -81,7 +84,7 @@ const TheHeaderDropdown = () => {
         </CDropdownItem>
         <CDropdownItem divider />
         <CDropdownItem>
-          <CIcon name="cil-lock-locked" className="mfe-2" /> 
+          <CIcon name="cil-lock-locked" className="mfe-2" onClick={props.signOut()} /> 
           Lock Account
         </CDropdownItem>
       </CDropdownMenu>
@@ -89,4 +92,19 @@ const TheHeaderDropdown = () => {
   )
 }
 
-export default TheHeaderDropdown
+const mapStateToProps = (state) => {
+  
+  return{
+    auth: state.firebase.auth
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  console.log(dispatch);
+  return {
+    signOut: () => dispatch(signOut())
+    
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TheHeaderDropdown)

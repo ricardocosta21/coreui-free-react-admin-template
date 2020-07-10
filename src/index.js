@@ -22,6 +22,10 @@ import { BrowserRouter } from "react-router-dom";
 
 import fbConfig from "./config/firebase";
 
+import { icons } from "./assets/icons";
+
+React.icons = icons
+
 const rrfConfig = {
   userProfile: "users",
   useFirestoreForProfile: true,

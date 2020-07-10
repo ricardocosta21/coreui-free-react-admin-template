@@ -119,7 +119,7 @@ class SignIn extends Component {
                     <div>
                       <h2>Sign up</h2>
                       <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        Lorem ipsum dolor sit amedt, consectetur adipisicing
                         elit, sed do eiusmod tempor incididunt ut labore et
                         dolore magna aliqua.
                       </p>

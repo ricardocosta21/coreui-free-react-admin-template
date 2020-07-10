@@ -12,6 +12,15 @@ export const signIn = (credentials) => {
     }).catch((err) => {
       dispatch({ type: 'LOGIN_ERROR', err });
     });
+  }
+}
 
+export const signOut = () => {
+  return (dispatch, getState) => {
+    console.log("logged Te logooooo");
+    //this is an async method. That why the then method.
+    firebase.auth().signOut().then(() => {
+      dispatch({ type: 'SIGNOUT_SUCCESS' })
+    });
   }
 }
