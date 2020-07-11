@@ -19,6 +19,7 @@ import CIcon from "@coreui/icons-react";
 
 import { connect } from "react-redux";
 import { signIn } from "../../../actions/authActions";
+import { Redirect } from "react-router-dom";
 
 // function handleClick() {
 //     alert('Hello!');
@@ -34,7 +35,7 @@ class SignIn extends Component {
     password: "",
   };
 
-  onChangeHandler = (e) => {
+  handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value,
     });
@@ -42,12 +43,16 @@ class SignIn extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    //console.log(this.state);
     this.props.signIn(this.state);
   };
 
   render() {
-    const { authError } = this.props;
+    const { authError, auth } = this.props;
+    
+    if (auth.uid) {
+      console.log(auth);
+      return <Redirect to="/dashboard" />;
+    }
 
     return (
       <div className="c-app c-default-layout flex-row align-items-center">
@@ -71,7 +76,7 @@ class SignIn extends Component {
                           placeholder="Email"
                           autoComplete="email"
                           id="email"
-                          onChange={(e) => this.onChangeHandler(e)}
+                          onChange={this.handleChange}
                         />
                       </CInputGroup>
                       <CInputGroup className="mb-4">
@@ -85,7 +90,7 @@ class SignIn extends Component {
                           placeholder="Password"
                           autoComplete="current-password"
                           id="password"
-                          onChange={(e) => this.onChangeHandler(e)}
+                          onChange={this.handleChange}
                         />
                       </CInputGroup>
                       <CRow>
@@ -95,13 +100,13 @@ class SignIn extends Component {
                             className="px-4"
                             onClick={this.handleSubmit}
                           >
-                            Login
+                            SignIn
                           </CButton>
-                           <div className="center red-text">
-                          {authError ? <p>{authError}</p> : null}
-                        </div>
+                          <div className="center red-text">
+                            {authError ? <p>{authError}</p> : null}
+                          </div>
                         </CCol>
-                       
+
                         <CCol xs="6" className="text-right">
                           <CButton color="link" className="px-0">
                             Forgot password?
@@ -149,6 +154,7 @@ class SignIn extends Component {
 const mapStateToProps = (state) => {
   return {
     authError: state.auth.authError,
+    auth: state.firebase.auth,
   };
 };
 

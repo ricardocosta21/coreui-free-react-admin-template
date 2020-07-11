@@ -13,6 +13,8 @@ import { signOut } from '../actions/authActions'
 
 const TheHeaderDropdown = (props) => {
   const { auth } = props;
+  //console.log("OLaaa" + auth);
+
   return (
     <CDropdown
       inNav
@@ -83,8 +85,8 @@ const TheHeaderDropdown = (props) => {
           <CBadge color="primary" className="mfs-auto">42</CBadge>
         </CDropdownItem>
         <CDropdownItem divider />
-        <CDropdownItem>
-          <CIcon name="cil-lock-locked" className="mfe-2" onClick={props.signOut()} /> 
+        <CDropdownItem onClick={props.signOut}>
+          <CIcon name="cil-lock-locked" className="mfe-2" /> 
           Lock Account
         </CDropdownItem>
       </CDropdownMenu>
@@ -92,19 +94,18 @@ const TheHeaderDropdown = (props) => {
   )
 }
 
-const mapStateToProps = (state) => {
+// const mapStateToProps = (state) => {
   
-  return{
-    auth: state.firebase.auth
-  }
-}
+//   return{
+//     auth: state.firebase.auth
+//   }
+// }
 
 const mapDispatchToProps = (dispatch) => {
-  console.log(dispatch);
   return {
     signOut: () => dispatch(signOut())
     
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TheHeaderDropdown)
+export default connect(null, mapDispatchToProps)(TheHeaderDropdown)

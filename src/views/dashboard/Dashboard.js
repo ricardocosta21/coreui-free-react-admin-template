@@ -1,4 +1,4 @@
-import React, { Component , lazy} from 'react';
+import React, { Component, lazy } from "react";
 import {
   CBadge,
   CButton,
@@ -21,22 +21,28 @@ import { compose } from "redux";
 
 import ProjectList from "../../containers/ProjectList";
 import CreateProject from "../../containers/CreateProject";
-
+import { Redirect } from "react-router-dom";
 
 const WidgetsDropdown = lazy(() => import("../widgets/WidgetsDropdown.js"));
 const WidgetsBrand = lazy(() => import("../widgets/WidgetsBrand.js"));
 
 class Dashboard extends Component {
   render() {
-    const { projects } = this.props;
+    const { projects, auth } = this.props;
     // console.log(this.props);
-    
+
+    if (!auth.uid) {
+      console.log("Please login " + auth);
+      return <Redirect to="/signin" />;
+    } else {
+      console.log("Logged in as " + auth.email);
+    }
+
     return (
       <>
-        <CreateProject/>
+        <CreateProject />
 
-
-       <div className="dashboard container">
+        <div className="dashboard container">
           <div className="row">
             <div className="col s12 m6">
               <ProjectList projects={projects} />
@@ -44,7 +50,7 @@ class Dashboard extends Component {
           </div>
         </div>
 
-        <WidgetsDropdown />   
+        <WidgetsDropdown />
 
         {/* <CCard>
           <CCardBody>
@@ -75,7 +81,7 @@ class Dashboard extends Component {
             </CRow>
             <MainChartExample style={{ height: "300px", marginTop: "40px" }} />
           </CCardBody> */}
-          {/* <CCardFooter>
+        {/* <CCardFooter>
           <CRow className="text-center">
             <CCol md sm="12" className="mb-sm-2 mb-0">
               <div className="text-muted">Visits</div>
@@ -575,19 +581,17 @@ class Dashboard extends Component {
       </CRow> */}
       </>
     );
-
   }
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state);
   return {
-    projects: state.firestore.ordered.projects,
+    // projects: state.firestore.ordered.projects,
+    auth: state.firebase.auth,
   };
 };
 
 export default compose(
-  connect(mapStateToProps),
-  firestoreConnect([{ collection: "projects" }])
+  connect(mapStateToProps)
+  // firestoreConnect([{ collection: "projects" }])
 )(Dashboard);
- 
