@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Comments} from 'react'
 import {
   CBadge,
   CDropdown,
@@ -12,8 +12,8 @@ import { connect } from 'react-redux'
 import { signOut } from '../actions/authActions'
 
 const TheHeaderDropdown = (props) => {
-  const { auth } = props;
-  //console.log("OLaaa" + auth);
+  const { auth, profile } = props;
+  console.log("OLaaa" + profile);
 
   return (
     <CDropdown
@@ -23,8 +23,10 @@ const TheHeaderDropdown = (props) => {
     >
       <CDropdownToggle className="c-header-nav-link" caret={false}>
         <div className="c-avatar">
+        
           <CImg
             src={'avatars/6.jpg'}
+            
             className="c-avatar-img"
             alt="admin@bootstrapmaster.com"
           />
@@ -100,12 +102,19 @@ const TheHeaderDropdown = (props) => {
 //     auth: state.firebase.auth
 //   }
 // }
+const mapStateToProps = (state) => {
+  console.log(state.firebase.profile.username);
+  return {
+    // projects: state.firestore.ordered.projects,
+    auth: state.firebase.auth,
+    profile: state.firebase.profile
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signOut: () => dispatch(signOut())
-    
+    signOut: () => dispatch(signOut())    
   }
 }
 
-export default connect(null, mapDispatchToProps)(TheHeaderDropdown)
+export default connect(mapStateToProps, mapDispatchToProps)(TheHeaderDropdown)

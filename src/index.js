@@ -16,7 +16,7 @@ import thunk from "redux-thunk";
 
 import { createStore, applyMiddleware } from "redux";
 import { Provider, useSelector } from "react-redux";
-import { ReactReduxFirebaseProvider, isLoaded } from "react-redux-firebase";
+import { ReactReduxFirebaseProvider,reactReduxFirebase, isLoaded } from "react-redux-firebase";
 import { createFirestoreInstance } from "redux-firestore";
 import { BrowserRouter } from "react-router-dom";
 
@@ -48,7 +48,7 @@ const rrfProps = {
 
 function AuthIsLoaded({ children }) {
   const auth = useSelector((state) => state.firebase.auth);
-  //console.log("Este mesmo " + auth)
+
   if (!isLoaded(auth)) return <div>Loading Screen...</div>;
   return children;
 }

@@ -128,14 +128,14 @@ class SignIn extends Component {
                         elit, sed do eiusmod tempor incididunt ut labore et
                         dolore magna aliqua.
                       </p>
-                      <Link to="/register">
+                      <Link to="/signup">
                         <CButton
                           color="primary"
                           className="mt-3"
                           active
                           tabIndex={-1}
                         >
-                          Register Now!
+                          SignUp Now!
                         </CButton>
                       </Link>
                     </div>

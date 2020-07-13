@@ -15,23 +15,43 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import { Redirect } from "react-router-dom";
-import { connect } from 'react-redux'
+import { connect } from "react-redux";
+import { signUp } from "../../../actions/authActions";
 
-class Register extends Component {
+class SignUp extends Component {
+  state = {
+    email: "",
+    password: "",
+    firstname: "",
+    lastname: "",
+  };
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  handleSubmit = (e)  => 
+  {
+    e.preventDefault();
+    this.props.signUp(this.state);
+  }
+
   render() {
-
-     const { auth } = this.props;
-    if (auth.uid) return <Redirect to='/' /> 
+    const { auth, authError } = this.props;
+    if (auth.uid) return <Redirect to="/" />;
 
     return (
       <div className="c-app c-default-layout flex-row align-items-center">
         <CContainer>
+        
           <CRow className="justify-content-center">
             <CCol md="9" lg="7" xl="6">
               <CCard className="mx-4">
                 <CCardBody className="p-4">
                   <CForm>
-                    <h1>Register</h1>
+                    <h1>SignUp</h1>
                     <p className="text-muted">Create your account</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
@@ -41,8 +61,10 @@ class Register extends Component {
                       </CInputGroupPrepend>
                       <CInput
                         type="text"
+                        id='username'
                         placeholder="Username"
                         autoComplete="username"
+                        onChange={this.handleChange}
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-3">
@@ -51,8 +73,10 @@ class Register extends Component {
                       </CInputGroupPrepend>
                       <CInput
                         type="text"
+                        id='email'
                         placeholder="Email"
                         autoComplete="email"
+                        onChange={this.handleChange}
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-3">
@@ -63,8 +87,10 @@ class Register extends Component {
                       </CInputGroupPrepend>
                       <CInput
                         type="password"
+                        id='password'
                         placeholder="Password"
                         autoComplete="new-password"
+                        onChange={this.handleChange}
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -75,13 +101,18 @@ class Register extends Component {
                       </CInputGroupPrepend>
                       <CInput
                         type="password"
+                        id='password'
                         placeholder="Repeat password"
                         autoComplete="new-password"
+                        onChange={this.handleChange}
                       />
                     </CInputGroup>
-                    <CButton color="success" block>
+                    <CButton onClick={this.handleSubmit} color="success" block>
                       Create Account
                     </CButton>
+                    <div className="red-text center">
+                      {authError ? <p>{authError} </p> : null }
+                    </div>
                   </CForm>
                 </CCardBody>
                 <CCardFooter className="p-4">
@@ -109,9 +140,15 @@ class Register extends Component {
 const mapStateToProps = (state) => {
   // console.log(state);
   return {
-    auth: state.firebase.auth
-  }
-}
+    auth: state.firebase.auth,
+    authError: state.auth.authError
+  };
+};
 
-export default connect(mapStateToProps)(Register)
+const mapDispatchProps = (dispatch) => {
+  return {
+    signUp: (creds) => dispatch(signUp(creds)),
+  };
+};
 
+export default connect(mapStateToProps, mapDispatchProps)(SignUp);

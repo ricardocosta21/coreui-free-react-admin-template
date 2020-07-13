@@ -32,10 +32,7 @@ class Dashboard extends Component {
     // console.log(this.props);
 
     if (!auth.uid) {
-      console.log("Please login " + auth);
       return <Redirect to="/signin" />;
-    } else {
-      console.log("Logged in as " + auth.email);
     }
 
     return (
@@ -585,6 +582,7 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state);
   return {
     // projects: state.firestore.ordered.projects,
     auth: state.firebase.auth,
