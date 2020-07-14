@@ -18,21 +18,16 @@ import {
 import CIcon from "@coreui/icons-react";
 
 import { connect } from "react-redux";
-import { signIn } from "../../../actions/authActions";
+import { signIn, signInWithGoogle } from "../../../actions/authActions";
 import { Redirect } from "react-router-dom";
 
-// function handleClick() {
-//     alert('Hello!');
-//   };
-
 class SignIn extends Component {
-  //  const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [error, setError] = useState(null);
 
   state = {
     email: "",
     password: "",
+    photoURL: "",
+    displayName: ""
   };
 
   handleChange = (e) => {
@@ -44,6 +39,11 @@ class SignIn extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.signIn(this.state);
+  };
+
+   handleSubmitGoogle = (e) => {
+    e.preventDefault();
+    this.props.signInWithGoogle(this.state);
   };
 
   render() {
@@ -106,6 +106,16 @@ class SignIn extends Component {
                           </div>
                         </CCol>
 
+                         <CCol xs="6">
+                          <CButton
+                            color="primary"
+                            className="px-10"
+                            onClick={this.handleSubmitGoogle}
+                          >
+                            SignIn With Google
+                          </CButton>
+                        </CCol>
+
                         <CCol xs="6" className="text-right">
                           <CButton color="link" className="px-0">
                             Forgot password?
@@ -159,7 +169,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signIn: (creds) => dispatch(signIn(creds))
+    signIn: (creds) => dispatch(signIn(creds)),
+    signInWithGoogle: () => dispatch(signInWithGoogle())
   };
 };
 

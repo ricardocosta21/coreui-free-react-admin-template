@@ -13,7 +13,8 @@ import { signOut } from '../actions/authActions'
 
 const TheHeaderDropdown = (props) => {
   const { auth, profile } = props;
-  console.log("OLaaa" + profile);
+
+console.log("There's a foto: " + profile.photoURL);
 
   return (
     <CDropdown
@@ -25,8 +26,7 @@ const TheHeaderDropdown = (props) => {
         <div className="c-avatar">
         
           <CImg
-            src={'avatars/6.jpg'}
-            
+            src={ profile.photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'}
             className="c-avatar-img"
             alt="admin@bootstrapmaster.com"
           />
@@ -96,16 +96,8 @@ const TheHeaderDropdown = (props) => {
   )
 }
 
-// const mapStateToProps = (state) => {
-  
-//   return{
-//     auth: state.firebase.auth
-//   }
-// }
 const mapStateToProps = (state) => {
-  console.log(state.firebase.profile.username);
   return {
-    // projects: state.firestore.ordered.projects,
     auth: state.firebase.auth,
     profile: state.firebase.profile
   };

@@ -21,7 +21,7 @@ export const signIn = (credentials) => {
 export const signUp = (newUser) => {
   return (dispatch, getState) => {
 
-    firebase.auth().createUserWithEmailAndPassword(
+      firebase.auth().createUserWithEmailAndPassword(
       newUser.email,
       newUser.password
     ).then(resp => {
@@ -34,16 +34,24 @@ export const signUp = (newUser) => {
   }
 }
 
-export const signInWithGoogle = (credentials) => {
+export const signInWithGoogle = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
+
   return (dispatch, getState) => {
-    firebase.auth().signInWithPopup(provider);
-  };
+
+    firebase.auth().signInWithPopup(provider)
+    .then(resp => {
+      var user = resp.user;
+      // console.log(user);
+      generateUserDocument(resp.user, resp.user.uid);
+    })
+  }
+  
 };
 
 export const signOut = (credentials) => {
   return (dispatch, getState) => {
-    console.log(credentials + " logged Te logooooo");
+    // console.log(credentials + " logged Te logooooo");
     //this is an async method. That why the then method.
     firebase
       .auth()

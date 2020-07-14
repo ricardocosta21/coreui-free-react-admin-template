@@ -29,7 +29,6 @@ const WidgetsBrand = lazy(() => import("../widgets/WidgetsBrand.js"));
 class Dashboard extends Component {
   render() {
     const { projects, auth } = this.props;
-    // console.log(this.props);
 
     if (!auth.uid) {
       return <Redirect to="/signin" />;
@@ -38,7 +37,6 @@ class Dashboard extends Component {
     return (
       <>
         <CreateProject />
-
         <div className="dashboard container">
           <div className="row">
             <div className="col s12 m6">
@@ -582,14 +580,12 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return {
-    // projects: state.firestore.ordered.projects,
     auth: state.firebase.auth,
   };
 };
 
 export default compose(
   connect(mapStateToProps)
-  // firestoreConnect([{ collection: "projects" }])
 )(Dashboard);

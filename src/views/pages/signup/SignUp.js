@@ -22,8 +22,8 @@ class SignUp extends Component {
   state = {
     email: "",
     password: "",
-    firstname: "",
-    lastname: "",
+    photoURL: "",
+    displayName: ""
   };
 
   handleChange = (e) => {
@@ -45,7 +45,7 @@ class SignUp extends Component {
     return (
       <div className="c-app c-default-layout flex-row align-items-center">
         <CContainer>
-        
+
           <CRow className="justify-content-center">
             <CCol md="9" lg="7" xl="6">
               <CCard className="mx-4">
@@ -61,7 +61,7 @@ class SignUp extends Component {
                       </CInputGroupPrepend>
                       <CInput
                         type="text"
-                        id='username'
+                        id='displayName'
                         placeholder="Username"
                         autoComplete="username"
                         onChange={this.handleChange}
@@ -138,7 +138,6 @@ class SignUp extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  // console.log(state);
   return {
     auth: state.firebase.auth,
     authError: state.auth.authError
