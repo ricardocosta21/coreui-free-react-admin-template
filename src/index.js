@@ -29,6 +29,7 @@ React.icons = icons;
 const rrfConfig = {
   userProfile: "users",
   useFirestoreForProfile: true,
+  attachAuthIsReady: true
 };
 
 if (!firebase.apps.length) {

@@ -50,7 +50,6 @@ class SignIn extends Component {
     const { authError, auth } = this.props;
     
     if (auth.uid) {
-      console.log(auth);
       return <Redirect to="/dashboard" />;
     }
 
@@ -154,13 +153,13 @@ class SignIn extends Component {
 const mapStateToProps = (state) => {
   return {
     authError: state.auth.authError,
-    auth: state.firebase.auth,
+    auth: state.firebase.auth
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signIn: (creds) => dispatch(signIn(creds)),
+    signIn: (creds) => dispatch(signIn(creds))
   };
 };
 
