@@ -20,7 +20,7 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
 import ProjectList from "../../containers/ProjectList";
-import CreateProject from "../../containers/CreateProject";
+// import CreateProject from "../../containers/CreateProject";
 import { Redirect } from "react-router-dom";
 
 const WidgetsDropdown = lazy(() => import("../widgets/WidgetsDropdown.js"));
@@ -36,7 +36,7 @@ class Dashboard extends Component {
 
     return (
       <>
-        <CreateProject />
+        {/* <CreateProject /> */}
         <div className="dashboard container">
           <div className="row">
             <div className="col s12 m6">

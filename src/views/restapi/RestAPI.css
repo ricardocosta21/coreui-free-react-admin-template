@@ -1,0 +1,35 @@
+@media all and (min-width: 480px) {
+    .Items {
+      padding-top: 60px;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .Items Button:hover {
+      background: #afd6aa;
+      color: #ffffff;
+    }
+
+    .Items input 
+    {
+      width: 200px;
+      background-color: #ebeceb;
+      margin: 3px;
+      border: 2px solid rgb(90, 105, 90);
+    }
+    
+    .ItemsList {
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .Buttons {
+      padding-top: 60px;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+    }
+
+  }

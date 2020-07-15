@@ -30,6 +30,13 @@ export default [
     _children: ['Components']
   },
   {
+    _tag: 'CSidebarNavItem',
+    name: 'RestAPI',
+    to: '/RestAPI',
+    icon: 'cil-cursor',
+    
+  },
+  {
     _tag: 'CSidebarNavDropdown',
     name: 'Base',
     route: '/base',
@@ -117,6 +124,7 @@ export default [
       },
     ],
   },
+  
   {
     _tag: 'CSidebarNavDropdown',
     name: 'Buttons',

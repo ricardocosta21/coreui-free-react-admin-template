@@ -22,12 +22,11 @@ import { signIn, signInWithGoogle } from "../../../actions/authActions";
 import { Redirect } from "react-router-dom";
 
 class SignIn extends Component {
-
   state = {
     email: "",
     password: "",
     photoURL: "",
-    displayName: ""
+    displayName: "",
   };
 
   handleChange = (e) => {
@@ -41,29 +40,49 @@ class SignIn extends Component {
     this.props.signIn(this.state);
   };
 
-   handleSubmitGoogle = (e) => {
+  handleSubmitGoogle = (e) => {
     e.preventDefault();
     this.props.signInWithGoogle(this.state);
   };
 
   render() {
     const { authError, auth } = this.props;
-    
+
     if (auth.uid) {
       return <Redirect to="/dashboard" />;
     }
 
     return (
-      <div className="c-app c-default-layout flex-row align-items-center">
+      <div className="c-app c-default-layout flex-row align-items-center text-center">
         <CContainer>
-          <CRow className="justify-content-center">
-            <CCol md="8">
+          <CRow className="justify-content-center ">
+            <CCol md="9" lg="6" xl="6">
               <CCardGroup>
-                <CCard className="p-4">
+                <CCard>
                   <CCardBody>
                     <CForm>
-                      <h1>SignIn</h1>
-                      <p className="text-muted">Sign In to your account</p>
+                      <h1>Sign In</h1>
+                      <CRow className="px-5 py-2 m-2">
+                        <CCol>
+                          <CButton
+                            color="primary"
+                            className="flex flex-col "
+                            onClick={this.handleSubmitGoogle}
+                          >
+                            Sign In With Google 
+                          </CButton>
+                        </CCol>
+                      </CRow>
+
+                      <CRow className="px-4 py-2 m-2 justify-content-center ">                      
+                       <CCol>
+                          {"Sign in or "}
+                        <Link to="/signup" >                      
+                          Create an account
+                        </Link>
+                        </CCol>
+                      </CRow>
+
                       <CInputGroup className="mb-3">
                         <CInputGroupPrepend>
                           <CInputGroupText>
@@ -92,69 +111,34 @@ class SignIn extends Component {
                           onChange={this.handleChange}
                         />
                       </CInputGroup>
-                      <CRow>
-                        <CCol xs="6">
+                      <CRow className="justify-content-center">
+                        <CCol xs="4">
                           <CButton
                             color="primary"
-                            className="px-4"
+                            className="px-6"
                             onClick={this.handleSubmit}
                           >
-                            SignIn
+                            Sign in
                           </CButton>
-                          <div className="center red-text">
+                          <div className="center red-text px-0 py-3">
                             {authError ? <p>{authError}</p> : null}
                           </div>
                         </CCol>
 
-                         <CCol xs="6">
-                          <CButton
-                            color="primary"
-                            className="px-10"
-                            onClick={this.handleSubmitGoogle}
-                          >
-                            SignIn With Google
-                          </CButton>
-                        </CCol>
-
-                        <CCol xs="6" className="text-right">
+                        <CCol xs="4">
                           <CButton color="link" className="px-0">
                             Forgot password?
                           </CButton>
                         </CCol>
                       </CRow>
+                     
                     </CForm>
-                  </CCardBody>
-                </CCard>
-                <CCard
-                  className="text-white bg-primary py-5 d-md-down-none"
-                  style={{ width: "44%" }}
-                >
-                  <CCardBody className="text-center">
-                    <div>
-                      <h2>Sign up</h2>
-                      <p>
-                        Lorem ipsum dolor sit amedt, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut labore et
-                        dolore magna aliqua.
-                      </p>
-                      <Link to="/signup">
-                        <CButton
-                          color="primary"
-                          className="mt-3"
-                          active
-                          tabIndex={-1}
-                        >
-                          SignUp Now!
-                        </CButton>
-                      </Link>
-                    </div>
                   </CCardBody>
                 </CCard>
               </CCardGroup>
             </CCol>
           </CRow>
         </CContainer>
-        <div className="red-text center"></div>
       </div>
     );
   }
@@ -163,14 +147,14 @@ class SignIn extends Component {
 const mapStateToProps = (state) => {
   return {
     authError: state.auth.authError,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     signIn: (creds) => dispatch(signIn(creds)),
-    signInWithGoogle: () => dispatch(signInWithGoogle())
+    signInWithGoogle: () => dispatch(signInWithGoogle()),
   };
 };
 
