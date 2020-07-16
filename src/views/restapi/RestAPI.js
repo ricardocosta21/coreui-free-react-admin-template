@@ -48,7 +48,7 @@ function Items() {
   // Get Message
   const handleGetAll = (e) => {
     fetch(
-      "http://ec2-user@ec2-3-21-168-251.us-east-2.compute.amazonaws.com/:8888/api/categories"
+      "http://ec2-3-21-168-251.us-east-2.compute.amazonaws.com/:8888/api/categories"
     )
       .then((res) => res.json())
       .then((data) => {
@@ -62,7 +62,7 @@ function Items() {
   // Post Message
   const handlePost = (e) => {
     fetch(
-      "http://ec2-user@ec2-3-21-168-251.us-east-2.compute.amazonaws.com/:8888/api/categories",
+      "http://ec2-3-21-168-251.us-east-2.compute.amazonaws.com/:8888/api/categories",
       {
         method: "POST",
         headers: {
@@ -84,7 +84,7 @@ function Items() {
   // Put Message
   const handlePut = (e) => {
     fetch(
-      "http://ec2-user@ec2-3-21-168-251.us-east-2.compute.amazonaws.com/:8888/api/categories?newName=" +
+      "http://ec2-3-21-168-251.us-east-2.compute.amazonaws.com/:8888/api/categories?newName=" +
         newName,
       {
         method: "PUT",
@@ -107,7 +107,7 @@ function Items() {
   // Delete Message
   const handleDelete = (e) => {
     fetch(
-      "http://ec2-user@ec2-3-21-168-251.us-east-2.compute.amazonaws.com/:8888/api/categories?id=" +
+      "http://ec2-3-21-168-251.us-east-2.compute.amazonaws.com/:8888/api/categories?id=" +
         id,
       {
         method: "DELETE",
