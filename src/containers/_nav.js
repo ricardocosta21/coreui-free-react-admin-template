@@ -37,6 +37,12 @@ export default [
     
   },
   {
+    _tag: 'CSidebarNavItem',
+    name: 'Stripe',
+    to: '/Stripe',
+    icon: 'cil-cursor',  
+  },
+  {
     _tag: 'CSidebarNavDropdown',
     name: 'Base',
     route: '/base',

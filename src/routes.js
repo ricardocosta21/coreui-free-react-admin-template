@@ -24,6 +24,7 @@ const BrandButtons = React.lazy(() => import('./views/buttons/brand-buttons/Bran
 const ButtonDropdowns = React.lazy(() => import('./views/buttons/button-dropdowns/ButtonDropdowns'));
 const ButtonGroups = React.lazy(() => import('./views/buttons/button-groups/ButtonGroups'));
 const RestAPI = React.lazy(() => import('./views/restapi/RestAPI'));
+const Stripe = React.lazy(() => import('./views/stripe/Stripe'));
 const Buttons = React.lazy(() => import('./views/buttons/buttons/Buttons'));
 const Charts = React.lazy(() => import('./views/charts/Charts'));
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'));
@@ -63,6 +64,7 @@ const routes = [
   { path: '/base/tabs', name: 'Tabs', component: Tabs },
   { path: '/base/tooltips', name: 'Tooltips', component: Tooltips },
   { path: '/restapi', name: 'RestAPI', component: RestAPI },
+  { path: '/stripe', name: 'Stripe', component: Stripe },
   { path: '/buttons', name: 'Buttons', component: Buttons, exact: true },
   { path: '/buttons/buttons', name: 'Buttons', component: Buttons },
   { path: '/buttons/button-dropdowns', name: 'Dropdowns', component: ButtonDropdowns },
