@@ -3,12 +3,33 @@ import {ElementsConsumer, CardElement} from '@stripe/react-stripe-js';
 
 import CardSection from './CardSection';
 
+
+// function stripeTokenHandler(token) {
+//   const paymentData = {token: token.id};
+
+//   // Use fetch to send the token ID and any other payment data to your server.
+//   // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+//   const response = fetch("http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/charge", {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(paymentData),
+//   });
+
+//   // Return and display the result of the charge.
+//   return response.json();
+// }
+
 function stripeTokenHandler(token) {
-  const paymentData = {token: token.id};
+  const paymentData = {
+    token: token.id,
+    customer: "manelitoReact",
+    productName:"Rubber duck"};
 
   // Use fetch to send the token ID and any other payment data to your server.
   // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-  const response = fetch("http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/charge", {
+  const response = fetch("http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/payment", {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
