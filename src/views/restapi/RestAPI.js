@@ -4,10 +4,8 @@
  * List all the features
  */
 import React, { useState, useEffect } from "react";
-import { Button, FormGroup, FormControl } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import {Card} from "react-bootstrap";
-import styles from "./RestAPI.css";
-
 
 function Contacts({ contacts }) {
   return (

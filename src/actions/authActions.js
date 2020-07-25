@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 
-import { generateUserDocument , firestore} from "../config/firebase";
+import { generateUserDocument} from "../config/firebase";
 
 export const signIn = (credentials) => {
   return (dispatch, getState) => {
@@ -41,8 +41,6 @@ export const signInWithGoogle = () => {
 
     firebase.auth().signInWithPopup(provider)
     .then(resp => {
-      var user = resp.user;
-      // console.log(user);
       generateUserDocument(resp.user, resp.user.uid);
     })
   }
@@ -51,7 +49,7 @@ export const signInWithGoogle = () => {
 
 export const signOut = (credentials) => {
   return (dispatch, getState) => {
-    // console.log(credentials + " logged Te logooooo");
+    // console.log(credentials + " logged in");
     //this is an async method. That why the then method.
     firebase
       .auth()

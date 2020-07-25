@@ -1,4 +1,4 @@
-import React, {Comments} from 'react'
+import React from 'react'
 import {
   CBadge,
   CDropdown,
@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 import { signOut } from '../actions/authActions'
 
 const TheHeaderDropdown = (props) => {
-  const { auth, profile } = props;
+  const { profile } = props;
 
 console.log("There's a foto: " + profile.photoURL);
 

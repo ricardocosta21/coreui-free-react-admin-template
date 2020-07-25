@@ -1,6 +1,5 @@
-import { createStore } from "redux";
-import React, { Component, createContext } from "react";
-import { auth, generateUserDocument } from "../config/firebase";
+import { createContext } from "react";
+
 
 export const UserContext = createContext({ user: null });
 

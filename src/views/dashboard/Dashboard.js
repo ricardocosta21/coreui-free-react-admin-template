@@ -1,30 +1,12 @@
-import React, { Component, lazy } from "react";
-import {
-  CBadge,
-  CButton,
-  CButtonGroup,
-  CCard,
-  CCardBody,
-  CCardFooter,
-  CCardHeader,
-  CCol,
-  CProgress,
-  CRow,
-  CCallout,
-} from "@coreui/react";
-import CIcon from "@coreui/icons-react";
-
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
-
-import ProjectList from "../../containers/ProjectList";
 // import CreateProject from "../../containers/CreateProject";
 import { Redirect } from "react-router-dom";
 
 class Dashboard extends Component {
   render() {
-    const { projects, auth } = this.props;
+    const { auth } = this.props;
 
     if (!auth.uid) {
       return <Redirect to="/signin" />;
