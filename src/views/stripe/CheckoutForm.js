@@ -20,7 +20,8 @@ export default function CheckoutForm() {
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     window
-      .fetch("https://localhost:5001/api/create-payment-intent", {
+       //.fetch("https://localhost:5001/api/create-payment-intent", {
+      .fetch("http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/create-payment-intent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
