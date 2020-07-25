@@ -16,7 +16,7 @@ import thunk from "redux-thunk";
 
 import { createStore, applyMiddleware } from "redux";
 import { Provider, useSelector } from "react-redux";
-import { ReactReduxFirebaseProvider,reactReduxFirebase, isLoaded } from "react-redux-firebase";
+import { ReactReduxFirebaseProvider, reactReduxFirebase, isLoaded } from "react-redux-firebase";
 import { createFirestoreInstance } from "redux-firestore";
 import { BrowserRouter } from "react-router-dom";
 

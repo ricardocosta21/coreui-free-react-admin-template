@@ -48,7 +48,8 @@ function Items() {
   // Get Message
   const handleGetAll = (e) => {
     fetch(
-      "http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/categories"
+      // "http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/categories"
+      "https://localhost:5001/api/categories"
     )
       .then((res) => res.json())
       .then((data) => {
@@ -62,7 +63,8 @@ function Items() {
   // Post Message
   const handlePost = (e) => {
     fetch(
-      "http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/categories",
+      // "http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/categories",
+      "https://localhost:5001/api/categories",
       {
         method: "POST",
         headers: {
@@ -84,8 +86,8 @@ function Items() {
   // Put Message
   const handlePut = (e) => {
     fetch(
-      "http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/categories?newName=" +
-        newName,
+      // "http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/categories?newName=" + newName,
+      "https://localhost:5001/api/categories?newName=" + newName,
       {
         method: "PUT",
         headers: {
@@ -107,8 +109,8 @@ function Items() {
   // Delete Message
   const handleDelete = (e) => {
     fetch(
-      "http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/categories?id=" +
-        id,
+      // "http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/categories?id=" + id,
+      "https://localhost:5001/api/categories?id=" + id,
       {
         method: "DELETE",
         headers: {
@@ -130,7 +132,7 @@ function Items() {
   return (
     <div className="Items">
 
-          <form className="">
+          {/* <form className=""> */}
           <label htmlFor="id" className="block">
           </label>
           <input type="id" className="my-1 p-1 w-full" name="id" 
@@ -146,8 +148,8 @@ function Items() {
             placeholder="Category Name"
             id="name"
             onChange={handleNameChange} 
-          form/>
-          </form>
+          />
+          {/* </form> */}
 
       <div className="Buttons">
         {/* <Button onClick={handleGetAll}>Get</Button> */}
