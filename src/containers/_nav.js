@@ -4,14 +4,10 @@ export default [
     name: 'Dashboard',
     to: '/dashboard',
     icon: 'cil-speedometer',
-    badge: {
-      color: 'info',
-      text: 'NEW',
-    }
-  },
-  {
-    _tag: 'CSidebarNavTitle',
-    _children: ['Theme']
+    // badge: {
+    //   color: 'info',
+    //   text: 'NEW',
+    // }
   },
   {
     _tag: 'CSidebarNavTitle',
@@ -43,51 +39,40 @@ export default [
       }
     ],
   },
-  {
-    _tag: 'CSidebarNavDivider'
-  },
-  {
-    _tag: 'CSidebarNavTitle',
-    _children: ['Extras'],
-  },
-  {
-    _tag: 'CSidebarNavDivider',
-    className: 'm-2'
-  },
-  {
-    _tag: 'CSidebarNavTitle',
-    _children: ['Labels']
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Label danger',
-    to: '',
-    icon: {
-      name: 'cil-star',
-      className: 'text-danger'
-    },
-    label: true
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Label info',
-    to: '',
-    icon: {
-      name: 'cil-star',
-      className: 'text-info'
-    },
-    label: true
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Label warning',
-    to: '',
-    icon: {
-      name: 'cil-star',
-      className: 'text-warning'
-    },
-    label: true
-  },
+  // {
+  //   _tag: 'CSidebarNavTitle',
+  //   _children: ['Labels']
+  // },
+  // {
+  //   _tag: 'CSidebarNavItem',
+  //   name: 'Label danger',
+  //   to: '',
+  //   icon: {
+  //     name: 'cil-star',
+  //     className: 'text-danger'
+  //   },
+  //   label: true
+  // },
+  // {
+  //   _tag: 'CSidebarNavItem',
+  //   name: 'Label info',
+  //   to: '',
+  //   icon: {
+  //     name: 'cil-star',
+  //     className: 'text-info'
+  //   },
+  //   label: true
+  // },
+  // {
+  //   _tag: 'CSidebarNavItem',
+  //   name: 'Label warning',
+  //   to: '',
+  //   icon: {
+  //     name: 'cil-star',
+  //     className: 'text-warning'
+  //   },
+  //   label: true
+  // },
   {
     _tag: 'CSidebarNavDivider',
     className: 'm-2'

@@ -14,8 +14,6 @@ import { signOut } from '../actions/authActions'
 const TheHeaderDropdown = (props) => {
   const { profile } = props;
 
-console.log("There's a foto: " + profile.photoURL);
-
   return (
     <CDropdown
       inNav
