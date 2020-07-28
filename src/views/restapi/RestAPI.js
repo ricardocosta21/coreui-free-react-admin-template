@@ -96,10 +96,12 @@ class Items extends Component {
 
   GetAll = (e) => {
     e.preventDefault();
-    const categories = this.props.handleGetAll(e);
+    
+    //const categories = this.props.handleGetAll(e);
+    console.log("Yey! " + this.props.handleGetAll(e));
   };
 
-  Post = (e) => {
+  AddCategory = (e) => {
     e.preventDefault();
     var cat = {
       id: this.state.categoryId,
@@ -153,8 +155,6 @@ class Items extends Component {
               </CCardHeader>
               <CCardBody>
                 <CForm
-                  action=""
-                  method="post"
                   encType="multipart/form-data"
                   className="form-horizontal"
                 >
@@ -195,7 +195,7 @@ class Items extends Component {
                   type="add"
                   size="sm"
                   color="primary"
-                  onClick={this.Post}
+                  onClick={this.AddCategory}
                 >
                   <CIcon name="cil-scrubber" /> Add
                 </CButton>
@@ -290,7 +290,7 @@ class Items extends Component {
                   type="add"
                   size="sm"
                   color="primary"
-                  onClick={this.Post}
+                  onClick={this.AddCategory}
                 >
                   <CIcon name="cil-scrubber" /> Add
                 </CButton>
@@ -306,6 +306,16 @@ class Items extends Component {
             </CCard>
           </CCol>
         </CRow>
+
+         <CButton
+                  type="reset"
+                  size="sm"
+                  color="danger"
+                  onClick={this.GetAll}
+                >
+                  <CIcon name="cil-ban" /> Get Categories
+                </CButton>
+
       </>
     );
   }
