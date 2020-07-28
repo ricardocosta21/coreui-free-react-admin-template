@@ -36,16 +36,7 @@ const Categories = (props) => {
   const { categories } = props;
   const [activeTab, setActiveTab] = useState(1);
 
-  // const contacts = [
-  //   {
-  //     id: "1",
-  //     name: "cenas1",
-  //   },
-  //   {
-  //     id: "2",
-  //     name: "cenas2",
-  //   },
-  // ];
+  if (categories == null) return <div> Nothing to see here. </div>;
 
   return (
     <div>
@@ -90,27 +81,44 @@ class Items extends Component {
       productName: "",
       productPrice: "",
     };
+    this.baseCategory = {
+      categoryId: "",
+      categoryName: "",
+    };
+    this.baseProduct = {
+      productId: "",
+      productName: "",
+      productPrice: "",
+    };
+
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   GetAll = (e) => {
     e.preventDefault();
-    const items = this.props.handleGetAll(e);
-  };
-
-  testGetAll = (e) => {
-    e.preventDefault();
-    const msg = this.props.handletestGetAll(e);
+    const categories = this.props.handleGetAll(e);
   };
 
   Post = (e) => {
     e.preventDefault();
-    this.props.handlePost(this.state.category);
+    var cat = {
+      id: this.state.categoryId,
+      name: this.state.categoryName,
+    };
+    this.props.handlePost(cat);
   };
 
   handleInputChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
+
+  handleClearCategory = () => {
+    this.setState(this.baseCategory);
+  };
+
+  handleClearProduct = () => {
+    this.setState(this.baseProduct);
+  };
 
   componentDidMount() {
     // this.setState({ contacts: this.GetAll() });
@@ -134,32 +142,6 @@ class Items extends Component {
       },
     ];
 
-    //   const categories = [
-    //   {
-    //     id: "2",
-    //     name: "cenas2",
-    //   },
-    //   {
-    //     id: "3",
-    //     name: "cenas3",
-    //   },
-    // ];
-
-    // Categories
-
-    // Products
-    // const [productId, setProductId] = useState("");
-    // const [productName, setProductName] = useState("");
-    // const [productPrice, setProductPrice] = useState("");
-    // const [newName, setNewProductName] = useState("");
-
-    // Clear form
-    const handleClearProduct = () => {
-      // setProductId("");
-      // setProductName("");
-      // setProductPrice("");
-    };
-
     return (
       <>
         <CRow>
@@ -167,7 +149,7 @@ class Items extends Component {
             <CCard>
               <CCardHeader>
                 Add
-                <small> Categories</small>
+                <small> Categories </small>
               </CCardHeader>
               <CCardBody>
                 <CForm
@@ -184,7 +166,7 @@ class Items extends Component {
                       <CInput
                         name="categoryId"
                         placeholder="id"
-                        value={this.state.id}
+                        value={this.state.categoryId}
                         onChange={this.handleInputChange}
                       />
                       <CFormText>Please enter your category ID</CFormText>
@@ -198,7 +180,7 @@ class Items extends Component {
                       <CInput
                         name="categoryName"
                         placeholder="i.e Groceries"
-                        value={this.state.name}
+                        value={this.state.categoryName}
                         onChange={this.handleInputChange}
                       />
                       <CFormText className="help-block">
@@ -221,7 +203,7 @@ class Items extends Component {
                   type="reset"
                   size="sm"
                   color="danger"
-                  //onClick={this.handleInputChange}
+                  onClick={this.handleClearCategory}
                 >
                   <CIcon name="cil-ban" /> Reset
                 </CButton>
@@ -229,7 +211,7 @@ class Items extends Component {
             </CCard>
 
             <div className="ItemsList">
-              <Categories categories={categories} />
+              <Categories categories={this.categories} />
             </div>
           </CCol>
 
@@ -316,7 +298,7 @@ class Items extends Component {
                   type="reset"
                   size="sm"
                   color="danger"
-                  onClick={handleClearProduct}
+                  onClick={this.handleClearProduct}
                 >
                   <CIcon name="cil-ban" /> Reset
                 </CButton>
@@ -324,10 +306,6 @@ class Items extends Component {
             </CCard>
           </CCol>
         </CRow>
-
-        <CButton type="reset" size="sm" color="danger" onClick={this.Post}>
-          <CIcon name="cil-ban" /> Reset
-        </CButton>
       </>
     );
   }
