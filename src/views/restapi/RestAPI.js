@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 import {
-  handleGetAll,
+  handleGetCategories,
   handlePost,
   handleDelete,
 } from "../../actions/apiActions";
@@ -80,6 +80,7 @@ class Items extends Component {
       productId: "",
       productName: "",
       productPrice: "",
+
     };
     this.baseCategory = {
       categoryId: "",
@@ -90,16 +91,9 @@ class Items extends Component {
       productName: "",
       productPrice: "",
     };
-
+    
     this.handleInputChange = this.handleInputChange.bind(this);
   }
-
-  GetAll = (e) => {
-    e.preventDefault();
-    
-    //const categories = this.props.handleGetAll(e);
-    console.log("Yey! " + this.props.handleGetAll(e));
-  };
 
   AddCategory = (e) => {
     e.preventDefault();
@@ -122,27 +116,16 @@ class Items extends Component {
     this.setState(this.baseProduct);
   };
 
-  componentDidMount() {
-    // this.setState({ contacts: this.GetAll() });
-  }
+
+   
+  componentDidMount = () => this.props.getCategories();
 
   render() {
-    const { authError, auth } = this.props;
+    const { authError, auth, categories} = this.props;
 
     if (!auth.uid) {
       return <Redirect to="/signin" />;
     }
-
-    const categories = [
-      {
-        id: "2",
-        name: "cenas2",
-      },
-      {
-        id: "3",
-        name: "cenas3",
-      },
-    ];
 
     return (
       <>
@@ -211,7 +194,7 @@ class Items extends Component {
             </CCard>
 
             <div className="ItemsList">
-              <Categories categories={this.categories} />
+              <Categories categories={categories} />
             </div>
           </CCol>
 
@@ -307,29 +290,21 @@ class Items extends Component {
           </CCol>
         </CRow>
 
-         <CButton
-                  type="reset"
-                  size="sm"
-                  color="danger"
-                  onClick={this.GetAll}
-                >
-                  <CIcon name="cil-ban" /> Get Categories
-                </CButton>
-
       </>
     );
   }
 }
-const mapStateToProps = (state) => {
+function mapStateToProps(state, props) {   
   return {
     authError: state.auth.authError,
     auth: state.firebase.auth,
+    categories: state.api.categories,
   };
-};
+}
 
-const mapDispatchToProps = (dispatch) => {
+function  mapDispatchToProps (dispatch) {
   return {
-    handleGetAll: () => dispatch(handleGetAll()),
+    getCategories:  () =>  dispatch(handleGetCategories()),
     handlePost: (category) => dispatch(handlePost(category)),
     handleDelete: () => dispatch(handleDelete()),
   };

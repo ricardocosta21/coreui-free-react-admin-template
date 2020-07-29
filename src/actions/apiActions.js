@@ -1,31 +1,16 @@
 const apiConnection = "https://localhost:5001/api/categories";
 // const apiConnection = "http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/categories"
+//const testConnection = "http://www.colr.org/json/color/random";
 
-
-
-export const handleGetAll = (e) => {
-  return async (dispatch, getState) => {
-    fetch(apiConnection)
-      .then((res) => res.json())
-      .then((data) => {
-        // setContacts([...data]);
-         dispatch({type: 'GET_SUCCESS', payload: data })
-        console.log(data);
-        return data
-      })
-      .then(() => {
-        dispatch({ type: "GET_SUCCESS"});
-      })
-      .catch((err) => {
-        dispatch({ type: "GET_ERROR", err });
+export function handleGetCategories() {
+  return async function(dispatch) {
+    return  fetch(apiConnection).then(response => response.json())
+      .then(json => {
+        //   console.log("Came here Actions");
+        dispatch({ type: "GET_SUCCESS", payload: json });
       });
   };
-};
-
-
-
-
-
+}
 
 export const handlePost = (category) => {
   return (getState) => {
@@ -40,7 +25,7 @@ export const handlePost = (category) => {
         name: category.name,
       }),
     }).then(() => {
-      //this.handleGetAll();
+      //this.handleGetCategories();
     });
   };
 };
@@ -76,7 +61,7 @@ export const handleDelete = (categoryId) => {
         "Content-Type": "application/json",
       },
     }).then(() => {
-      this.handleGetAll();
+      this.handleGetCategories();
     });
     // e.preventDefault();
   };
