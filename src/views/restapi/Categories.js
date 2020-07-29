@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { connect } from "react-redux";
-
+import { compose } from "redux";
+import { Redirect } from "react-router-dom";
 import {
   handleGetCategories,
   handlePostCategories,
@@ -12,6 +13,8 @@ import {
   CCard,
   CCardBody,
   CCol,
+  CRow,
+  CForm,
   CListGroup,
   CListGroupItem,
 } from "@coreui/react";
@@ -39,35 +42,44 @@ export class Categories extends Component {
       <div>
         <CCard className="cardContainer">
           <CCardBody>
-            <CCol xs="12" md="9">
-              <CListGroup id="list-tab" role="tablist">
-                {categories.map((category) => (
-                  <div key={category.id}>
-                    <CListGroupItem
-                      onClick={() => {
-                        this.setState({ activeTab: category.id });
-                        this.sendCatName(category.name);
-                      }}
-                      action
-                      active={this.state.activeTab === category.id}
-                    >
-                      {" "}
-                      {category.id} {category.name}
-                      <CButton
-                        className="float-right"
-                        type="button"
-                        color="danger"
+            <CForm inline xs="16" md="17">
+              <CCol>
+                <CListGroup id="list-tab" role="tablist">
+                  {categories.map((category) => (
+                    <div key={category.id}>
+                      <CListGroupItem
+                        // style={{
+                        //   textAlign: "center",
+                        // }}
                         onClick={() => {
-                          this.props.deleteCategories(category.id);
+                          this.setState({ activeTab: category.id });
+                          this.sendCatName(category.name);
                         }}
+                        action
+                        active={this.state.activeTab === category.id}
                       >
-                        <CIcon name="cil-ban" />
-                      </CButton>
-                    </CListGroupItem>
-                  </div>
-                ))}
-              </CListGroup>
-            </CCol>
+                        {category.id} {category.name}
+                        <CButton
+                          color="danger"
+                          className="my-2 my-sm-0"
+                          type="submit"
+                          style={{
+                            textAlign: "right",
+                            justifyContent: "right",
+                            alignItems: "right",
+                          }}
+                          onClick={() => {
+                            this.props.deleteCategories(category.id);
+                          }}
+                        >
+                          <CIcon name="cil-ban" />
+                        </CButton>
+                      </CListGroupItem>
+                    </div>
+                  ))}
+                </CListGroup>
+              </CCol>
+            </CForm>
           </CCardBody>
         </CCard>
       </div>
@@ -87,7 +99,8 @@ function mapDispatchToProps(dispatch) {
   return {
     getCategories: () => dispatch(handleGetCategories()),
     handlePost: (category) => dispatch(handlePostCategories(category)),
-    deleteCategories: (categoryId) => dispatch(handleDeleteCategories(categoryId)),
+    deleteCategories: (categoryId) =>
+      dispatch(handleDeleteCategories(categoryId)),
   };
 }
 
