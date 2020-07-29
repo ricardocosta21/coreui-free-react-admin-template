@@ -3,14 +3,13 @@
  *
  * List all the features
  */
-import React, { Component, useState, useEffect } from "react";
+import React, { Component} from "react";
 import { connect } from "react-redux";
-import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 import {
   handleGetCategories,
-  handlePost,
-  handleDelete,
+  handlePostCategories,
+  handleDeleteCategories,
 } from "../../actions/apiActions";
 
 import {
@@ -24,63 +23,24 @@ import {
   CFormGroup,
   CFormText,
   CInput,
-  CListGroup,
-  CListGroupItem,
   CLabel,
-  CInputGroupPrepend,
   CRow,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-
-const Categories = (props) => {
-  const { categories } = props;
-  const [activeTab, setActiveTab] = useState(1);
-
-  if (categories == null) return <div> Nothing to see here. </div>;
-
-  return (
-    <div>
-      <CCard className="cardContainer">
-        <CCardBody>
-          <CCol xs="12" md="9">
-            <CListGroup id="list-tab" role="tablist">
-              {categories.map((category) => (
-                <div key={category.id}>
-                  <CListGroupItem
-                    onClick={() => setActiveTab(category.id)}
-                    action
-                    active={activeTab === category.id}
-                  >
-                    {" "}
-                    {category.id} {category.name}
-                    <CButton
-                      className="float-right"
-                      type="button"
-                      color="danger"
-                    >
-                      <CIcon name="cil-ban" />
-                    </CButton>
-                  </CListGroupItem>
-                </div>
-              ))}
-            </CListGroup>
-          </CCol>
-        </CCardBody>
-      </CCard>
-    </div>
-  );
-};
+import Categories from "./Categories";
 
 class Items extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       categoryId: "",
       categoryName: "",
       productId: "",
       productName: "",
       productPrice: "",
-
+      listDataFromChild: null,
+      selectedCategoryName: "",
     };
     this.baseCategory = {
       categoryId: "",
@@ -91,17 +51,17 @@ class Items extends Component {
       productName: "",
       productPrice: "",
     };
-    
+
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   AddCategory = (e) => {
     e.preventDefault();
-    var cat = {
+    var category = {
       id: this.state.categoryId,
       name: this.state.categoryName,
     };
-    this.props.handlePost(cat);
+    this.props.handlePost(category);
   };
 
   handleInputChange(e) {
@@ -116,12 +76,18 @@ class Items extends Component {
     this.setState(this.baseProduct);
   };
 
-
-   
   componentDidMount = () => this.props.getCategories();
 
+  getCategoryName = (categoryName) => {
+    let newState = this.state;
+    newState = {
+      selectedCategoryName: categoryName,
+    };
+    this.setState(newState);
+  };
+
   render() {
-    const { authError, auth, categories} = this.props;
+    const { auth, categories} = this.props;
 
     if (!auth.uid) {
       return <Redirect to="/signin" />;
@@ -148,7 +114,6 @@ class Items extends Component {
                     <CCol xs="12" md="9">
                       <CInput
                         name="categoryId"
-                        placeholder="id"
                         value={this.state.categoryId}
                         onChange={this.handleInputChange}
                       />
@@ -162,7 +127,6 @@ class Items extends Component {
                     <CCol xs="12" md="9">
                       <CInput
                         name="categoryName"
-                        placeholder="i.e Groceries"
                         value={this.state.categoryName}
                         onChange={this.handleInputChange}
                       />
@@ -178,7 +142,9 @@ class Items extends Component {
                   type="add"
                   size="sm"
                   color="primary"
-                  onClick={this.AddCategory}
+                  onClick={(e) => {
+                    this.AddCategory(e);
+                  }}
                 >
                   <CIcon name="cil-scrubber" /> Add
                 </CButton>
@@ -193,8 +159,12 @@ class Items extends Component {
               </CCardFooter>
             </CCard>
 
+            {/* Categories list */}
             <div className="ItemsList">
-              <Categories categories={categories} />
+              <Categories
+                categories={categories}
+                getCategoryName={this.getCategoryName.bind(this)}
+              />
             </div>
           </CCol>
 
@@ -214,10 +184,10 @@ class Items extends Component {
                 >
                   <CFormGroup row>
                     <CCol md="3">
-                      <CLabel>Selected Category</CLabel>
+                      <CLabel>Category</CLabel>
                     </CCol>
                     <CCol xs="12" md="9">
-                      <CLabel>Selected</CLabel>
+                      <CLabel>{this.state.selectedCategoryName}</CLabel>
                     </CCol>
                   </CFormGroup>
                   <CFormGroup row>
@@ -227,7 +197,6 @@ class Items extends Component {
                     <CCol xs="12" md="9">
                       <CInput
                         name="productId"
-                        placeholder="Id"
                         value={this.state.productId}
                         onChange={this.handleInputChange}
                       />
@@ -241,7 +210,6 @@ class Items extends Component {
                     <CCol xs="12" md="9">
                       <CInput
                         name="productName"
-                        placeholder="i.e Potatoes"
                         value={this.state.productName}
                         onChange={this.handleInputChange}
                       />
@@ -257,7 +225,6 @@ class Items extends Component {
                     <CCol xs="12" md="9">
                       <CInput
                         name="productPrice"
-                        placeholder="£0.0"
                         value={this.state.productPrice}
                         onChange={this.handleInputChange}
                       />
@@ -289,12 +256,12 @@ class Items extends Component {
             </CCard>
           </CCol>
         </CRow>
-
       </>
     );
   }
 }
-function mapStateToProps(state, props) {   
+
+function mapStateToProps(state, props) {
   return {
     authError: state.auth.authError,
     auth: state.firebase.auth,
@@ -302,12 +269,12 @@ function mapStateToProps(state, props) {
   };
 }
 
-function  mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    getCategories:  () =>  dispatch(handleGetCategories()),
-    handlePost: (category) => dispatch(handlePost(category)),
-    handleDelete: () => dispatch(handleDelete()),
+    getCategories: () => dispatch(handleGetCategories()),
+    handlePost: (category) => dispatch(handlePostCategories(category)),
+    deleteCategories: (catId) => dispatch(handleDeleteCategories(catId)),
   };
-};
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Items);

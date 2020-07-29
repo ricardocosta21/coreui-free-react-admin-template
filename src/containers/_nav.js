@@ -1,5 +1,9 @@
 export default [
   {
+    _tag: 'CSidebarNavDivider',
+    className: 'm-2'
+  },
+  {
     _tag: 'CSidebarNavItem',
     name: 'Dashboard',
     to: '/dashboard',
@@ -17,8 +21,7 @@ export default [
     _tag: 'CSidebarNavItem',
     name: 'RestAPI',
     to: '/RestAPI',
-    icon: 'cil-cursor',
-    
+    icon: 'cil-star',
   },
   {
     _tag: 'CSidebarNavItem',

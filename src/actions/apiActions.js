@@ -2,19 +2,22 @@ const apiConnection = "https://localhost:5001/api/categories";
 // const apiConnection = "http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/categories"
 //const testConnection = "http://www.colr.org/json/color/random";
 
+//Get
 export function handleGetCategories() {
-  return async function(dispatch) {
-    return  fetch(apiConnection).then(response => response.json())
-      .then(json => {
+  return function (dispatch) {
+    return fetch(apiConnection)
+      .then((response) => response.json())
+      .then((json) => {
         //   console.log("Came here Actions");
         dispatch({ type: "GET_SUCCESS", payload: json });
       });
   };
-}
+};
 
-export const handlePost = (category) => {
-  return (getState) => {
-    fetch(apiConnection, {
+// Post
+export function handlePostCategories(category) {
+  return function (dispatch) {
+    return fetch(apiConnection, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -25,7 +28,36 @@ export const handlePost = (category) => {
         name: category.name,
       }),
     }).then(() => {
-      //this.handleGetCategories();
+       dispatch({ type: "POST_SUCCESS" });
+    }).then(() => {
+       return fetch(apiConnection)
+      .then((response) => response.json())
+      .then((json) => {
+        dispatch({ type: "GET_SUCCESS", payload: json });
+      });
+  
+    });
+  };
+};
+
+// Delete
+export function handleDeleteCategories(categoryId) {
+  return function (dispatch) {
+    return  fetch(apiConnection + "?id=" + categoryId, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }).then(() => {
+       dispatch({ type: "DELETE_SUCCESS" });
+    }).then(() =>  {
+       return  fetch(apiConnection)
+      .then((response) => response.json())
+      .then((json) => {
+        dispatch({ type: "GET_SUCCESS", payload: json });
+      });
+  
     });
   };
 };
@@ -51,18 +83,3 @@ export const handlePost = (category) => {
 
 //   e.preventDefault();
 // };
-
-export const handleDelete = (categoryId) => {
-  return (getState) => {
-    fetch(apiConnection + categoryId, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    }).then(() => {
-      this.handleGetCategories();
-    });
-    // e.preventDefault();
-  };
-};
