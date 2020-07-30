@@ -15,6 +15,8 @@ import {
   CCol,
   CRow,
   CForm,
+  CCardHeader,
+  CFormGroup,
   CListGroup,
   CListGroupItem,
 } from "@coreui/react";
@@ -41,45 +43,48 @@ export class Categories extends Component {
     return (
       <div>
         <CCard className="cardContainer">
+          <CCardHeader>Categories</CCardHeader>
           <CCardBody>
-            <CForm inline xs="16" md="17">
-              <CCol>
-                <CListGroup id="list-tab" role="tablist">
-                  {categories.map((category) => (
-                    <div key={category.id}>
+            <CListGroup id="list-tab" role="tablist">
+              {categories.map((category) => (
+                <div key={category.id}>
+                  <CFormGroup row>
+                    <CCol xs="12" md="10">
                       <CListGroupItem
-                        // style={{
-                        //   textAlign: "center",
-                        // }}
                         onClick={() => {
-                          this.setState({ activeTab: category.id });
-                          this.sendCatName(category.name);
+                          if (category.id === this.state.activeTab) {
+                            this.setState({ activeTab: "" });
+                            this.sendCatName("");
+                          } else {
+                            this.setState({ activeTab: category.id });
+                            this.sendCatName(category.name);
+                          }
                         }}
                         action
                         active={this.state.activeTab === category.id}
                       >
                         {category.id} {category.name}
-                        <CButton
-                          color="danger"
-                          className="my-2 my-sm-0"
-                          type="submit"
-                          style={{
-                            textAlign: "right",
-                            justifyContent: "right",
-                            alignItems: "right",
-                          }}
-                          onClick={() => {
-                            this.props.deleteCategories(category.id);
-                          }}
-                        >
-                          <CIcon name="cil-ban" />
-                        </CButton>
                       </CListGroupItem>
-                    </div>
-                  ))}
-                </CListGroup>
-              </CCol>
-            </CForm>
+                      <CButton
+                        style={{
+                          position: "absolute",
+                          top: "0%",
+                          left: "98%",
+                          padding: "10.5px 16px",
+                        }}
+                        color="danger"
+                        type="submit"
+                        onClick={() => {
+                          this.props.deleteCategories(category.id);
+                        }}
+                      >
+                        <CIcon name="cilTrash" />
+                      </CButton>
+                    </CCol>
+                  </CFormGroup>
+                </div>
+              ))}
+            </CListGroup>
           </CCardBody>
         </CCard>
       </div>
