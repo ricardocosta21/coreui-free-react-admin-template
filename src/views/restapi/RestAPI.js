@@ -3,13 +3,16 @@
  *
  * List all the features
  */
-import React, { Component} from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import {
   handleGetCategories,
   handlePostCategories,
   handleDeleteCategories,
+  handleGetProducts,
+  handlePostProducts,
+  handleDeleteProducts,
 } from "../../actions/apiActions";
 
 import {
@@ -28,6 +31,7 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import Categories from "./Categories";
+import Products from "./Products";
 
 class Items extends Component {
   constructor(props) {
@@ -61,7 +65,7 @@ class Items extends Component {
       id: this.state.categoryId,
       name: this.state.categoryName,
     };
-    this.props.handlePost(category);
+    this.props.handlePostCat(category);
   };
 
   handleInputChange(e) {
@@ -86,8 +90,16 @@ class Items extends Component {
     this.setState(newState);
   };
 
+  getProductName = (productName) => {
+    let newState = this.state;
+    newState = {
+      selectedProductName: productName,
+    };
+    this.setState(newState);
+  };
+
   render() {
-    const { auth, categories} = this.props;
+    const { auth, categories, products } = this.props;
 
     if (!auth.uid) {
       return <Redirect to="/signin" />;
@@ -254,6 +266,14 @@ class Items extends Component {
                 </CButton>
               </CCardFooter>
             </CCard>
+
+            {/* Products list */}
+            <div className="ItemsList">
+              <Products
+                products={products}
+                getProductName={this.getProductName.bind(this)}
+              />
+            </div>
           </CCol>
         </CRow>
       </>
@@ -266,14 +286,19 @@ function mapStateToProps(state, props) {
     authError: state.auth.authError,
     auth: state.firebase.auth,
     categories: state.api.categories,
+    products: state.api.products,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getCategories: () => dispatch(handleGetCategories()),
-    handlePost: (category) => dispatch(handlePostCategories(category)),
+    handlePostCat: (category) => dispatch(handlePostCategories(category)),
     deleteCategories: (catId) => dispatch(handleDeleteCategories(catId)),
+
+    getProducts: () => dispatch(handleGetProducts()),
+    handlePostPro: (product) => dispatch(handlePostProducts(product)),
+    deleteProducts: (proId) => dispatch(handleDeleteProducts(proId)),
   };
 }
 
