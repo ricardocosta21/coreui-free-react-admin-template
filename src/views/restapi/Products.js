@@ -1,7 +1,5 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component} from "react";
 import { connect } from "react-redux";
-import { compose } from "redux";
-import { Redirect } from "react-router-dom";
 import {
   handleGetProducts,
   handlePostProducts,
@@ -13,8 +11,6 @@ import {
   CCard,
   CCardBody,
   CCol,
-  CRow,
-  CForm,
   CCardHeader,
   CFormGroup,
   CListGroup,
@@ -34,7 +30,6 @@ export class Products extends Component {
     this.props.getProductName(productName);
   };
 
-  
   render() {
     const { products } = this.props;
     if (products == null) return <div> Nothing to see here. </div>;
@@ -103,8 +98,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getProducts: () => dispatch(handleGetProducts()),
     handlePost: (product) => dispatch(handlePostProducts(product)),
-    deleteProducts: (productId) =>
-      dispatch(handleDeleteProducts(productId)),
+    deleteProducts: (productId) => dispatch(handleDeleteProducts(productId)),
   };
 }
 

@@ -45,6 +45,7 @@ class Items extends Component {
       productPrice: "",
       listDataFromChild: null,
       selectedCategoryName: "",
+      selectedCategoryId: "",
     };
     this.baseCategory = {
       categoryId: "",
@@ -68,6 +69,16 @@ class Items extends Component {
     this.props.handlePostCat(category);
   };
 
+  AddProduct = (categoryId) => {
+    var product = {
+      id: this.state.productId,
+      name: this.state.productName,
+      price: this.state.productPrice,
+      categoryId: this.state.selectedCategoryId,
+    };
+    this.props.handlePostPro(product);
+  };
+
   handleInputChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -80,12 +91,25 @@ class Items extends Component {
     this.setState(this.baseProduct);
   };
 
-  componentDidMount = () => this.props.getCategories();
+  componentDidMount = () => 
+  {
+    this.props.getCategories();
+    this.props.getProducts();
+  }
+
 
   getCategoryName = (categoryName) => {
     let newState = this.state;
     newState = {
       selectedCategoryName: categoryName,
+    };
+    this.setState(newState);
+  };
+
+  getCategoryId = (categoryId) => {
+    let newState = this.state;
+    newState = {
+      selectedCategoryId: categoryId,
     };
     this.setState(newState);
   };
@@ -176,6 +200,7 @@ class Items extends Component {
               <Categories
                 categories={categories}
                 getCategoryName={this.getCategoryName.bind(this)}
+                getCategoryId={this.getCategoryId.bind(this)}
               />
             </div>
           </CCol>
@@ -252,7 +277,9 @@ class Items extends Component {
                   type="add"
                   size="sm"
                   color="primary"
-                  onClick={this.AddCategory}
+                  onClick={() => {
+                    this.AddProduct(this.state.selectedCategoryId);
+                  }}
                 >
                   <CIcon name="cil-scrubber" /> Add
                 </CButton>

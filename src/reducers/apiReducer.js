@@ -1,12 +1,16 @@
 const initState = {
   response: "",
   categories: [],
+  products: [],
 };
 
 const apiReducer = (state = initState, { type, payload }) => {
   switch (type) {
-    case "GET_SUCCESS":
+    case "GET_CATEGORIES_SUCCESS":
       return { ...state, categories: payload, hasError: "" }; // spread out any state,
+
+    case "GET_PRODUCTS_SUCCESS":
+      return { ...state, products: payload, hasError: "" }; // spread out any state,
 
     case "POST_SUCCESS":
       console.log("post success");

@@ -10,10 +10,10 @@ export function handleGetCategories() {
       .then((response) => response.json())
       .then((json) => {
         //   console.log("Came here Actions");
-        dispatch({ type: "GET_SUCCESS", payload: json });
+        dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
       });
   };
-};
+}
 
 // Post
 export function handlePostCategories(category) {
@@ -28,40 +28,42 @@ export function handlePostCategories(category) {
         id: Number(category.id),
         name: category.name,
       }),
-    }).then(() => {
-       dispatch({ type: "POST_SUCCESS" });
-    }).then(() => {
-       return fetch(apiConnection)
-      .then((response) => response.json())
-      .then((json) => {
-        dispatch({ type: "GET_SUCCESS", payload: json });
+    })
+      .then(() => {
+        dispatch({ type: "POST_SUCCESS" });
+      })
+      .then(() => {
+        return fetch(apiConnection)
+          .then((response) => response.json())
+          .then((json) => {
+            dispatch({ type: "GET_SUCCESS", payload: json });
+          });
       });
-  
-    });
   };
-};
+}
 
 // Delete
 export function handleDeleteCategories(categoryId) {
   return function (dispatch) {
-    return  fetch(apiConnection + "?id=" + categoryId, {
+    return fetch(apiConnection + "?id=" + categoryId, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-    }).then(() => {
-       dispatch({ type: "DELETE_SUCCESS" });
-    }).then(() =>  {
-       return  fetch(apiConnection)
-      .then((response) => response.json())
-      .then((json) => {
-        dispatch({ type: "GET_SUCCESS", payload: json });
+    })
+      .then(() => {
+        dispatch({ type: "DELETE_SUCCESS" });
+      })
+      .then(() => {
+        return fetch(apiConnection)
+          .then((response) => response.json())
+          .then((json) => {
+            dispatch({ type: "GET_SUCCESS", payload: json });
+          });
       });
-  
-    });
   };
-};
+}
 
 // Put Message
 // const handlePut = (e) => {
@@ -85,7 +87,6 @@ export function handleDeleteCategories(categoryId) {
 //   e.preventDefault();
 // };
 
-
 // PRODUCTS
 
 //Get
@@ -95,10 +96,10 @@ export function handleGetProducts() {
       .then((response) => response.json())
       .then((json) => {
         //   console.log("Came here Actions");
-        dispatch({ type: "GET_SUCCESS", payload: json });
+        dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
       });
   };
-};
+}
 
 // Post
 export function handlePostProducts(product) {
@@ -112,38 +113,42 @@ export function handlePostProducts(product) {
       body: JSON.stringify({
         id: Number(product.id),
         name: product.name,
+        price: Number(product.price),
+        categoryId: product.categoryId,
       }),
-    }).then(() => {
-       dispatch({ type: "POST_SUCCESS" });
-    }).then(() => {
-       return fetch(apiConnection)
-      .then((response) => response.json())
-      .then((json) => {
-        dispatch({ type: "GET_SUCCESS", payload: json });
+    })
+      .then(() => {
+        dispatch({ type: "POST_SUCCESS" });
+      })
+      .then(() => {
+        return fetch(apiConnection)
+          .then((response) => response.json())
+          .then((json) => {
+            dispatch({ type: "GET_SUCCESS", payload: json });
+          });
       });
-  
-    });
   };
-};
+}
 
 // Delete
 export function handleDeleteProducts(productId) {
   return function (dispatch) {
-    return  fetch(apiConnection + "?id=" + productId, {
+    return fetch(apiConnection + "?id=" + productId, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-    }).then(() => {
-       dispatch({ type: "DELETE_SUCCESS" });
-    }).then(() =>  {
-       return  fetch(apiConnection)
-      .then((response) => response.json())
-      .then((json) => {
-        dispatch({ type: "GET_SUCCESS", payload: json });
+    })
+      .then(() => {
+        dispatch({ type: "DELETE_SUCCESS" });
+      })
+      .then(() => {
+        return fetch(apiConnection)
+          .then((response) => response.json())
+          .then((json) => {
+            dispatch({ type: "GET_SUCCESS", payload: json });
+          });
       });
-  
-    });
   };
-};
+}

@@ -1,7 +1,7 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { compose } from "redux";
-import { Redirect } from "react-router-dom";
+
+
 import {
   handleGetCategories,
   handlePostCategories,
@@ -13,8 +13,6 @@ import {
   CCard,
   CCardBody,
   CCol,
-  CRow,
-  CForm,
   CCardHeader,
   CFormGroup,
   CListGroup,
@@ -30,8 +28,9 @@ export class Categories extends Component {
     };
   }
 
-  sendCatName = (categoryName) => {
+  sendCatName = (categoryName, categoryId) => {
     this.props.getCategoryName(categoryName);
+    this.props.getCategoryId(categoryId);
   };
 
   // componentDidMount = () => this.props.deleteCategories(1);
@@ -54,10 +53,10 @@ export class Categories extends Component {
                         onClick={() => {
                           if (category.id === this.state.activeTab) {
                             this.setState({ activeTab: "" });
-                            this.sendCatName("");
+                            this.sendCatName("", "");
                           } else {
                             this.setState({ activeTab: category.id });
-                            this.sendCatName(category.name);
+                            this.sendCatName(category.name, category.id);
                           }
                         }}
                         action
