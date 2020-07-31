@@ -28,6 +28,8 @@ import {
   CInput,
   CLabel,
   CRow,
+  CAlert,
+  CLink,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import Categories from "./Categories";
@@ -40,19 +42,18 @@ class Items extends Component {
     this.state = {
       categoryId: "",
       categoryName: "",
-      productId: "",
       productName: "",
       productPrice: "",
       listDataFromChild: null,
       selectedCategoryName: "",
       selectedCategoryId: "",
+      showSelectedCategoryId: true,
     };
     this.baseCategory = {
       categoryId: "",
       categoryName: "",
     };
     this.baseProduct = {
-      productId: "",
       productName: "",
       productPrice: "",
     };
@@ -70,8 +71,10 @@ class Items extends Component {
   };
 
   AddProduct = (categoryId) => {
+    if (categoryId === null) {
+      return;
+    }
     var product = {
-      id: this.state.productId,
       name: this.state.productName,
       price: this.state.productPrice,
       categoryId: this.state.selectedCategoryId,
@@ -91,12 +94,10 @@ class Items extends Component {
     this.setState(this.baseProduct);
   };
 
-  componentDidMount = () => 
-  {
+  componentDidMount = () => {
     this.props.getCategories();
     this.props.getProducts();
-  }
-
+  };
 
   getCategoryName = (categoryName) => {
     let newState = this.state;
@@ -229,19 +230,6 @@ class Items extends Component {
                   </CFormGroup>
                   <CFormGroup row>
                     <CCol md="3">
-                      <CLabel htmlFor="text-input">Id</CLabel>
-                    </CCol>
-                    <CCol xs="12" md="9">
-                      <CInput
-                        name="productId"
-                        value={this.state.productId}
-                        onChange={this.handleInputChange}
-                      />
-                      <CFormText>Please enter your Product Id</CFormText>
-                    </CCol>
-                  </CFormGroup>
-                  <CFormGroup row>
-                    <CCol md="3">
                       <CLabel htmlFor="email-input">Name</CLabel>
                     </CCol>
                     <CCol xs="12" md="9">
@@ -277,8 +265,9 @@ class Items extends Component {
                   type="add"
                   size="sm"
                   color="primary"
+                  disabled={this.state.selectedCategoryId === '' ? true : false}
                   onClick={() => {
-                    this.AddProduct(this.state.selectedCategoryId);
+                      this.AddProduct(this.state.selectedCategoryId);
                   }}
                 >
                   <CIcon name="cil-scrubber" /> Add
@@ -298,7 +287,6 @@ class Items extends Component {
             <div className="ItemsList">
               <Products
                 products={products}
-                getProductName={this.getProductName.bind(this)}
               />
             </div>
           </CCol>

@@ -26,9 +26,9 @@ export class Products extends Component {
     };
   }
 
-  sendProName = (productName) => {
-    this.props.getProductName(productName);
-  };
+//   sendProName = (productName) => {
+//     this.props.getProductName(productName);
+//   };
 
   render() {
     const { products } = this.props;
@@ -48,10 +48,10 @@ export class Products extends Component {
                         onClick={() => {
                           if (product.id === this.state.activeTab) {
                             this.setState({ activeTab: "" });
-                            this.sendProName("");
+                            // this.sendProName("");
                           } else {
                             this.setState({ activeTab: product.id });
-                            this.sendProName(product.name);
+                            // this.sendProName(product.name);
                           }
                         }}
                         action
@@ -69,7 +69,7 @@ export class Products extends Component {
                         color="danger"
                         type="submit"
                         onClick={() => {
-                          this.props.deleteProducts(product.id);
+                          this.props.deleteProducts(product);
                         }}
                       >
                         <CIcon name="cilTrash" />
@@ -98,7 +98,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getProducts: () => dispatch(handleGetProducts()),
     handlePost: (product) => dispatch(handlePostProducts(product)),
-    deleteProducts: (productId) => dispatch(handleDeleteProducts(productId)),
+    deleteProducts: (product) => dispatch(handleDeleteProducts(product)),
   };
 }
 

@@ -1,15 +1,16 @@
-const apiConnection = "https://localhost:5001/api/categories";
-// const apiConnection = "http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/categories"
-//const testConnection = "http://www.colr.org/json/color/random";
+const apiConnection = "https://localhost:5001/api/";
+// const apiConnection = "http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/"
+
 
 // CATEGORIES
 //Get
 export function handleGetCategories() {
   return function (dispatch) {
-    return fetch(apiConnection)
+    return fetch(apiConnection + "categories")
       .then((response) => response.json())
       .then((json) => {
         //   console.log("Came here Actions");
+        // console.log("GET_CATEGORIES_SUCCESS: " + JSON.stringify({json}));
         dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
       });
   };
@@ -18,7 +19,7 @@ export function handleGetCategories() {
 // Post
 export function handlePostCategories(category) {
   return function (dispatch) {
-    return fetch(apiConnection, {
+    return fetch(apiConnection + "categories", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -33,10 +34,10 @@ export function handlePostCategories(category) {
         dispatch({ type: "POST_SUCCESS" });
       })
       .then(() => {
-        return fetch(apiConnection)
+        return fetch(apiConnection + "categories")
           .then((response) => response.json())
           .then((json) => {
-            dispatch({ type: "GET_SUCCESS", payload: json });
+            dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
           });
       });
   };
@@ -45,7 +46,7 @@ export function handlePostCategories(category) {
 // Delete
 export function handleDeleteCategories(categoryId) {
   return function (dispatch) {
-    return fetch(apiConnection + "?id=" + categoryId, {
+    return fetch(apiConnection  + "categories?id=" + categoryId, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -56,10 +57,10 @@ export function handleDeleteCategories(categoryId) {
         dispatch({ type: "DELETE_SUCCESS" });
       })
       .then(() => {
-        return fetch(apiConnection)
+        return fetch(apiConnection + "categories")
           .then((response) => response.json())
           .then((json) => {
-            dispatch({ type: "GET_SUCCESS", payload: json });
+            dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
           });
       });
   };
@@ -92,10 +93,11 @@ export function handleDeleteCategories(categoryId) {
 //Get
 export function handleGetProducts() {
   return function (dispatch) {
-    return fetch(apiConnection)
+    return fetch(apiConnection + "products")
       .then((response) => response.json())
       .then((json) => {
         //   console.log("Came here Actions");
+        // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
         dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
       });
   };
@@ -104,16 +106,16 @@ export function handleGetProducts() {
 // Post
 export function handlePostProducts(product) {
   return function (dispatch) {
-    return fetch(apiConnection, {
+    return fetch(apiConnection + "products", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: Number(product.id),
+        // id: Number(product.id),
         name: product.name,
-        price: Number(product.price),
+        price: product.price,
         categoryId: product.categoryId,
       }),
     })
@@ -121,33 +123,39 @@ export function handlePostProducts(product) {
         dispatch({ type: "POST_SUCCESS" });
       })
       .then(() => {
-        return fetch(apiConnection)
+        return fetch(apiConnection + "products")
           .then((response) => response.json())
           .then((json) => {
-            dispatch({ type: "GET_SUCCESS", payload: json });
+            dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
           });
       });
   };
 }
 
 // Delete
-export function handleDeleteProducts(productId) {
+export function handleDeleteProducts(product) {
   return function (dispatch) {
-    return fetch(apiConnection + "?id=" + productId, {
+    return fetch(apiConnection  + "products", {
       method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        id: Number(product.id),
+        name: product.name,
+        price: product.price,
+        categoryId: product.categoryId,
+      }),
     })
       .then(() => {
         dispatch({ type: "DELETE_SUCCESS" });
       })
       .then(() => {
-        return fetch(apiConnection)
+        return fetch(apiConnection + "products")
           .then((response) => response.json())
           .then((json) => {
-            dispatch({ type: "GET_SUCCESS", payload: json });
+            dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
           });
       });
   };
