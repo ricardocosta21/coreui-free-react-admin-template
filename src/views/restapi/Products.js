@@ -2,6 +2,7 @@ import React, { Component} from "react";
 import { connect } from "react-redux";
 import {
   handleGetProducts,
+  handleGetProductsWithId,
   handlePostProducts,
   handleDeleteProducts,
 } from "../../actions/apiActions";
@@ -29,10 +30,15 @@ export class Products extends Component {
 //   sendProName = (productName) => {
 //     this.props.getProductName(productName);
 //   };
+  // componentDidMount = (category) => this.props.getProducts(category);
+
 
   render() {
+
+    // this.props.getProducts();
     const { products } = this.props;
     if (products == null) return <div> Nothing to see here. </div>;
+    
 
     return (
       <div>
@@ -96,7 +102,8 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getProducts: () => dispatch(handleGetProducts()),
+    //getProducts: () => dispatch(handleGetProducts()),
+    getProducts: (category) => dispatch(handleGetProductsWithId(category)),
     handlePost: (product) => dispatch(handlePostProducts(product)),
     deleteProducts: (product) => dispatch(handleDeleteProducts(product)),
   };

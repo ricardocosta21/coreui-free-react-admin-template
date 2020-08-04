@@ -91,17 +91,40 @@ export function handleDeleteCategories(categoryId) {
 // PRODUCTS
 
 //Get
-export function handleGetProducts() {
-  return function (dispatch) {
-    return fetch(apiConnection + "products")
+// export function handleGetProducts() {
+//   return function (dispatch) {
+//     return fetch(apiConnection + "products")
+//       .then((response) => response.json())
+//       .then((json) => {
+//         //   console.log("Came here Actions");
+//         // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
+//         dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
+//       });
+//   };
+// }
+
+export function handleGetProductsWithId(category) {
+ return function (dispatch) {
+    return fetch(apiConnection  + "products?categoryId=" + category.id)
       .then((response) => response.json())
       .then((json) => {
-        //   console.log("Came here Actions");
-        // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
+        //console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
         dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
       });
   };
 }
+
+// export function handleGetProducts() {
+//   return function (dispatch) {
+//     return fetch(apiConnection + "products")
+//       .then((response) => response.json())
+//       .then((json) => {
+//         //   console.log("Came here Actions");
+//         // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
+//         dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
+//       });
+//   };
+// }
 
 // Post
 export function handlePostProducts(product) {
@@ -113,7 +136,6 @@ export function handlePostProducts(product) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // id: Number(product.id),
         name: product.name,
         price: product.price,
         categoryId: product.categoryId,

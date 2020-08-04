@@ -10,7 +10,7 @@ import {
   handleGetCategories,
   handlePostCategories,
   handleDeleteCategories,
-  handleGetProducts,
+  handleGetProductsWithId,
   handlePostProducts,
   handleDeleteProducts,
 } from "../../actions/apiActions";
@@ -28,8 +28,6 @@ import {
   CInput,
   CLabel,
   CRow,
-  CAlert,
-  CLink,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import Categories from "./Categories";
@@ -47,7 +45,6 @@ class Items extends Component {
       listDataFromChild: null,
       selectedCategoryName: "",
       selectedCategoryId: "",
-      showSelectedCategoryId: true,
     };
     this.baseCategory = {
       categoryId: "",
@@ -96,24 +93,36 @@ class Items extends Component {
 
   componentDidMount = () => {
     this.props.getCategories();
-    this.props.getProducts();
   };
 
-  getCategoryName = (categoryName) => {
+  getCategory = (category) => {
     let newState = this.state;
     newState = {
-      selectedCategoryName: categoryName,
+      selectedCategoryId: category.Id,
+      selectedCategoryName: category.Name,
     };
     this.setState(newState);
+    
+    this.props.getProducts(category);
   };
 
-  getCategoryId = (categoryId) => {
-    let newState = this.state;
-    newState = {
-      selectedCategoryId: categoryId,
-    };
-    this.setState(newState);
-  };
+  // getCategoryName = (categoryName) => {
+  //   let newState = this.state;
+  //   newState = {
+  //     selectedCategoryName: categoryName,
+  //   };
+  //   this.setState(newState);
+  // };
+
+  // getCategoryId = (categoryId) => {
+  //   let newState = this.state;
+  //   newState = {
+  //     selectedCategoryId: categoryId,
+  //   };
+  //   this.setState(newState);
+
+  //   // this.props.getProducts();
+  // };
 
   getProductName = (productName) => {
     let newState = this.state;
@@ -200,8 +209,9 @@ class Items extends Component {
             <div className="ItemsList">
               <Categories
                 categories={categories}
-                getCategoryName={this.getCategoryName.bind(this)}
-                getCategoryId={this.getCategoryId.bind(this)}
+                // getCategoryName={this.getCategoryName.bind(this)}
+                // getCategoryId={this.getCategoryId.bind(this)}
+                getCategory={this.getCategory.bind(this)}
               />
             </div>
           </CCol>
@@ -265,9 +275,9 @@ class Items extends Component {
                   type="add"
                   size="sm"
                   color="primary"
-                  disabled={this.state.selectedCategoryId === '' ? true : false}
+                  disabled={this.state.selectedCategoryId === "" ? true : false}
                   onClick={() => {
-                      this.AddProduct(this.state.selectedCategoryId);
+                    this.AddProduct(this.state.selectedCategoryId);
                   }}
                 >
                   <CIcon name="cil-scrubber" /> Add
@@ -285,9 +295,7 @@ class Items extends Component {
 
             {/* Products list */}
             <div className="ItemsList">
-              <Products
-                products={products}
-              />
+              <Products products={products} />
             </div>
           </CCol>
         </CRow>
@@ -311,7 +319,8 @@ function mapDispatchToProps(dispatch) {
     handlePostCat: (category) => dispatch(handlePostCategories(category)),
     deleteCategories: (catId) => dispatch(handleDeleteCategories(catId)),
 
-    getProducts: () => dispatch(handleGetProducts()),
+    //getProducts: () => dispatch(handleGetProducts()),
+    getProducts: (category) => dispatch(handleGetProductsWithId(category)),
     handlePostPro: (product) => dispatch(handlePostProducts(product)),
     deleteProducts: (proId) => dispatch(handleDeleteProducts(proId)),
   };

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-
 import {
   handleGetCategories,
   handlePostCategories,
@@ -28,12 +27,14 @@ export class Categories extends Component {
     };
   }
 
-  sendCatName = (categoryName, categoryId) => {
-    this.props.getCategoryName(categoryName);
-    this.props.getCategoryId(categoryId);
-  };
+  // sendCatName = (categoryName, categoryId) => {
+  //   this.props.getCategoryName(categoryName);
+  //   this.props.getCategoryId(categoryId);
+  // };
 
-  // componentDidMount = () => this.props.deleteCategories(1);
+  sendCategory = (category) => {
+    this.props.getCategory(category);
+  };
 
   render() {
     const { categories } = this.props;
@@ -53,10 +54,10 @@ export class Categories extends Component {
                         onClick={() => {
                           if (category.id === this.state.activeTab) {
                             this.setState({ activeTab: "" });
-                            this.sendCatName("", "");
+                            this.sendCategory("");
                           } else {
                             this.setState({ activeTab: category.id });
-                            this.sendCatName(category.name, category.id);
+                            this.sendCategory(category);
                           }
                         }}
                         action
