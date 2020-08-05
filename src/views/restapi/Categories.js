@@ -54,7 +54,7 @@ export class Categories extends Component {
                         onClick={() => {
                           if (category.id === this.state.activeTab) {
                             this.setState({ activeTab: "" });
-                            this.sendCategory("");
+                            this.sendCategory(null);
                           } else {
                             this.setState({ activeTab: category.id });
                             this.sendCategory(category);

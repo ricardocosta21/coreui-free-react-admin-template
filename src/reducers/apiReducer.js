@@ -11,7 +11,7 @@ const apiReducer = (state = initState, { type, payload }) => {
       return { ...state, categories: payload, hasError: "" }; // spread out any state,
 
     case "GET_PRODUCTS_SUCCESS":
-      console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({payload}));
+      // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({payload}));
       return { ...state, products: payload, hasError: "" }; // spread out any state,
 
     case "POST_SUCCESS":
@@ -26,6 +26,7 @@ const apiReducer = (state = initState, { type, payload }) => {
       return {
         ...state,
         response: "delete success",
+        products: [],
       };
 
     case "GET_ERROR":

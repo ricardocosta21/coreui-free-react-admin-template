@@ -1,7 +1,6 @@
 const apiConnection = "https://localhost:5001/api/";
 // const apiConnection = "http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/"
 
-
 // CATEGORIES
 //Get
 export function handleGetCategories() {
@@ -26,7 +25,7 @@ export function handlePostCategories(category) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: Number(category.id),
+        // id: Number(category.id),
         name: category.name,
       }),
     })
@@ -46,7 +45,7 @@ export function handlePostCategories(category) {
 // Delete
 export function handleDeleteCategories(categoryId) {
   return function (dispatch) {
-    return fetch(apiConnection  + "categories?id=" + categoryId, {
+    return fetch(apiConnection + "categories?id=" + categoryId, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -103,28 +102,23 @@ export function handleDeleteCategories(categoryId) {
 //   };
 // }
 
+//Get with Category ID
 export function handleGetProductsWithId(category) {
- return function (dispatch) {
-    return fetch(apiConnection  + "products?categoryId=" + category.id)
+  return function (dispatch) {
+    if (category == null) {
+      // console.log("LIKE Null!" + JSON.stringify({category}));
+      dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: [] });
+      return;
+    }
+    // console.log("LIKE WHAAAT?!" + JSON.stringify({category}));
+    return fetch(apiConnection + "products?categoryId=" + category.id)
       .then((response) => response.json())
       .then((json) => {
-        //console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
+        // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
         dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
       });
   };
 }
-
-// export function handleGetProducts() {
-//   return function (dispatch) {
-//     return fetch(apiConnection + "products")
-//       .then((response) => response.json())
-//       .then((json) => {
-//         //   console.log("Came here Actions");
-//         // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
-//         dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
-//       });
-//   };
-// }
 
 // Post
 export function handlePostProducts(product) {
@@ -145,7 +139,7 @@ export function handlePostProducts(product) {
         dispatch({ type: "POST_SUCCESS" });
       })
       .then(() => {
-        return fetch(apiConnection + "products")
+        return fetch(apiConnection + "products?categoryId=" + product.categoryId)
           .then((response) => response.json())
           .then((json) => {
             dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
@@ -157,7 +151,7 @@ export function handlePostProducts(product) {
 // Delete
 export function handleDeleteProducts(product) {
   return function (dispatch) {
-    return fetch(apiConnection  + "products", {
+    return fetch(apiConnection + "products", {
       method: "DELETE",
       headers: {
         Accept: "application/json",

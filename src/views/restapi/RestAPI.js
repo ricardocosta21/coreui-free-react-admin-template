@@ -61,7 +61,6 @@ class Items extends Component {
   AddCategory = (e) => {
     e.preventDefault();
     var category = {
-      id: this.state.categoryId,
       name: this.state.categoryName,
     };
     this.props.handlePostCat(category);
@@ -71,11 +70,13 @@ class Items extends Component {
     if (categoryId === null) {
       return;
     }
+    // console.log("this should work " + this.state.selectedCategoryId);
     var product = {
       name: this.state.productName,
       price: this.state.productPrice,
       categoryId: this.state.selectedCategoryId,
     };
+    console.log("product! " + JSON.stringify({product}));
     this.props.handlePostPro(product);
   };
 
@@ -97,13 +98,17 @@ class Items extends Component {
 
   getCategory = (category) => {
     let newState = this.state;
-    newState = {
-      selectedCategoryId: category.Id,
-      selectedCategoryName: category.Name,
-    };
-    this.setState(newState);
-    
-    this.props.getProducts(category);
+    if (category != null) {
+      newState = {
+        selectedCategoryId: category.id,
+        selectedCategoryName: category.name,
+      };
+      this.setState(newState);
+
+      this.props.getProducts(category);
+    } else {
+      this.props.getProducts(category);
+    }
   };
 
   // getCategoryName = (categoryName) => {
@@ -153,7 +158,7 @@ class Items extends Component {
                   encType="multipart/form-data"
                   className="form-horizontal"
                 >
-                  <CFormGroup row>
+                  {/* <CFormGroup row>
                     <CCol md="3">
                       <CLabel htmlFor="text-input">Id</CLabel>
                     </CCol>
@@ -165,7 +170,7 @@ class Items extends Component {
                       />
                       <CFormText>Please enter your category ID</CFormText>
                     </CCol>
-                  </CFormGroup>
+                  </CFormGroup> */}
                   <CFormGroup row>
                     <CCol md="3">
                       <CLabel htmlFor="email-input">Name</CLabel>
@@ -277,6 +282,10 @@ class Items extends Component {
                   color="primary"
                   disabled={this.state.selectedCategoryId === "" ? true : false}
                   onClick={() => {
+                    console.log(
+                      "this.state.selectedCategoryId: " +
+                        this.state.selectedCategoryId
+                    );
                     this.AddProduct(this.state.selectedCategoryId);
                   }}
                 >
