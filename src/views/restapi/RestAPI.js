@@ -107,6 +107,11 @@ class Items extends Component {
 
       this.props.getProducts(category);
     } else {
+        newState = {
+        selectedCategoryId: "",
+        selectedCategoryName: ""
+      };
+      this.setState(newState);
       this.props.getProducts(category);
     }
   };
