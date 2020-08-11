@@ -19,13 +19,18 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-export class Categories extends Component {
+export class CategoriesList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeTab: "",
     };
   }
+
+  // sendCatName = (categoryName, categoryId) => {
+  //   this.props.getCategoryName(categoryName);
+  //   this.props.getCategoryId(categoryId);
+  // };
 
   sendCategory = (category) => {
     this.props.getCategory(category);
@@ -38,7 +43,7 @@ export class Categories extends Component {
     return (
       <div>
         <CCard className="cardContainer">
-          <CCardHeader>Categories</CCardHeader>
+          <CCardHeader>Categories List</CCardHeader>
           <CCardBody>
             <CListGroup id="list-tab" role="tablist">
               {categories.map((category) => (
@@ -60,21 +65,6 @@ export class Categories extends Component {
                       >
                         {category.name}
                       </CListGroupItem>
-                      <CButton
-                        style={{
-                          position: "absolute",
-                          top: "0%",
-                          left: "98%",
-                          padding: "10.5px 16px",
-                        }}
-                        color="danger"
-                        type="submit"
-                        onClick={() => {
-                          this.props.deleteCategories(category.id);
-                        }}
-                      >
-                        <CIcon name="cilTrash" />
-                      </CButton>
                     </CCol>
                   </CFormGroup>
                 </div>
@@ -99,8 +89,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getCategories: () => dispatch(handleGetCategories()),
     handlePost: (category) => dispatch(handlePostCategories(category)),
-    deleteCategories: (catId) => dispatch(handleDeleteCategories(catId)),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesList);

@@ -1,10 +1,10 @@
 import React, { Component} from "react";
 import { connect } from "react-redux";
 import {
-  handleGetProducts,
   handleGetProductsWithId,
   handlePostProducts,
   handleDeleteProducts,
+  handleAddToCart,
 } from "../../actions/apiActions";
 
 import {
@@ -19,7 +19,7 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-export class Products extends Component {
+export class ProductsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,14 +36,14 @@ export class Products extends Component {
   render() {
 
     // this.props.getProducts();
-    const { products } = this.props;
+    const { products, auth } = this.props;
     if (products == null) return <div> Nothing to see here. </div>;
     
 
     return (
       <div>
         <CCard className="cardContainer">
-          <CCardHeader>Products</CCardHeader>
+          <CCardHeader>Products List</CCardHeader>
           <CCardBody>
             <CListGroup id="list-tab" role="tablist">
               {products.map((product) => (
@@ -72,13 +72,15 @@ export class Products extends Component {
                           left: "98%",
                           padding: "10.5px 16px",
                         }}
-                        color="danger"
+                        color="success"
                         type="submit"
                         onClick={() => {
-                          this.props.deleteProducts(product);
+                          //this.props.deleteProducts(product);
+                          
+                          this.props.addToCart(product, auth);
                         }}
                       >
-                        <CIcon name="cilTrash" />
+                        <CIcon name="cil-check" />
                       </CButton>
                     </CCol>
                   </CFormGroup>
@@ -105,8 +107,10 @@ function mapDispatchToProps(dispatch) {
     //getProducts: () => dispatch(handleGetProducts()),
     getProducts: (category) => dispatch(handleGetProductsWithId(category)),
     handlePost: (product, auth) => dispatch(handlePostProducts(product, auth)),
-    deleteProducts: (product, auth) => dispatch(handleDeleteProducts(product, auth)),
+    // deleteProducts: (product) => dispatch(handleDeleteProducts(product)),
+    addToCart: (product, auth) => dispatch(handleAddToCart(product, auth)),
+
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Products);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsList);

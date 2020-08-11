@@ -44,7 +44,7 @@ class Items extends Component {
       productPrice: "",
       listDataFromChild: null,
       selectedCategoryName: "",
-      selectedCategoryId: "",
+      selectedCategoryId: ""
     };
     this.baseCategory = {
       categoryId: "",
@@ -66,18 +66,18 @@ class Items extends Component {
     this.props.handlePostCat(category);
   };
 
-  AddProduct = (categoryId) => {
+  AddProduct = (categoryId, clientUID) => {
     if (categoryId === null) {
       return;
     }
-    // console.log("this should work " + this.state.selectedCategoryId);
+    
     var product = {
       name: this.state.productName,
       price: this.state.productPrice,
       categoryId: this.state.selectedCategoryId,
     };
-    console.log("product! " + JSON.stringify({product}));
-    this.props.handlePostPro(product);
+    // console.log("product! " + JSON.stringify({ product }));
+    this.props.handlePostPro(product, clientUID);
   };
 
   handleInputChange(e) {
@@ -107,9 +107,9 @@ class Items extends Component {
 
       this.props.getProducts(category);
     } else {
-        newState = {
+      newState = {
         selectedCategoryId: "",
-        selectedCategoryName: ""
+        selectedCategoryName: "",
       };
       this.setState(newState);
       this.props.getProducts(category);
@@ -149,6 +149,8 @@ class Items extends Component {
       return <Redirect to="/signin" />;
     }
 
+
+    
     return (
       <>
         <CRow>
@@ -163,19 +165,6 @@ class Items extends Component {
                   encType="multipart/form-data"
                   className="form-horizontal"
                 >
-                  {/* <CFormGroup row>
-                    <CCol md="3">
-                      <CLabel htmlFor="text-input">Id</CLabel>
-                    </CCol>
-                    <CCol xs="12" md="9">
-                      <CInput
-                        name="categoryId"
-                        value={this.state.categoryId}
-                        onChange={this.handleInputChange}
-                      />
-                      <CFormText>Please enter your category ID</CFormText>
-                    </CCol>
-                  </CFormGroup> */}
                   <CFormGroup row>
                     <CCol md="3">
                       <CLabel htmlFor="email-input">Name</CLabel>
@@ -183,6 +172,7 @@ class Items extends Component {
                     <CCol xs="12" md="9">
                       <CInput
                         name="categoryName"
+                        style={{ textTransform: "capitalize" }}
                         value={this.state.categoryName}
                         onChange={this.handleInputChange}
                       />
@@ -254,6 +244,7 @@ class Items extends Component {
                     </CCol>
                     <CCol xs="12" md="9">
                       <CInput
+                        style={{ textTransform: "capitalize"}}
                         name="productName"
                         value={this.state.productName}
                         onChange={this.handleInputChange}
@@ -291,7 +282,7 @@ class Items extends Component {
                       "this.state.selectedCategoryId: " +
                         this.state.selectedCategoryId
                     );
-                    this.AddProduct(this.state.selectedCategoryId);
+                    this.AddProduct(this.state.selectedCategoryId, auth.uid);
                   }}
                 >
                   <CIcon name="cil-scrubber" /> Add
@@ -335,8 +326,8 @@ function mapDispatchToProps(dispatch) {
 
     //getProducts: () => dispatch(handleGetProducts()),
     getProducts: (category) => dispatch(handleGetProductsWithId(category)),
-    handlePostPro: (product) => dispatch(handlePostProducts(product)),
-    deleteProducts: (proId) => dispatch(handleDeleteProducts(proId)),
+    handlePostPro: (product, auth) => dispatch(handlePostProducts(product, auth)),
+    deleteProducts: (proId, auth) => dispatch(handleDeleteProducts(proId, auth)),
   };
 }
 

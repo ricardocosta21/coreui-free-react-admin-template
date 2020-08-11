@@ -2,6 +2,7 @@ const initState = {
   response: "",
   categories: [],
   products: [],
+  basketProducts: [],
 };
 
 const apiReducer = (state = initState, { type, payload }) => {
@@ -14,6 +15,10 @@ const apiReducer = (state = initState, { type, payload }) => {
       // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({payload}));
       return { ...state, products: payload, hasError: "" }; // spread out any state,
 
+     case "GET_BASKET_PRODUCTS_SUCCESS":
+      // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({payload}));
+      return { ...state, basketProducts: payload, hasError: "" }; // spread out any state,
+
     case "POST_SUCCESS":
       console.log("post success");
       return {
@@ -23,11 +28,11 @@ const apiReducer = (state = initState, { type, payload }) => {
 
     case "DELETE_SUCCESS":
       console.log("delete success");
-      return {
-        ...state,
-        response: "delete success",
-        products: [],
-      };
+      // return {
+      //   ...state,
+      //   response: "delete success",
+      // };
+      return { ...state, response: "delete success", products: payload, hasError: "" }; // spread out any state,
 
     case "GET_ERROR":
       console.log("get error");

@@ -53,7 +53,7 @@ export function handleDeleteCategories(categoryId) {
       },
     })
       .then(() => {
-        dispatch({ type: "DELETE_SUCCESS" });
+        dispatch({ type: "DELETE_SUCCESS", payload: [] });
       })
       .then(() => {
         return fetch(apiConnection + "categories")
@@ -121,7 +121,7 @@ export function handleGetProductsWithId(category) {
 }
 
 // Post
-export function handlePostProducts(product) {
+export function handlePostProducts(product, auth) {
   return function (dispatch) {
     return fetch(apiConnection + "products", {
       method: "POST",
@@ -131,25 +131,22 @@ export function handlePostProducts(product) {
       },
       body: JSON.stringify({
         name: product.name,
+        clientUID: auth.uid,
         price: product.price,
         categoryId: product.categoryId,
       }),
-    })
-      .then(() => {
-        dispatch({ type: "POST_SUCCESS" });
-      })
-      .then(() => {
-        return fetch(apiConnection + "products?categoryId=" + product.categoryId)
-          .then((response) => response.json())
-          .then((json) => {
-            dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
-          });
-      });
+    }).then(() => {
+      return fetch(apiConnection + "products?categoryId=" + product.categoryId)
+        .then((response) => response.json())
+        .then((json) => {
+          dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
+        });
+    });
   };
 }
 
 // Delete
-export function handleDeleteProducts(product) {
+export function handleDeleteProducts(product, auth) {
   return function (dispatch) {
     return fetch(apiConnection + "products", {
       method: "DELETE",
@@ -160,19 +157,118 @@ export function handleDeleteProducts(product) {
       body: JSON.stringify({
         id: Number(product.id),
         name: product.name,
+        clientUID: auth.uid,
         price: product.price,
         categoryId: product.categoryId,
       }),
+    }).then(() => {
+      return fetch(apiConnection + "products?categoryId=" + product.categoryId)
+        .then((response) => response.json())
+        .then((json) => {
+          dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
+        });
+    });
+  };
+}
+
+
+
+
+// Basket Products
+
+
+
+//Get with auth.UID
+export function handleGetBasketProductsForUser(auth) {
+  return function (dispatch) {
+    if (auth == null) {
+      dispatch({ type: "GET_ERROR", payload: [] });
+      return;
+    }
+    return fetch(apiConnection + "basket?clientUID=" + auth.uid)
+      .then((response) => response.json())
+      .then((json) => {
+        dispatch({ type: "GET_BASKET_PRODUCTS_SUCCESS", payload: json });
+      });
+  };
+}
+
+
+// Add Product to Cart
+export function handleAddToCart(product, auth) {
+  return function (dispatch) {
+    console.log(auth.uid);
+    return fetch(apiConnection + "basket", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: Number(product.id),
+        name: product.name,
+        clientUID: auth.uid,
+        price: product.price,
+        categoryId: product.categoryId,
+      }),
+    }).then(() => {
+      return fetch(apiConnection + "basket?clientUID=" + auth.uid)
+        .then((response) => response.json())
+        .then((json) => {
+          dispatch({ type: "GET_BASKET_PRODUCTS_SUCCESS", payload: json });
+        });
+    });
+  };
+}
+
+
+// Delete
+export function handleDeleteBasketProduct(productId, auth) {
+  return function (dispatch) {
+    return fetch(apiConnection + "basket?id=" + productId, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
     })
       .then(() => {
-        dispatch({ type: "DELETE_SUCCESS" });
-      })
-      .then(() => {
-        return fetch(apiConnection + "products")
+        
+         return fetch(apiConnection + "basket?clientUID=" + auth.uid)
           .then((response) => response.json())
           .then((json) => {
-            dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
+            dispatch({ type: "GET_BASKET_PRODUCTS_SUCCESS", payload: json });
           });
       });
   };
 }
+
+
+
+// // Add Product to Cart
+// export function handleAddToCart(product, auth) {
+//   return function (dispatch) {
+//     console.log(auth.uid);
+//     return fetch(apiConnection + "basket", {
+//       method: "POST",
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         id: Number(product.id),
+//         name: product.name,
+//         clientUID: auth.uid,
+//         price: product.price,
+//         categoryId: product.categoryId,
+//       }),
+//     })
+//       .then(() => {
+//         return fetch(apiConnection + "basket?categoryId=" + product.categoryId)
+//           .then((response) => response.json())
+//           .then((json) => {
+//             dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
+//           });
+//       });
+//   };
+// }

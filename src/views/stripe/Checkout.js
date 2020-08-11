@@ -11,7 +11,6 @@ import {
   handleGetProductsWithId,
   handlePostProducts,
   handleDeleteProducts,
-  handleGetBasketProductsForUser,
 } from "../../actions/apiActions.js";
 
 import {
@@ -28,11 +27,9 @@ import {
   CLabel,
   CRow,
 } from "@coreui/react";
-import CIcon from "@coreui/icons-react";
 
 import CategoriesList from "../../views/restapi/CategoriesList";
 import ProductsList from "../../views/restapi/ProductsList";
-import BasketItems from "../../views/restapi/BasketItems";
 import CheckoutForm from "./CheckoutForm";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
@@ -70,7 +67,7 @@ class Stripe extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  getCategory = (category) => {
+ getCategory = (category) => {
     let newState = this.state;
     if (category != null) {
       newState = {
@@ -90,15 +87,12 @@ class Stripe extends Component {
     }
   };
 
-  componentDidMount = () => {
+ componentDidMount = () => {
     this.props.getCategories();
-
-    //It worked!
-    this.props.getBasketProducts(this.props.auth);
   };
 
   render() {
-    const { auth, categories, products, basketProducts } = this.props;
+    const { auth, categories, products } = this.props;
 
     if (!auth.uid) {
       return <Redirect to="/signin" />;
@@ -106,49 +100,28 @@ class Stripe extends Component {
 
     return (
       <Elements stripe={stripePromise}>
-        <CRow>
+
+         {/* <CRow>
           <CCol xs="12" md="6">
-            <div className="CategoriesList">
-              <CategoriesList
+           <div className="CategoriesList">
+               <CategoriesList
                 categories={categories}
                 // getCategoryName={this.getCategoryName.bind(this)}
                 // getCategoryId={this.getCategoryId.bind(this)}
                 getCategory={this.getCategory.bind(this)}
               />
             </div>
+        </CCol>
 
-  <div className="ProductsList">
-              <ProductsList products={products} />
+         <CCol>
+           <div className="ProductsList">
+              <ProductsList products={products}/>
             </div>
-
-          
-          </CCol>
-            <CCol>
-            <div className="BasketProducts">
-              <BasketItems basketProducts={basketProducts} />
-            </div>
-          </CCol>
-
-        </CRow>
+        </CCol>
+          </CRow> */}
 
 
-        {/* <CheckoutForm /> */}
-        {/* <CCol>
-          {" "}
-          <CButton
-            style={{
-              position: "absolute",
-              top: "0%",
-              left: "98%",
-              padding: "10.5px 16px",
-            }}
-            color="success"
-            type="submit"
-            onClick={() => {}}
-          >
-            <CIcon name="cil-check" />
-          </CButton>{" "}
-        </CCol> */}
+        <CheckoutForm />
       </Elements>
     );
   }
@@ -160,7 +133,6 @@ function mapStateToProps(state, props) {
     auth: state.firebase.auth,
     categories: state.api.categories,
     products: state.api.products,
-    basketProducts: state.api.basketProducts,
   };
 }
 
@@ -172,12 +144,8 @@ function mapDispatchToProps(dispatch) {
 
     //getProducts: () => dispatch(handleGetProducts()),
     getProducts: (category) => dispatch(handleGetProductsWithId(category)),
-    handlePostPro: (product, auth) =>
-      dispatch(handlePostProducts(product, auth)),
-    deleteProducts: (proId, auth) =>
-      dispatch(handleDeleteProducts(proId, auth)),
-
-    getBasketProducts: (auth) => dispatch(handleGetBasketProductsForUser(auth)),
+    handlePostPro: (product, auth) => dispatch(handlePostProducts(product, auth)),
+    deleteProducts: (proId, auth) => dispatch(handleDeleteProducts(proId, auth)),
   };
 }
 
