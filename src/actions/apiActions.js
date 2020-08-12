@@ -107,7 +107,7 @@ export function handleGetProductsWithId(category) {
   return function (dispatch) {
     if (category == null) {
       // console.log("LIKE Null!" + JSON.stringify({category}));
-      dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: [] });
+      dispatch({ type: "GET_PRODUCTS_ERROR", payload: [] });
       return;
     }
     // console.log("LIKE WHAAAT?!" + JSON.stringify({category}));
@@ -117,6 +117,14 @@ export function handleGetProductsWithId(category) {
         // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
         dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
       });
+  };
+}
+
+//Get with Category ID
+export function handleClearProducts() {
+  return function (dispatch) {
+      dispatch({ type: "GET_PRODUCTS_ERROR", payload: [] });
+      return;
   };
 }
 

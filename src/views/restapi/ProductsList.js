@@ -12,6 +12,7 @@ import {
   CCard,
   CCardBody,
   CCol,
+  CRow,
   CCardHeader,
   CFormGroup,
   CListGroup,
@@ -30,8 +31,12 @@ export class ProductsList extends Component {
 //   sendProName = (productName) => {
 //     this.props.getProductName(productName);
 //   };
-  // componentDidMount = (category) => this.props.getProducts(category);
+ componentDidMount = () => {
+    
 
+    //It worked!
+    // this.props.getProducts(this.props.products);
+  };
 
   render() {
 
@@ -51,6 +56,7 @@ export class ProductsList extends Component {
                   <CFormGroup row>
                     <CCol xs="12" md="10">
                       <CListGroupItem
+                        
                         onClick={() => {
                           if (product.id === this.state.activeTab) {
                             this.setState({ activeTab: "" });
@@ -61,9 +67,14 @@ export class ProductsList extends Component {
                           }
                         }}
                         action
+                        
                         active={this.state.activeTab === product.id}
                       >
-                        {product.name} {'£'}{product.price}
+                      <CRow>
+                      <CCol>{product.name}</CCol>
+                      <CCol>{'£'}{product.price}</CCol>
+                      </CRow>
+                        {/* {product.name} {'£'}{product.price} */}
                       </CListGroupItem>
                       <CButton
                         style={{
@@ -75,8 +86,6 @@ export class ProductsList extends Component {
                         color="success"
                         type="submit"
                         onClick={() => {
-                          //this.props.deleteProducts(product);
-                          
                           this.props.addToCart(product, auth);
                         }}
                       >

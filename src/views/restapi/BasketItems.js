@@ -14,6 +14,7 @@ import {
   CCard,
   CCardBody,
   CCol,
+  CRow,
   CCardHeader,
   CFormGroup,
   CListGroup,
@@ -66,7 +67,11 @@ export class BasketItems extends Component {
                         action
                         active={this.state.activeTab === basketProduct.id}
                       >
-                        {basketProduct.name} {'£'}{basketProduct.price}
+                       <CRow>
+                      <CCol>{basketProduct.name}</CCol>
+                      <CCol>{'£'}{basketProduct.price}</CCol>
+                      </CRow>
+                        {/* {basketProduct.name} {'£'}{basketProduct.price} */}
                       </CListGroupItem>
                       <CButton
                         style={{

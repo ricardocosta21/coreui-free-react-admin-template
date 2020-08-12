@@ -12,6 +12,7 @@ import {
   handlePostProducts,
   handleDeleteProducts,
   handleGetBasketProductsForUser,
+  handleClearProducts,
 } from "../../actions/apiActions.js";
 
 import {
@@ -86,13 +87,15 @@ class Stripe extends Component {
         selectedCategoryName: "",
       };
       this.setState(newState);
-      this.props.getProducts(category);
+      this.props.getProducts();
     }
   };
 
   componentDidMount = () => {
     this.props.getCategories();
 
+    this.props.clearProducts();
+    
     //It worked!
     this.props.getBasketProducts(this.props.auth);
   };
@@ -117,20 +120,16 @@ class Stripe extends Component {
               />
             </div>
 
-  <div className="ProductsList">
+            <div className="ProductsList">
               <ProductsList products={products} />
             </div>
-
-          
           </CCol>
-            <CCol>
+          <CCol>
             <div className="BasketProducts">
               <BasketItems basketProducts={basketProducts} />
             </div>
           </CCol>
-
         </CRow>
-
 
         {/* <CheckoutForm /> */}
         {/* <CCol>
@@ -172,10 +171,9 @@ function mapDispatchToProps(dispatch) {
 
     //getProducts: () => dispatch(handleGetProducts()),
     getProducts: (category) => dispatch(handleGetProductsWithId(category)),
-    handlePostPro: (product, auth) =>
-      dispatch(handlePostProducts(product, auth)),
-    deleteProducts: (proId, auth) =>
-      dispatch(handleDeleteProducts(proId, auth)),
+    clearProducts: () => dispatch(handleClearProducts()),
+    handlePostPro: (product, auth) => dispatch(handlePostProducts(product, auth)),
+    deleteProducts: (proId, auth) => dispatch(handleDeleteProducts(proId, auth)),
 
     getBasketProducts: (auth) => dispatch(handleGetBasketProductsForUser(auth)),
   };

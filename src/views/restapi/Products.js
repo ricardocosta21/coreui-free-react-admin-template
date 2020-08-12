@@ -1,4 +1,4 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   handleGetProducts,
@@ -12,6 +12,7 @@ import {
   CCard,
   CCardBody,
   CCol,
+  CRow,
   CCardHeader,
   CFormGroup,
   CListGroup,
@@ -27,18 +28,15 @@ export class Products extends Component {
     };
   }
 
-//   sendProName = (productName) => {
-//     this.props.getProductName(productName);
-//   };
+  //   sendProName = (productName) => {
+  //     this.props.getProductName(productName);
+  //   };
   // componentDidMount = (category) => this.props.getProducts(category);
 
-
   render() {
-
     // this.props.getProducts();
     const { products } = this.props;
     if (products == null) return <div> Nothing to see here. </div>;
-    
 
     return (
       <div>
@@ -63,7 +61,13 @@ export class Products extends Component {
                         action
                         active={this.state.activeTab === product.id}
                       >
-                        {product.name} {'£'}{product.price}
+                        <CRow>
+                          <CCol>{product.name}</CCol>
+                          <CCol>
+                            {"£"}
+                            {product.price}
+                          </CCol>
+                        </CRow>
                       </CListGroupItem>
                       <CButton
                         style={{
@@ -105,7 +109,8 @@ function mapDispatchToProps(dispatch) {
     //getProducts: () => dispatch(handleGetProducts()),
     getProducts: (category) => dispatch(handleGetProductsWithId(category)),
     handlePost: (product, auth) => dispatch(handlePostProducts(product, auth)),
-    deleteProducts: (product, auth) => dispatch(handleDeleteProducts(product, auth)),
+    deleteProducts: (product, auth) =>
+      dispatch(handleDeleteProducts(product, auth)),
   };
 }
 
