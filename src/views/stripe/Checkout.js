@@ -11,6 +11,8 @@ import {
   handleGetProductsWithId,
   handlePostProducts,
   handleDeleteProducts,
+  handleClearProducts,
+  handleGetBasketProductsForUser,
 } from "../../actions/apiActions.js";
 
 import {
@@ -28,8 +30,7 @@ import {
   CRow,
 } from "@coreui/react";
 
-import CategoriesList from "../../views/restapi/CategoriesList";
-import ProductsList from "../../views/restapi/ProductsList";
+import BasketProducts from "../../views/restapi/BasketProducts";
 import CheckoutForm from "./CheckoutForm";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
@@ -38,7 +39,7 @@ const stripePromise = loadStripe(
   "pk_test_51H7KdVHWUwuAN6yQmtIC9Hg0o6Ott8QWOfcGDoA6taCr9MzUBsFicjG83R69fOcYW3bvC0KG3EMPDp45m67IDGm200zF2Q9Q6A"
 );
 
-class Stripe extends Component {
+class Checkout extends Component {
   constructor(props) {
     super(props);
 
@@ -133,6 +134,7 @@ function mapStateToProps(state, props) {
     auth: state.firebase.auth,
     categories: state.api.categories,
     products: state.api.products,
+    basketProducts: state.api.basketProducts,
   };
 }
 
@@ -144,9 +146,12 @@ function mapDispatchToProps(dispatch) {
 
     //getProducts: () => dispatch(handleGetProducts()),
     getProducts: (category) => dispatch(handleGetProductsWithId(category)),
+    clearProducts: () => dispatch(handleClearProducts()),
     handlePostPro: (product, auth) => dispatch(handlePostProducts(product, auth)),
     deleteProducts: (proId, auth) => dispatch(handleDeleteProducts(proId, auth)),
+
+    getBasketProducts: (auth) => dispatch(handleGetBasketProductsForUser(auth)),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Stripe);
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

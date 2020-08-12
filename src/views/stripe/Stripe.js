@@ -33,7 +33,7 @@ import CIcon from "@coreui/icons-react";
 
 import CategoriesList from "../../views/restapi/CategoriesList";
 import ProductsList from "../../views/restapi/ProductsList";
-import BasketItems from "../../views/restapi/BasketItems";
+import BasketProducts from "../../views/restapi/BasketProducts";
 import CheckoutForm from "./CheckoutForm";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
@@ -126,28 +126,13 @@ class Stripe extends Component {
           </CCol>
           <CCol>
             <div className="BasketProducts">
-              <BasketItems basketProducts={basketProducts} />
+              <BasketProducts basketProducts={basketProducts} />
             </div>
           </CCol>
         </CRow>
 
-        {/* <CheckoutForm /> */}
-        {/* <CCol>
-          {" "}
-          <CButton
-            style={{
-              position: "absolute",
-              top: "0%",
-              left: "98%",
-              padding: "10.5px 16px",
-            }}
-            color="success"
-            type="submit"
-            onClick={() => {}}
-          >
-            <CIcon name="cil-check" />
-          </CButton>{" "}
-        </CCol> */}
+{/* <CheckoutForm /> */}
+     
       </Elements>
     );
   }

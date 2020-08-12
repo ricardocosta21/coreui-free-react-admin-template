@@ -1,10 +1,7 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-  handleGetProducts,
-  handleGetProductsWithId,
   handlePostProducts,
-  handleDeleteProducts,
   handleDeleteBasketProduct,
   handleGetBasketProductsForUser,
 } from "../../actions/apiActions";
@@ -13,6 +10,7 @@ import {
   CButton,
   CCard,
   CCardBody,
+  CCardFooter,
   CCol,
   CRow,
   CCardHeader,
@@ -22,7 +20,7 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-export class BasketItems extends Component {
+export class BasketProducts extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,24 +28,20 @@ export class BasketItems extends Component {
     };
   }
 
-//   sendProName = (productName) => {
-//     this.props.getProductName(productName);
-//   };
-//   componentDidMount = (auth) => this.props.getBasketProducts(auth);
+  //   sendProName = (productName) => {
+  //     this.props.getProductName(productName);
+  //   };
+  //   componentDidMount = (auth) => this.props.getBasketProducts(auth);
 
   render() {
-
-    
     const { basketProducts, auth } = this.props;
 
-    // this.props.getBasketProducts(auth);
-
     if (basketProducts == null) return <div> Nothing to see here. </div>;
-    
+
     return (
       <div>
         <CCard className="cardContainer">
-          <CCardHeader>Basket Items</CCardHeader>
+          <CCardHeader>Basket List</CCardHeader>
           <CCardBody>
             <CListGroup id="list-tab" role="tablist">
               {basketProducts.map((basketProduct) => (
@@ -67,11 +61,13 @@ export class BasketItems extends Component {
                         action
                         active={this.state.activeTab === basketProduct.id}
                       >
-                       <CRow>
-                      <CCol>{basketProduct.name}</CCol>
-                      <CCol>{'£'}{basketProduct.price}</CCol>
-                      </CRow>
-                        {/* {basketProduct.name} {'£'}{basketProduct.price} */}
+                        <CRow>
+                          <CCol>{basketProduct.name}</CCol>
+                          <CCol>
+                            {"£"}
+                            {basketProduct.price}
+                          </CCol>
+                        </CRow>
                       </CListGroupItem>
                       <CButton
                         style={{
@@ -83,8 +79,10 @@ export class BasketItems extends Component {
                         color="danger"
                         type="submit"
                         onClick={() => {
-                            console.log("basketProduct.id " + basketProduct.id)
-                          this.props.deleteBasketProducts(basketProduct.id, auth);
+                          this.props.deleteBasketProducts(
+                            basketProduct.id,
+                            auth
+                          );
                         }}
                       >
                         <CIcon name="cilTrash" />
@@ -95,6 +93,12 @@ export class BasketItems extends Component {
               ))}
             </CListGroup>
           </CCardBody>
+
+          <CCardFooter className="text-center">
+            <CButton href="#/checkout" type="submit" color="success">
+              Proceed to Checkout
+            </CButton>
+          </CCardFooter>
         </CCard>
       </div>
     );
@@ -113,10 +117,12 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch) {
   return {
     //getProducts: () => dispatch(handleGetProducts()),
-    getBasketProducts: (category) => dispatch(handleGetBasketProductsForUser(category)),
+    getBasketProducts: (category) =>
+      dispatch(handleGetBasketProductsForUser(category)),
     handlePost: (product, auth) => dispatch(handlePostProducts(product, auth)),
-    deleteBasketProducts: (bProductId, auth) => dispatch(handleDeleteBasketProduct(bProductId, auth)),
+    deleteBasketProducts: (bProductId, auth) =>
+      dispatch(handleDeleteBasketProduct(bProductId, auth)),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BasketItems);
+export default connect(mapStateToProps, mapDispatchToProps)(BasketProducts);
