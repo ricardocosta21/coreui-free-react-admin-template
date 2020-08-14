@@ -1,5 +1,5 @@
-const apiConnection = "https://localhost:5001/api/";
-// const apiConnection = "http://ec2-3-19-60-209.us-east-2.compute.amazonaws.com:8888/api/"
+//const apiConnection = "https://localhost:5001/api/";
+const apiConnection = "http://ec2-3-19-26-38.us-east-2.compute.amazonaws.com:8888/api/"
 
 // CATEGORIES
 //Get
