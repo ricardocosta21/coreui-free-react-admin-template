@@ -30,7 +30,7 @@ import {
   CRow,
 } from "@coreui/react";
 
-import BasketProductsCheckout from "../../views/restapi/BasketProductsCheckout";
+import BasketProductsCheckout from "../../views/admin/BasketProductsCheckout";
 import CheckoutForm from "./CheckoutForm";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
@@ -74,8 +74,6 @@ class Checkout extends Component {
 
   render() {
     const { auth, basketProducts } = this.props;
-
-    const boneco = '1';
 
     if (!auth.uid) {
       return <Redirect to="/signin" />;

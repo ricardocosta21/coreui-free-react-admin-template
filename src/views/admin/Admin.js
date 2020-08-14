@@ -33,7 +33,7 @@ import CIcon from "@coreui/icons-react";
 import Categories from "./Categories";
 import Products from "./Products";
 
-class Items extends Component {
+class Admin extends Component {
   constructor(props) {
     super(props);
 
@@ -331,4 +331,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Items);
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);

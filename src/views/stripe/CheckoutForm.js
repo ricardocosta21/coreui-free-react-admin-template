@@ -6,6 +6,8 @@ import {
   Elements,
 } from "@stripe/react-stripe-js";
 
+import { Redirect } from 'react-router-dom';
+
 import { loadStripe } from "@stripe/stripe-js";
 import { connect } from "react-redux";
 
@@ -77,6 +79,10 @@ export class CheckoutForm extends Component {
       this.setState({ processing: false });
       // setSucceeded(true);
       this.setState({ succeeded: true });
+
+        
+        window.location.href = '#/PaymentSuccessful';
+      
     }
   };
 
@@ -85,19 +91,19 @@ export class CheckoutForm extends Component {
   }
 
   paymentSuccess(isSuccess) {
-  if (isSuccess) {
-    return (
-      <div>
-        {" "}
-        Payment succeeded, see the result in your
-        <a href={`https://dashboard.stripe.com/test/payments`}>
+    if (isSuccess) {
+      return (
+        <div>
           {" "}
-          Stripe dashboard.{" "}
-        </a>
-      </div>
-    );
+          Payment succeeded, see the result in your
+          <a href={`https://dashboard.stripe.com/test/payments`}>
+            {" "}
+            Stripe dashboard.{" "}
+          </a>
+        </div>
+      );
+    }
   }
-}
 
   async componentDidMount() {
     await this.props.getBasketProducts(this.props.auth);
@@ -136,6 +142,7 @@ export class CheckoutForm extends Component {
             type="submit"
             size="md"
             color="primary"
+            style={{ marginTop: "10px" }}
             onSubmit={this.handleSubmit}
             disabled={
               this.state.processing ||
@@ -143,7 +150,7 @@ export class CheckoutForm extends Component {
               this.state.succeeded
             }
           >
-            {/* <button disabled={processing || disabled || succeeded} id="submit"> */} 
+            {/* <button disabled={processing || disabled || succeeded} id="submit"> */}
             <span id="button-text">
               {this.state.processing ? "Processing" : "Pay Now"}
             </span>
@@ -157,14 +164,11 @@ export class CheckoutForm extends Component {
           )}
 
           {this.paymentSuccess(this.state.succeeded)}
-          
         </form>
       </>
     );
   }
 }
-
-
 
 function mapStateToProps(state, props) {
   return {

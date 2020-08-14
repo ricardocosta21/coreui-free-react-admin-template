@@ -48,19 +48,7 @@ export class BasketProducts extends Component {
                 <div key={basketProduct.id}>
                   <CFormGroup row>
                     <CCol xs="12" md="10">
-                      <CListGroupItem
-                        onClick={() => {
-                          if (basketProduct.id === this.state.activeTab) {
-                            this.setState({ activeTab: "" });
-                            // this.sendProName("");
-                          } else {
-                            this.setState({ activeTab: basketProduct.id });
-                            // this.sendProName(product.name);
-                          }
-                        }}
-                        action
-                        active={this.state.activeTab === basketProduct.id}
-                      >
+                      <CListGroupItem>
                         <CRow>
                           <CCol>{basketProduct.name}</CCol>
                           <CCol>

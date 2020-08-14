@@ -19,8 +19,8 @@ export default [
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'RestAPI',
-    to: '/RestAPI',
+    name: 'Admin',
+    to: '/Admin',
     icon: 'cil-star',
   },
   {
@@ -29,19 +29,21 @@ export default [
     to: '/Stripe',
     icon: 'cil-cursor',  
   },
-  {
-    _tag: 'CSidebarNavDropdown',
-    name: 'Base',
-    route: '/base',
-    icon: 'cil-puzzle',
-    _children: [
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Forms',
-        to: '/base/forms',
-      }
-    ],
-  },
+  // {
+  //   _tag: 'CSidebarNavDropdown',
+  //   name: 'Base',
+  //   route: '/base',
+  //   icon: 'cil-puzzle',
+  //   _children: [
+  //     {
+  //       _tag: 'CSidebarNavItem',
+  //       name: 'Forms',
+  //       to: '/base/forms',
+  //     }
+  //   ],
+  // },
+
+
   // {
   //   _tag: 'CSidebarNavTitle',
   //   _children: ['Labels']

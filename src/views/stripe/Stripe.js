@@ -29,9 +29,9 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-import CategoriesList from "../../views/restapi/CategoriesList";
-import ProductsList from "../../views/restapi/ProductsList";
-import BasketProducts from "../../views/restapi/BasketProducts";
+import CategoriesList from "../../views/admin/CategoriesList";
+import ProductsList from "../../views/admin/ProductsList";
+import BasketProducts from "../../views/admin/BasketProducts";
 import CheckoutForm from "./CheckoutForm";
 
 class Stripe extends Component {

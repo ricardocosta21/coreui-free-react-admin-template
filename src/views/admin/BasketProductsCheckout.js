@@ -73,10 +73,10 @@ export class BasketProductsCheckout extends Component {
           </CCardBody>
 
           <CCardFooter>
-            <h3>
+            <h4>
               Total: {"£"}
               {totalPrice}
-            </h3>
+            </h4>
           </CCardFooter>
         </CCard>
       </div>
