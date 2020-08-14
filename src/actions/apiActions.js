@@ -183,9 +183,7 @@ export function handleDeleteProducts(product, auth) {
 
 
 // Basket Products
-
-
-
+// here
 //Get with auth.UID
 export function handleGetBasketProductsForUser(auth) {
   return function (dispatch) {

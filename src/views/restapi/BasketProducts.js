@@ -41,7 +41,7 @@ export class BasketProducts extends Component {
     return (
       <div>
         <CCard className="cardContainer">
-          <CCardHeader>Basket List</CCardHeader>
+          <CCardHeader>Basket Products</CCardHeader>
           <CCardBody>
             <CListGroup id="list-tab" role="tablist">
               {basketProducts.map((basketProduct) => (

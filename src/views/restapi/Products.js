@@ -35,7 +35,7 @@ export class Products extends Component {
 
   render() {
     // this.props.getProducts();
-    const { products } = this.props;
+    const { products, auth} = this.props;
     if (products == null) return <div> Nothing to see here. </div>;
 
     return (
@@ -79,7 +79,7 @@ export class Products extends Component {
                         color="danger"
                         type="submit"
                         onClick={() => {
-                          this.props.deleteProducts(product);
+                          this.props.deleteProducts(product, auth);
                         }}
                       >
                         <CIcon name="cilTrash" />
@@ -106,7 +106,6 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    //getProducts: () => dispatch(handleGetProducts()),
     getProducts: (category) => dispatch(handleGetProductsWithId(category)),
     handlePost: (product, auth) => dispatch(handlePostProducts(product, auth)),
     deleteProducts: (product, auth) =>

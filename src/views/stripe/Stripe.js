@@ -1,5 +1,3 @@
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import { connect } from "react-redux";
 import React, { Component } from "react";
 
@@ -35,12 +33,6 @@ import CategoriesList from "../../views/restapi/CategoriesList";
 import ProductsList from "../../views/restapi/ProductsList";
 import BasketProducts from "../../views/restapi/BasketProducts";
 import CheckoutForm from "./CheckoutForm";
-
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe(
-  "pk_test_51H7KdVHWUwuAN6yQmtIC9Hg0o6Ott8QWOfcGDoA6taCr9MzUBsFicjG83R69fOcYW3bvC0KG3EMPDp45m67IDGm200zF2Q9Q6A"
-);
 
 class Stripe extends Component {
   constructor(props) {
@@ -106,16 +98,16 @@ class Stripe extends Component {
     if (!auth.uid) {
       return <Redirect to="/signin" />;
     }
-
+    
     return (
-      <Elements stripe={stripePromise}>
+      
         <CRow>
           <CCol xs="12" md="6">
             <div className="CategoriesList">
               <CategoriesList
                 categories={categories}
                 // getCategoryName={this.getCategoryName.bind(this)}
-                // getCategoryId={this.getCategoryId.bind(this)}
+                // getCategoryId={this.getCategoryId.bind(this)} 
                 getCategory={this.getCategory.bind(this)}
               />
             </div>
@@ -130,10 +122,7 @@ class Stripe extends Component {
             </div>
           </CCol>
         </CRow>
-
-{/* <CheckoutForm /> */}
-     
-      </Elements>
+      
     );
   }
 }
@@ -154,7 +143,6 @@ function mapDispatchToProps(dispatch) {
     handlePostCat: (category) => dispatch(handlePostCategories(category)),
     deleteCategories: (catId) => dispatch(handleDeleteCategories(catId)),
 
-    //getProducts: () => dispatch(handleGetProducts()),
     getProducts: (category) => dispatch(handleGetProductsWithId(category)),
     clearProducts: () => dispatch(handleClearProducts()),
     handlePostPro: (product, auth) => dispatch(handlePostProducts(product, auth)),

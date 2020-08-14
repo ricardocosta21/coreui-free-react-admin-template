@@ -1,4 +1,4 @@
-import { Elements } from "@stripe/react-stripe-js";
+import { Elements, ElementsConsumer } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { connect } from "react-redux";
 import React, { Component } from "react";
@@ -30,7 +30,7 @@ import {
   CRow,
 } from "@coreui/react";
 
-import BasketProducts from "../../views/restapi/BasketProducts";
+import BasketProductsCheckout from "../../views/restapi/BasketProductsCheckout";
 import CheckoutForm from "./CheckoutForm";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
@@ -68,88 +68,55 @@ class Checkout extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
- getCategory = (category) => {
-    let newState = this.state;
-    if (category != null) {
-      newState = {
-        selectedCategoryId: category.id,
-        selectedCategoryName: category.name,
-      };
-      this.setState(newState);
-
-      this.props.getProducts(category);
-    } else {
-      newState = {
-        selectedCategoryId: "",
-        selectedCategoryName: "",
-      };
-      this.setState(newState);
-      this.props.getProducts(category);
-    }
-  };
-
- componentDidMount = () => {
-    this.props.getCategories();
+  componentDidMount = async () => {
+    this.props.getBasketProducts(this.props.auth);
   };
 
   render() {
-    const { auth, categories, products } = this.props;
+    const { auth, basketProducts } = this.props;
+
+    const boneco = '1';
 
     if (!auth.uid) {
       return <Redirect to="/signin" />;
     }
-
+    
     return (
       <Elements stripe={stripePromise}>
-
-         {/* <CRow>
-          <CCol xs="12" md="6">
-           <div className="CategoriesList">
-               <CategoriesList
-                categories={categories}
-                // getCategoryName={this.getCategoryName.bind(this)}
-                // getCategoryId={this.getCategoryId.bind(this)}
-                getCategory={this.getCategory.bind(this)}
-              />
+        <CRow className="justify-content-center">
+          <CCol xs="12" md="5">
+            <div className="BasketProducts">
+              <BasketProductsCheckout basketProducts={basketProducts} />
+                <InjectedCheckoutForm/>
             </div>
-        </CCol>
-
-         <CCol>
-           <div className="ProductsList">
-              <ProductsList products={products}/>
-            </div>
-        </CCol>
-          </CRow> */}
-
-
-        <CheckoutForm />
+          </CCol>
+        </CRow>
+      
       </Elements>
     );
   }
 }
 
+const InjectedCheckoutForm = () => {
+  return (
+    <ElementsConsumer>
+      {({elements, stripe}) => (
+        <CheckoutForm elements={elements} stripe={stripe} />
+      )}
+    </ElementsConsumer>
+  );
+};
+
 function mapStateToProps(state, props) {
   return {
     authError: state.auth.authError,
     auth: state.firebase.auth,
-    categories: state.api.categories,
-    products: state.api.products,
     basketProducts: state.api.basketProducts,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getCategories: () => dispatch(handleGetCategories()),
-    handlePostCat: (category) => dispatch(handlePostCategories(category)),
-    deleteCategories: (catId) => dispatch(handleDeleteCategories(catId)),
-
-    //getProducts: () => dispatch(handleGetProducts()),
-    getProducts: (category) => dispatch(handleGetProductsWithId(category)),
-    clearProducts: () => dispatch(handleClearProducts()),
-    handlePostPro: (product, auth) => dispatch(handlePostProducts(product, auth)),
-    deleteProducts: (proId, auth) => dispatch(handleDeleteProducts(proId, auth)),
-
     getBasketProducts: (auth) => dispatch(handleGetBasketProductsForUser(auth)),
   };
 }
