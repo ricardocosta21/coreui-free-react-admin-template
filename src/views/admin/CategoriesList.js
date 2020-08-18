@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import {
-  handleGetCategories,
+  handleGetCategoriesByClientUID,
   handlePostCategories,
   handleDeleteCategories,
 } from "../../actions/apiActions";
@@ -87,8 +87,8 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getCategories: () => dispatch(handleGetCategories()),
-    handlePost: (category) => dispatch(handlePostCategories(category)),
+    getCategories: (auth) => dispatch(handleGetCategoriesByClientUID(auth)),
+    handlePost: (category, auth) => dispatch(handlePostCategories(category, auth)),
   };
 }
 

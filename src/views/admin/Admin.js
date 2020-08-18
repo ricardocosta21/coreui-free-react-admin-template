@@ -7,12 +7,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import {
-  handleGetCategories,
+  handleGetCategoriesByClientUID,
   handlePostCategories,
   handleDeleteCategories,
   handleGetProductsWithId,
   handlePostProducts,
-  handleDeleteProducts,
 } from "../../actions/apiActions";
 
 import {
@@ -44,7 +43,7 @@ class Admin extends Component {
       productPrice: "",
       listDataFromChild: null,
       selectedCategoryName: "",
-      selectedCategoryId: ""
+      selectedCategoryId: "",
     };
     this.baseCategory = {
       categoryId: "",
@@ -63,21 +62,21 @@ class Admin extends Component {
     var category = {
       name: this.state.categoryName,
     };
-    this.props.handlePostCat(category);
+    this.props.handlePostCat(category, this.props.auth);
   };
 
-  AddProduct = (categoryId, clientUID) => {
+  AddProduct = (categoryId, auth) => {
     if (categoryId === null) {
       return;
     }
-    
+
     var product = {
       name: this.state.productName,
       price: this.state.productPrice,
       categoryId: this.state.selectedCategoryId,
     };
-    // console.log("product! " + JSON.stringify({ product }));
-    this.props.handlePostPro(product, clientUID);
+    // console.log("product! uid: " + JSON.stringify(clientUID));
+    this.props.handlePostPro(product, auth);
   };
 
   handleInputChange(e) {
@@ -93,7 +92,9 @@ class Admin extends Component {
   };
 
   componentDidMount = () => {
-    this.props.getCategories();
+    this.props.getCategories(this.props.auth);
+    this.props.getProducts(null, this.props.auth);
+    this.handleClearProduct();
   };
 
   getCategory = (category) => {
@@ -105,34 +106,16 @@ class Admin extends Component {
       };
       this.setState(newState);
 
-      this.props.getProducts(category);
+      this.props.getProducts(category, this.props.auth);
     } else {
       newState = {
         selectedCategoryId: "",
         selectedCategoryName: "",
       };
       this.setState(newState);
-      this.props.getProducts(category);
+      this.props.getProducts(category, this.props.auth);
     }
   };
-
-  // getCategoryName = (categoryName) => {
-  //   let newState = this.state;
-  //   newState = {
-  //     selectedCategoryName: categoryName,
-  //   };
-  //   this.setState(newState);
-  // };
-
-  // getCategoryId = (categoryId) => {
-  //   let newState = this.state;
-  //   newState = {
-  //     selectedCategoryId: categoryId,
-  //   };
-  //   this.setState(newState);
-
-  //   // this.props.getProducts();
-  // };
 
   getProductName = (productName) => {
     let newState = this.state;
@@ -149,8 +132,6 @@ class Admin extends Component {
       return <Redirect to="/signin" />;
     }
 
-
-    
     return (
       <>
         <CRow>
@@ -244,7 +225,7 @@ class Admin extends Component {
                     </CCol>
                     <CCol xs="12" md="9">
                       <CInput
-                        style={{ textTransform: "capitalize"}}
+                        style={{ textTransform: "capitalize" }}
                         name="productName"
                         value={this.state.productName}
                         onChange={this.handleInputChange}
@@ -278,11 +259,7 @@ class Admin extends Component {
                   color="primary"
                   disabled={this.state.selectedCategoryId === "" ? true : false}
                   onClick={() => {
-                    console.log(
-                      "this.state.selectedCategoryId: " +
-                        this.state.selectedCategoryId
-                    );
-                    this.AddProduct(this.state.selectedCategoryId, auth.uid);
+                    this.AddProduct(this.state.selectedCategoryId, auth);
                   }}
                 >
                   <CIcon name="cil-scrubber" /> Add
@@ -320,14 +297,16 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getCategories: () => dispatch(handleGetCategories()),
-    handlePostCat: (category) => dispatch(handlePostCategories(category)),
-    deleteCategories: (catId) => dispatch(handleDeleteCategories(catId)),
+    getCategories: (auth) => dispatch(handleGetCategoriesByClientUID(auth)),
+    handlePostCat: (category, auth) =>
+      dispatch(handlePostCategories(category, auth)),
+    deleteCategories: (category, auth) =>
+      dispatch(handleDeleteCategories(category, auth)),
 
-    //getProducts: () => dispatch(handleGetProducts()),
-    getProducts: (category) => dispatch(handleGetProductsWithId(category)),
-    handlePostPro: (product, auth) => dispatch(handlePostProducts(product, auth)),
-    deleteProducts: (proId, auth) => dispatch(handleDeleteProducts(proId, auth)),
+    getProducts: (category, auth) =>
+      dispatch(handleGetProductsWithId(category, auth)),
+    handlePostPro: (product, auth) =>
+      dispatch(handlePostProducts(product, auth)),
   };
 }
 

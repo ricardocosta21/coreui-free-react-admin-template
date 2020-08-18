@@ -5,28 +5,11 @@ import React, { Component } from "react";
 
 import { Redirect } from "react-router-dom";
 import {
-  handleGetCategories,
-  handlePostCategories,
-  handleDeleteCategories,
-  handleGetProductsWithId,
-  handlePostProducts,
-  handleDeleteProducts,
-  handleClearProducts,
   handleGetBasketProductsForUser,
 } from "../../actions/apiActions.js";
 
 import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCardFooter,
-  CCardHeader,
   CCol,
-  CForm,
-  CFormGroup,
-  CFormText,
-  CInput,
-  CLabel,
   CRow,
 } from "@coreui/react";
 

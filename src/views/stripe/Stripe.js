@@ -3,7 +3,7 @@ import React, { Component } from "react";
 
 import { Redirect } from "react-router-dom";
 import {
-  handleGetCategories,
+  handleGetCategoriesByClientUID,
   handlePostCategories,
   handleDeleteCategories,
   handleGetProductsWithId,
@@ -14,20 +14,9 @@ import {
 } from "../../actions/apiActions.js";
 
 import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCardFooter,
-  CCardHeader,
   CCol,
-  CForm,
-  CFormGroup,
-  CFormText,
-  CInput,
-  CLabel,
   CRow,
 } from "@coreui/react";
-import CIcon from "@coreui/icons-react";
 
 import CategoriesList from "../../views/admin/CategoriesList";
 import ProductsList from "../../views/admin/ProductsList";
@@ -72,19 +61,19 @@ class Stripe extends Component {
       };
       this.setState(newState);
 
-      this.props.getProducts(category);
+      this.props.getProducts(category, this.props.auth);
     } else {
       newState = {
         selectedCategoryId: "",
         selectedCategoryName: "",
       };
       this.setState(newState);
-      this.props.getProducts();
+      this.props.getProducts(null, this.props.auth);
     }
   };
 
   componentDidMount = () => {
-    this.props.getCategories();
+    this.props.getCategories(this.props.auth);
 
     this.props.clearProducts();
     
@@ -139,11 +128,11 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getCategories: () => dispatch(handleGetCategories()),
-    handlePostCat: (category) => dispatch(handlePostCategories(category)),
-    deleteCategories: (catId) => dispatch(handleDeleteCategories(catId)),
+    getCategories: (auth) => dispatch(handleGetCategoriesByClientUID(auth)),
+    handlePostCat: (category, auth) => dispatch(handlePostCategories(category, auth)),
+    deleteCategories: (category, auth) => dispatch(handleDeleteCategories(category, auth)),
 
-    getProducts: (category) => dispatch(handleGetProductsWithId(category)),
+    getProducts: (category, auth) => dispatch(handleGetProductsWithId(category, auth)),
     clearProducts: () => dispatch(handleClearProducts()),
     handlePostPro: (product, auth) => dispatch(handlePostProducts(product, auth)),
     deleteProducts: (proId, auth) => dispatch(handleDeleteProducts(proId, auth)),

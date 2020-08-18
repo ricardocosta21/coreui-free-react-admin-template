@@ -1,22 +1,39 @@
-//const apiConnection = "https://localhost:5001/api/";
-const apiConnection = "http://ec2-3-19-26-38.us-east-2.compute.amazonaws.com:8888/api/"
+const apiConnection = "https://localhost:5001/api/";
+// const apiConnection = "http://ec2-3-19-26-38.us-east-2.compute.amazonaws.com:8888/api/"
 
 // CATEGORIES
 //Get
-export function handleGetCategories() {
+// export function handleGetCategories(auth) {
+//   return function (dispatch) {
+//     return fetch(apiConnection + "categories")
+//       .then((response) => response.json())
+//       .then((json) => {
+//         //   console.log("Came here Actions");
+//         // console.log("GET_CATEGORIES_SUCCESS: " + JSON.stringify({json}));
+//         dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
+//       });
+//   };
+// }
+
+//Get
+export function handleGetCategoriesByClientUID(auth) {
   return function (dispatch) {
-    return fetch(apiConnection + "categories")
+    if (auth == null) {
+      dispatch({ type: "GET_ERROR", payload: [] });
+      return;
+    }
+    return fetch(apiConnection + "categories/" + auth.uid)
       .then((response) => response.json())
       .then((json) => {
-        //   console.log("Came here Actions");
-        // console.log("GET_CATEGORIES_SUCCESS: " + JSON.stringify({json}));
+        // console.log("Came here Actions" + json);
         dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
       });
   };
 }
 
+
 // Post
-export function handlePostCategories(category) {
+export function handlePostCategories(category, auth) {
   return function (dispatch) {
     return fetch(apiConnection + "categories", {
       method: "POST",
@@ -25,15 +42,12 @@ export function handlePostCategories(category) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // id: Number(category.id),
+        clientUID: auth.uid,
         name: category.name,
       }),
     })
       .then(() => {
-        dispatch({ type: "POST_SUCCESS" });
-      })
-      .then(() => {
-        return fetch(apiConnection + "categories")
+        return fetch(apiConnection + "categories/" + auth.uid)
           .then((response) => response.json())
           .then((json) => {
             dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
@@ -43,25 +57,33 @@ export function handlePostCategories(category) {
 }
 
 // Delete
-export function handleDeleteCategories(categoryId) {
+export function handleDeleteCategories(category, auth) {
   return function (dispatch) {
-    return fetch(apiConnection + "categories?id=" + categoryId, {
+    return fetch(apiConnection + "categories", {
       method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-    })
-      .then(() => {
-        dispatch({ type: "DELETE_SUCCESS", payload: [] });
-      })
-      .then(() => {
-        return fetch(apiConnection + "categories")
-          .then((response) => response.json())
-          .then((json) => {
-            dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
-          });
+      body: JSON.stringify({
+        id: Number(category.id),
+        name: category.name,
+        clientUID: auth.uid,
+      }),
+    }).then(() => {
+      return fetch(apiConnection + "categories/" + auth.uid)
+        .then((response) => response.json())
+        .then((json) => {
+          dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
+        });
+     }).then(() => {
+      return fetch(apiConnection + "products?categoryId=" + category.id + "&clientUID=" + auth.uid)
+      .then((response) => response.json())
+      .then((json) => {
+        // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
+        dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
       });
+    });
   };
 }
 
@@ -103,15 +125,15 @@ export function handleDeleteCategories(categoryId) {
 // }
 
 //Get with Category ID
-export function handleGetProductsWithId(category) {
+export function handleGetProductsWithId(category, auth) {
   return function (dispatch) {
     if (category == null) {
-      // console.log("LIKE Null!" + JSON.stringify({category}));
+      
       dispatch({ type: "GET_PRODUCTS_ERROR", payload: [] });
       return;
     }
     // console.log("LIKE WHAAAT?!" + JSON.stringify({category}));
-    return fetch(apiConnection + "products?categoryId=" + category.id)
+    return fetch(apiConnection + "products?categoryId=" + category.id + "&clientUID=" + auth.uid)
       .then((response) => response.json())
       .then((json) => {
         // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
@@ -123,8 +145,8 @@ export function handleGetProductsWithId(category) {
 //Get with Category ID
 export function handleClearProducts() {
   return function (dispatch) {
-      dispatch({ type: "GET_PRODUCTS_ERROR", payload: [] });
-      return;
+    dispatch({ type: "GET_PRODUCTS_ERROR", payload: [] });
+    return;
   };
 }
 
@@ -144,7 +166,7 @@ export function handlePostProducts(product, auth) {
         categoryId: product.categoryId,
       }),
     }).then(() => {
-      return fetch(apiConnection + "products?categoryId=" + product.categoryId)
+      return fetch(apiConnection + "products?categoryId=" + product.categoryId + "&clientUID=" + auth.uid)
         .then((response) => response.json())
         .then((json) => {
           dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
@@ -170,7 +192,7 @@ export function handleDeleteProducts(product, auth) {
         categoryId: product.categoryId,
       }),
     }).then(() => {
-      return fetch(apiConnection + "products?categoryId=" + product.categoryId)
+      return fetch(apiConnection + "products?categoryId=" + product.categoryId + "&clientUID=" + auth.uid)
         .then((response) => response.json())
         .then((json) => {
           dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
@@ -178,6 +200,7 @@ export function handleDeleteProducts(product, auth) {
     });
   };
 }
+
 
 
 
@@ -199,11 +222,10 @@ export function handleGetBasketProductsForUser(auth) {
   };
 }
 
-
 // Add Product to Cart
 export function handleAddToCart(product, auth) {
   return function (dispatch) {
-    console.log(auth.uid);
+    // console.log(auth.uid);
     return fetch(apiConnection + "basket", {
       method: "POST",
       headers: {
@@ -227,7 +249,6 @@ export function handleAddToCart(product, auth) {
   };
 }
 
-
 // Delete
 export function handleDeleteBasketProduct(productId, auth) {
   return function (dispatch) {
@@ -237,19 +258,15 @@ export function handleDeleteBasketProduct(productId, auth) {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-    })
-      .then(() => {
-        
-         return fetch(apiConnection + "basket?clientUID=" + auth.uid)
-          .then((response) => response.json())
-          .then((json) => {
-            dispatch({ type: "GET_BASKET_PRODUCTS_SUCCESS", payload: json });
-          });
-      });
+    }).then(() => {
+      return fetch(apiConnection + "basket?clientUID=" + auth.uid)
+        .then((response) => response.json())
+        .then((json) => {
+          dispatch({ type: "GET_BASKET_PRODUCTS_SUCCESS", payload: json });
+        });
+    });
   };
 }
-
-
 
 // // Add Product to Cart
 // export function handleAddToCart(product, auth) {

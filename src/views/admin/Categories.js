@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import {
-  handleGetCategories,
+  handleGetCategoriesByClientUID,
   handlePostCategories,
   handleDeleteCategories,
 } from "../../actions/apiActions";
@@ -32,7 +32,7 @@ export class Categories extends Component {
   };
 
   render() {
-    const { categories } = this.props;
+    const { categories, auth } = this.props;
     if (categories == null) return <div> Nothing to see here. </div>;
 
     return (
@@ -70,7 +70,7 @@ export class Categories extends Component {
                         color="danger"
                         type="submit"
                         onClick={() => {
-                          this.props.deleteCategories(category.id);
+                          this.props.deleteCategories(category, auth);
                         }}
                       >
                         <CIcon name="cilTrash" />
@@ -97,9 +97,9 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getCategories: () => dispatch(handleGetCategories()),
-    handlePost: (category) => dispatch(handlePostCategories(category)),
-    deleteCategories: (catId) => dispatch(handleDeleteCategories(catId)),
+    getCategories: (auth) => dispatch(handleGetCategoriesByClientUID(auth)),
+    handlePost: (category, auth) => dispatch(handlePostCategories(category, auth)),
+    deleteCategories: (category, auth) => dispatch(handleDeleteCategories(category, auth)),
   };
 }
 

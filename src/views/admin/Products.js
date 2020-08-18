@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-  handleGetProducts,
   handleGetProductsWithId,
   handlePostProducts,
   handleDeleteProducts,
@@ -59,7 +58,7 @@ export class Products extends Component {
                           }
                         }}
                         action
-                        active={this.state.activeTab === product.id}
+                        // active={this.state.activeTab === product.id}
                       >
                         <CRow>
                           <CCol>{product.name}</CCol>
@@ -106,7 +105,7 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getProducts: (category) => dispatch(handleGetProductsWithId(category)),
+    getProducts: (category, auth) => dispatch(handleGetProductsWithId(category, auth)),
     handlePost: (product, auth) => dispatch(handlePostProducts(product, auth)),
     deleteProducts: (product, auth) =>
       dispatch(handleDeleteProducts(product, auth)),

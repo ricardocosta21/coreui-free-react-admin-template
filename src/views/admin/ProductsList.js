@@ -114,7 +114,7 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch) {
   return {
     //getProducts: () => dispatch(handleGetProducts()),
-    getProducts: (category) => dispatch(handleGetProductsWithId(category)),
+    getProducts: (category, auth) => dispatch(handleGetProductsWithId(category, auth)),
     handlePost: (product, auth) => dispatch(handlePostProducts(product, auth)),
     // deleteProducts: (product) => dispatch(handleDeleteProducts(product)),
     addToCart: (product, auth) => dispatch(handleAddToCart(product, auth)),
