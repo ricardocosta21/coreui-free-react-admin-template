@@ -1,17 +1,9 @@
 import React, { Component } from "react";
-import {
-  CardElement,
-  useStripe,
-  useElements,
-  Elements,
-} from "@stripe/react-stripe-js";
+import { CardElement } from "@stripe/react-stripe-js";
 
-import { Redirect } from 'react-router-dom';
-
-import { loadStripe } from "@stripe/stripe-js";
 import { connect } from "react-redux";
 
-import { CButton, CCol, CRow } from "@coreui/react";
+import { CButton } from "@coreui/react";
 
 import CardSection from "./CardSection";
 
@@ -80,9 +72,7 @@ export class CheckoutForm extends Component {
       // setSucceeded(true);
       this.setState({ succeeded: true });
 
-        
-        window.location.href = '#/PaymentSuccessful';
-      
+      window.location.href = "#/PaymentSuccessful";
     }
   };
 
@@ -111,13 +101,16 @@ export class CheckoutForm extends Component {
 
     await window
       //.fetch("https://localhost:5001/api/pay", {
-        .fetch("http://ec2-3-19-26-38.us-east-2.compute.amazonaws.com:8888/api/pay", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(this.props.basketProducts),
-      })
+      .fetch(
+        "http://ec2-3-19-26-38.us-east-2.compute.amazonaws.com:8888/api/pay",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(this.props.basketProducts),
+        }
+      )
       .then((res) => {
         return res.json();
       })

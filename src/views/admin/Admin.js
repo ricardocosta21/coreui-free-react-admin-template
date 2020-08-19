@@ -3,7 +3,7 @@
  *
  * List all the features
  */
-import React, { Component } from "react";
+import React, { Component, Suspense} from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import {
@@ -29,8 +29,17 @@ import {
   CRow,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-import Categories from "./Categories";
-import Products from "./Products";
+
+const Categories = React.lazy(() => import('./Categories'));
+
+const Products = React.lazy(() => import('./Products'));
+
+
+const loading = (
+  <div className="pt-3 text-center">
+    <div className="sk-spinner sk-spinner-pulse"></div>
+  </div>
+)
 
 class Admin extends Component {
   constructor(props) {
@@ -133,6 +142,7 @@ class Admin extends Component {
     }
 
     return (
+       <Suspense fallback={loading}>
       <>
         <CRow>
           <CCol xs="12" md="6">
@@ -282,6 +292,7 @@ class Admin extends Component {
           </CCol>
         </CRow>
       </>
+      </Suspense>
     );
   }
 }

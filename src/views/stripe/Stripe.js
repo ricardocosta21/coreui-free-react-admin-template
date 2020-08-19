@@ -4,11 +4,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import {
   handleGetCategoriesByClientUID,
-  handlePostCategories,
-  handleDeleteCategories,
   handleGetProductsWithId,
-  handlePostProducts,
-  handleDeleteProducts,
   handleGetBasketProductsForUser,
   handleClearProducts,
 } from "../../actions/apiActions.js";
@@ -129,14 +125,8 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch) {
   return {
     getCategories: (auth) => dispatch(handleGetCategoriesByClientUID(auth)),
-    handlePostCat: (category, auth) => dispatch(handlePostCategories(category, auth)),
-    deleteCategories: (category, auth) => dispatch(handleDeleteCategories(category, auth)),
-
     getProducts: (category, auth) => dispatch(handleGetProductsWithId(category, auth)),
     clearProducts: () => dispatch(handleClearProducts()),
-    handlePostPro: (product, auth) => dispatch(handlePostProducts(product, auth)),
-    deleteProducts: (proId, auth) => dispatch(handleDeleteProducts(proId, auth)),
-
     getBasketProducts: (auth) => dispatch(handleGetBasketProductsForUser(auth)),
   };
 }

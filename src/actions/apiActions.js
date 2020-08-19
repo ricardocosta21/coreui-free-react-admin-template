@@ -1,5 +1,5 @@
 //const apiConnection = "https://localhost:5001/api/";
- const apiConnection = "http://ec2-3-19-26-38.us-east-2.compute.amazonaws.com:8888/api/"
+const apiConnection = "http://ec2-3-19-26-38.us-east-2.compute.amazonaws.com:8888/api/"
 
 // CATEGORIES
 //Get
@@ -80,7 +80,7 @@ export function handleDeleteCategories(category, auth) {
       return fetch(apiConnection + "products?categoryId=" + category.id + "&clientUID=" + auth.uid)
       .then((response) => response.json())
       .then((json) => {
-        // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
+        console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
         dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
       });
     });

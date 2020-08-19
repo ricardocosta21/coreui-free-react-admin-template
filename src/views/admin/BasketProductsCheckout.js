@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  handleDeleteBasketProduct,
-  handleGetBasketProductsForUser,
-} from "../../actions/apiActions";
 
 import {
-  CButton,
   CCard,
   CCardBody,
   CCardFooter,
@@ -15,9 +10,7 @@ import {
   CCardHeader,
   CFormGroup,
   CListGroup,
-  CListGroupItem,
 } from "@coreui/react";
-import CIcon from "@coreui/icons-react";
 
 export class BasketProductsCheckout extends Component {
   constructor(props) {
@@ -35,11 +28,6 @@ export class BasketProductsCheckout extends Component {
     }
     return totalPrice;
   };
-
-  //   sendProName = (productName) => {
-  //     this.props.getProductName(productName);
-  //   };
-  //   componentDidMount = (auth) => this.props.getBasketProducts(auth);
 
   render() {
     const { basketProducts } = this.props;
@@ -94,10 +82,7 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getBasketProducts: (category) =>
-      dispatch(handleGetBasketProductsForUser(category)),
-    deleteBasketProducts: (bProductId, auth) =>
-      dispatch(handleDeleteBasketProduct(bProductId, auth)),
+    
   };
 }
 

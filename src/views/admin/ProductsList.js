@@ -1,9 +1,6 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-  handleGetProductsWithId,
-  handlePostProducts,
-  handleDeleteProducts,
   handleAddToCart,
 } from "../../actions/apiActions";
 
@@ -28,22 +25,14 @@ export class ProductsList extends Component {
     };
   }
 
-//   sendProName = (productName) => {
-//     this.props.getProductName(productName);
-//   };
- componentDidMount = () => {
-    
-
-    //It worked!
+  componentDidMount = () => {
     // this.props.getProducts(this.props.products);
   };
 
   render() {
-
     // this.props.getProducts();
     const { products, auth } = this.props;
     if (products == null) return <div> Nothing to see here. </div>;
-    
 
     return (
       <div>
@@ -56,7 +45,6 @@ export class ProductsList extends Component {
                   <CFormGroup row>
                     <CCol xs="12" md="10">
                       <CListGroupItem
-                        
                         onClick={() => {
                           if (product.id === this.state.activeTab) {
                             this.setState({ activeTab: "" });
@@ -67,13 +55,16 @@ export class ProductsList extends Component {
                           }
                         }}
                         action
-                        
-                        active={this.state.activeTab === product.id}
+
+                        // active={this.state.activeTab === product.id}
                       >
-                      <CRow>
-                      <CCol>{product.name}</CCol>
-                      <CCol>{'£'}{product.price}</CCol>
-                      </CRow>
+                        <CRow>
+                          <CCol>{product.name}</CCol>
+                          <CCol>
+                            {"£"}
+                            {product.price}
+                          </CCol>
+                        </CRow>
                         {/* {product.name} {'£'}{product.price} */}
                       </CListGroupItem>
                       <CButton
@@ -113,12 +104,7 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    //getProducts: () => dispatch(handleGetProducts()),
-    getProducts: (category, auth) => dispatch(handleGetProductsWithId(category, auth)),
-    handlePost: (product, auth) => dispatch(handlePostProducts(product, auth)),
-    // deleteProducts: (product) => dispatch(handleDeleteProducts(product)),
     addToCart: (product, auth) => dispatch(handleAddToCart(product, auth)),
-
   };
 }
 
