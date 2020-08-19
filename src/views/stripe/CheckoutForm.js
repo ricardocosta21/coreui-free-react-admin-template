@@ -101,9 +101,7 @@ export class CheckoutForm extends Component {
 
     await window
       //.fetch("https://localhost:5001/api/pay", {
-      .fetch(
-        "http://ec2-3-19-26-38.us-east-2.compute.amazonaws.com:8888/api/pay",
-        {
+       .fetch(  "http://ec2-3-19-26-38.us-east-2.compute.amazonaws.com:8888/api/pay", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
