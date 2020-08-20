@@ -1,3 +1,4 @@
+
 export default [
   {
     _tag: 'CSidebarNavDivider',
@@ -7,7 +8,7 @@ export default [
     _tag: 'CSidebarNavItem',
     name: 'Dashboard',
     to: '/dashboard',
-    icon: 'cil-speedometer',
+    icon: 'dashboard',
     // badge: {
     //   color: 'info',
     //   text: 'NEW',
@@ -21,13 +22,13 @@ export default [
     _tag: 'CSidebarNavItem',
     name: 'Admin',
     to: '/Admin',
-    icon: 'cil-star',
+    icon: 'admin',
   },
   {
     _tag: 'CSidebarNavItem',
     name: 'Stripe',
     to: '/Stripe',
-    icon: 'cil-cursor',  
+    icon: 'ccard',  
   },
   // {
   //   _tag: 'CSidebarNavDropdown',

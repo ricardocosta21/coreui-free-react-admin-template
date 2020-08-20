@@ -22,9 +22,9 @@ import fbConfig from "./config/firebase";
 
 
 
-// import { icons } from "./assets/icons";
-
-// React.icons = icons;
+import { icons } from "./assets/icons";
+// import {icons} from 'react-icons/fa';
+React.icons = icons;
 
 const rrfConfig = {
   userProfile: "users",
