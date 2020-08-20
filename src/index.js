@@ -20,9 +20,11 @@ import { ReactReduxFirebaseProvider, isLoaded } from "react-redux-firebase";
 
 import fbConfig from "./config/firebase";
 
-import { icons } from "./assets/icons";
 
-React.icons = icons;
+
+// import { icons } from "./assets/icons";
+
+// React.icons = icons;
 
 const rrfConfig = {
   userProfile: "users",

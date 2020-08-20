@@ -23,7 +23,7 @@
     "url": "git@github.com:coreui/coreui-free-react-admin-template.git"
   },
   "dependencies": {
-    "@coreui/coreui": "^3.2.0",
+    "@coreui/coreui": "^3.2.2",
     "@coreui/icons": "2.0.0-beta.4",
     "@coreui/icons-react": "^1.0.1",
     "@coreui/react": "^3.0.6",
@@ -39,6 +39,7 @@
     "react-app-polyfill": "^1.0.6",
     "react-dom": "^16.13.1",
     "react-firestore": "^1.0.1",
+    "react-icons": "^3.11.0",
     "react-redux": "^7.2.0",
     "react-redux-firebase": "^3.6.0",
     "react-router-dom": "^5.2.0",

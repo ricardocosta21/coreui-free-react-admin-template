@@ -15,7 +15,8 @@ import {
   CInputGroupText,
   CRow,
 } from "@coreui/react";
-import CIcon from "@coreui/icons-react";
+// import CIcon from "@coreui/icons-react";
+import { FaUser, FaKey } from 'react-icons/fa';
 
 import { connect } from "react-redux";
 import { signIn, signInWithGoogle } from "../../../actions/authActions";
@@ -86,7 +87,7 @@ class SignIn extends Component {
                       <CInputGroup className="mb-3">
                         <CInputGroupPrepend>
                           <CInputGroupText>
-                            <CIcon name="cil-user" />
+                            <FaUser />
                           </CInputGroupText>
                         </CInputGroupPrepend>
                         <CInput
@@ -100,7 +101,7 @@ class SignIn extends Component {
                       <CInputGroup className="mb-4">
                         <CInputGroupPrepend>
                           <CInputGroupText>
-                            <CIcon name="cil-lock-locked" />
+                            <FaKey />
                           </CInputGroupText>
                         </CInputGroupPrepend>
                         <CInput

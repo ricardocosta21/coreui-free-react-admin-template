@@ -17,7 +17,6 @@ import {
   CListGroup,
   CListGroupItem,
 } from "@coreui/react";
-import CIcon from "@coreui/icons-react";
 
 export class CategoriesList extends Component {
   constructor(props) {

@@ -15,7 +15,7 @@ import {
   CListGroup,
   CListGroupItem,
 } from "@coreui/react";
-import CIcon from "@coreui/icons-react";
+import { FaPlus } from 'react-icons/fa';
 
 export class ProductsList extends Component {
   constructor(props) {
@@ -80,7 +80,7 @@ export class ProductsList extends Component {
                           this.props.addToCart(product, auth);
                         }}
                       >
-                        <CIcon name="cil-check" />
+                        <FaPlus/>
                       </CButton>
                     </CCol>
                   </CFormGroup>

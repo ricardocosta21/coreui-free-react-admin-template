@@ -17,7 +17,9 @@ import {
   CListGroup,
   CListGroupItem,
 } from "@coreui/react";
-import CIcon from "@coreui/icons-react";
+// import CIcon from "@coreui/icons-react";
+
+import { FaTrash } from 'react-icons/fa';
 
 export class Products extends Component {
   constructor(props) {
@@ -81,7 +83,7 @@ export class Products extends Component {
                           this.props.deleteProducts(product, auth);
                         }}
                       >
-                        <CIcon name="cilTrash" />
+                        <FaTrash/>
                       </CButton>
                     </CCol>
                   </CFormGroup>

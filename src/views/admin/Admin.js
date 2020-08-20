@@ -29,6 +29,7 @@ import {
   CRow,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
+import { FaPlus, FaTrash } from 'react-icons/fa';
 
 const Categories = React.lazy(() => import('./Categories'));
 
@@ -183,7 +184,7 @@ class Admin extends Component {
                     this.AddCategory(e);
                   }}
                 >
-                  <CIcon name="cil-scrubber" /> Add
+                  <FaPlus /> Add
                 </CButton>
                 <CButton
                   type="reset"
@@ -191,7 +192,7 @@ class Admin extends Component {
                   color="danger"
                   onClick={this.handleClearCategory}
                 >
-                  <CIcon name="cil-ban" /> Reset
+                  <FaTrash /> Clear
                 </CButton>
               </CCardFooter>
             </CCard>
@@ -272,7 +273,7 @@ class Admin extends Component {
                     this.AddProduct(this.state.selectedCategoryId, auth);
                   }}
                 >
-                  <CIcon name="cil-scrubber" /> Add
+                   <FaPlus /> Add
                 </CButton>
                 <CButton
                   type="reset"
@@ -280,7 +281,7 @@ class Admin extends Component {
                   color="danger"
                   onClick={this.handleClearProduct}
                 >
-                  <CIcon name="cil-ban" /> Reset
+                  <FaTrash /> Clear
                 </CButton>
               </CCardFooter>
             </CCard>
