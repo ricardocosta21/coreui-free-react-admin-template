@@ -28,7 +28,7 @@ import {
   CLabel,
   CRow,
 } from "@coreui/react";
-import CIcon from "@coreui/icons-react";
+
 import { FaPlus, FaTrash } from 'react-icons/fa';
 
 const Categories = React.lazy(() => import('./Categories'));
