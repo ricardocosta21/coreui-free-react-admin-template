@@ -9,6 +9,9 @@ import CardSection from "./CardSection";
 
 import { handleGetBasketProductsForUser } from "../../actions/apiActions";
 
+//ecs
+const apiConnection = "http://ec2-18-222-68-163.us-east-2.compute.amazonaws.com:8888/api/"
+
 export class CheckoutForm extends Component {
   constructor(props) {
     super(props);
@@ -101,7 +104,8 @@ export class CheckoutForm extends Component {
 
     await window
       //.fetch("https://localhost:5001/api/pay", {
-       .fetch(  "http://ec2-3-19-26-38.us-east-2.compute.amazonaws.com:8888/api/pay", {
+      //  .fetch(  "http://ec2-3-19-26-38.us-east-2.compute.amazonaws.com:8888/api/pay", {
+       .fetch(apiConnection + "pay", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

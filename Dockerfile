@@ -1,4 +1,5 @@
-FROM node:12.16.1
+FROM node:12.18.2
+# FROM node:latest
 
 # for caching optimisations
 COPY package*.json /
