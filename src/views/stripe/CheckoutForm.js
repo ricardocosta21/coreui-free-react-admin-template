@@ -10,7 +10,7 @@ import CardSection from "./CardSection";
 import { handleGetBasketProductsForUser } from "../../actions/apiActions";
 
 //ecs
-const apiConnection = "http://ec2-18-222-68-163.us-east-2.compute.amazonaws.com:8888/api/"
+const apiConnection = "http://ec2-18-218-0-71.us-east-2.compute.amazonaws.com:8888/api/"
 
 export class CheckoutForm extends Component {
   constructor(props) {
