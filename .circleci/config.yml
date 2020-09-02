@@ -1,14 +1,3 @@
-# version: 2.1
-# jobs:
-#   build:
-#     docker:
-#       - image: alpine:3.7
-#     steps:
-#       - run:
-#           name: The First Step
-#           command: |
-#             echo 'Hello World!'
-#             echo 'This is the delivery pipeline'
 
 orbs:
   aws-ecr: circleci/aws-ecr@6.12.2
@@ -27,7 +16,6 @@ workflows:
           path: .
           profile-name: default
           region: AWS_REGION_ENV_VAR_NAME
-          repo: ricardo21/supermarketclient
+          repo: supermarketclient
           skip-when-tags-exist: false
           tag: 'latest'
-          # tag: "$CIRCLE_BUILD_NUM"
