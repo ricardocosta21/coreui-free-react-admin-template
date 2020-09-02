@@ -2,7 +2,7 @@
 version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@0.1.4
-  aws-ecs: circleci/aws-ecs@0.0.10
+  aws-ecs: circleci/aws-ecs@1.0.5
 jobs:
   update-tag:
     docker:
@@ -10,17 +10,11 @@ jobs:
     steps:
       - aws-cli/install
       - aws-cli/configure:
-          aws-access-key-id: ACCESS_KEY_ID_ENV_VAR_NAME
-          aws-secret-access-key: SECRET_ACCESS_KEY_ENV_VAR_NAME
-          aws-region: AWS_REGION_ENV_VAR_NAME
-      - aws-ecs/update-service:
-          family: 'ecs-service-1'
-          cluster-name: 'ecs-cluster-1'
-          container-image-name-updates: 'container='ecs-service-1',tag=latest'
-workflows:
-  deploy:
-    jobs:
-      - update-tag
+        aws-access-key-id: ACCESS_KEY_ID_ENV_VAR_NAME
+        aws-secret-access-key: SECRET_ACCESS_KEY_ENV_VAR_NAME
+        aws-region: AWS_REGION_ENV_VAR_NAME
+      - aws-ecs/update-task-definition-from-json:
+          task-definition-json: ecs-task-def.json
 
 # version: 2.1
 # orbs:
