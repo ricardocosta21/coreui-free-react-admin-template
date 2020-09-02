@@ -14,16 +14,16 @@ workflows:
       #     region: AWS_REGION_ENV_VAR_NAME
       #     tag: "latest"
 
-      - update-tag:
-          docker:
-            - image: 'circleci/python:3.7.1'
-          steps:
-            - aws-cli/install
-            - aws-cli/configure:
-                aws-access-key-id: ACCESS_KEY_ID_ENV_VAR_NAME
-                aws-region: AWS_DEFAULT_REGION
-            - aws-ecs/update-task-definition-from-json:
-                task-definition-json: ecs-task-def.json
+      update-tag:
+        docker:
+          - image: 'circleci/python:3.7.1'
+        steps:
+          - aws-cli/install
+          - aws-cli/configure:
+              aws-access-key-id: ACCESS_KEY_ID_ENV_VAR_NAME
+              aws-region: AWS_DEFAULT_REGION
+          - aws-ecs/update-task-definition-from-json:
+              task-definition-json: ecs-task-def.json
 
       - aws-ecs/deploy-service-update:
           # requires:
