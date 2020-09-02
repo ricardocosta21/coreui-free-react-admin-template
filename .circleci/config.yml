@@ -2,18 +2,20 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@0.1.4
   aws-ecs: circleci/aws-ecs@1.0.5
-jobs:
-  update-tag:
-    docker:
-      - image: 'circleci/python:3.7.1'
-    steps:
-      - aws-cli/install
-      - aws-cli/configure:
-          aws-access-key-id: ACCESS_KEY_ID
-          aws-secret-access-key: SECRET_ACCESS_KEY
-          aws-region: AWS_REGION_ENV_VAR_NAME
-      - aws-ecs/update-task-definition-from-json:
-          task-definition-json: ecs-task-def.json
+workflows:
+  build_and_push_image:
+    jobs:
+      update-tag:
+        docker:
+          - image: 'circleci/python:3.7.1'
+        steps:
+          - aws-cli/install
+          - aws-cli/configure:
+              aws-access-key-id: ACCESS_KEY_ID
+              aws-secret-access-key: SECRET_ACCESS_KEY
+              aws-region: AWS_REGION_ENV_VAR_NAME
+          - aws-ecs/update-task-definition-from-json:
+              task-definition-json: ecs-task-def.json
 
           # orbs:
 #   aws-ecr: circleci/aws-ecr@6.12.2
