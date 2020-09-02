@@ -14,9 +14,6 @@ workflows:
       #     region: AWS_REGION_ENV_VAR_NAME
       #     tag: "latest"
 
-      - aws-cli/configure:
-          aws-access-key-id: ACCESS_KEY_ID_ENV_VAR_NAME
-          aws-region: AWS_DEFAULT_REGION
       - aws-ecs/update-task-definition-from-json:
           task-definition-json: ecs-task-def.json
 
