@@ -14,7 +14,7 @@ jobs:
         run: 
           command: |
               TASK_DEFINITION_ARN=$(aws ecs describe-task-definition \
-                  --task-definition ecs-service-1 \
+                  --task-definition ecs-task-1 \
                   --output text \
                   --query 'taskDefinition.taskDefinitionArn')
               echo "export TASK_DEFINITION_ARN='${TASK_DEFINITION_ARN}'" >> $BASH_ENV
