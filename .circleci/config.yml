@@ -26,12 +26,11 @@ jobs:
 
   # Orchestrate our job run sequence
 workflows:
-  build_and_deploy:
-    jobs:
-      - build_and_push_image
-      - deploy_service:
-          requires:
-            - build_and_push_image
+  jobs:
+    - build_and_push_image
+    - deploy_service:
+        requires:
+          - build_and_push_image
 # orbs:
 #   aws-ecr: circleci/aws-ecr@6.12.2
 # version: 2.1
