@@ -3,7 +3,7 @@
 //ec2 instance
 //const apiConnection = "http://ec2-3-19-26-38.us-east-2.compute.amazonaws.com:8888/api/"
 //ecs instance
-const apiConnection = "http://ec2-13-59-242-60.us-east-2.compute.amazonaws.com:8888/api/"
+const apiConnection = "http://ec2-3-16-50-28.us-east-2.compute.amazonaws.com:8888/api/"
 
 // CATEGORIES
 //Get
