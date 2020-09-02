@@ -25,7 +25,7 @@ workflows:
           - aws-ecr/build-and-push-image
         family: 'ecs-service-1'
         cluster-name: 'ecs-cluster-1'
-        container-image-name-updates: 'container={"ecs-service-1"},tag=${CIRCLE_SHA1}'
+        container-image-name-updates: 'container=ecs-service-1,tag=${CIRCLE_SHA1}'
 
 
 
