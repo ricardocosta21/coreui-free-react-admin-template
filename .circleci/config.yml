@@ -21,7 +21,7 @@ workflows:
           aws-secret-access-key: SECRET_ACCESS_KEY_ENV_VAR_NAME
           family: "ecs-service-1"
           cluster-name: "ecs-cluster-1"
-          container-image-name-updates: "container=ecs-service-1,tag=${CIRCLE_SHA1}"
+          container-image-name-updates: "container=ecs-service-1,tag=2"
 # orbs:
 #   aws-ecr: circleci/aws-ecr@6.12.2
 # version: 2.1
