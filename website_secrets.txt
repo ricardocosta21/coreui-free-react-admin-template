@@ -1,0 +1,1 @@
+SECRET_KEY_BASE=adsafasdfsafwfwefdsfsdacwaeewfdadsfasdfewceascadcasdcdsadceeas DB_HOST=db_host_adress DB_USER=dbuser DB_PASSWORD=supersecretpass
