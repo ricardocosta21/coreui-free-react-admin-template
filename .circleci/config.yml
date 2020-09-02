@@ -29,4 +29,5 @@ workflows:
           region: AWS_REGION_ENV_VAR_NAME
           repo: ricardo21/supermarketclient
           skip-when-tags-exist: false
-          tag: "$CIRCLE_BUILD_NUM"
+          tag: 'latest'
+          # tag: "$CIRCLE_BUILD_NUM"
