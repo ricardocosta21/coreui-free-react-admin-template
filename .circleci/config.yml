@@ -1,3 +1,4 @@
+version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@0.1.4
@@ -25,7 +26,7 @@ jobs:
 
   # Orchestrate our job run sequence
 workflows:
-  version: 2.1
+  
   build_and_deploy:
     jobs:
       - build_and_push_image
