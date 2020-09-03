@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.12.2
   aws-ecs: circleci/aws-ecs@1.1.0
+  aws-cli: circleci/aws-cli@0.1.4
 workflows:
   build-and-deploy:
     jobs:
@@ -13,6 +14,17 @@ workflows:
       #     repo: supermarketclient 
       #     region: AWS_REGION
       #     tag: 'latest'
+      update-tag:
+        docker:
+          - image: 'circleci/python:3.7.1'
+        steps:
+          - aws-cli/install
+          - aws-cli/configure:
+              aws-access-key-id: $AWS_ACCESS_KEY_ID
+              aws-region: $AWS_REGION
+          - aws-ecs/update-task-definition-from-json:
+              task-definition-json: ecs-task-def.json
+
       - aws-ecs/deploy-service-update:
           # requires:
           #   - aws-ecr/build-and-push-image # only run this job once aws-ecr/build-and-push-image has completed
