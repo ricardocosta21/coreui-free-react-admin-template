@@ -22,7 +22,7 @@ workflows:
           aws-secret-access-key: SECRET_ACCESS_KEY
           family: ecs-task-1
           cluster-name: ecs-cluster-1
-          container-image-name-updates: 'container=367495629778.dkr.ecr.us-east-2.amazonaws.com/supermarketclient,tag=latest'
+          container-image-name-updates: 'container=1b7b1be1-6ccb-4b06-aadc-7f5fed35096d,tag=latest'
 
 
 #
