@@ -25,16 +25,17 @@ workflows:
               family: ecs-service-1
               cluster-name: ecs-cluster-1
               task-definition-arn: '${TASK_DEFINITION_ARN}'
-      - cmd_ecs_deploy:
-        description: Deploys a new task definition to ECS
-        steps:
-          - aws-cli/setup:
-              aws-access-key-id: ACCESS_KEY_ID
-              aws-region: AWS_REGION
-          - aws-ecs/update-service:
-              family: ecs-service-1
-              cluster-name: ecs-cluster-1
-              container-image-name-updates: 'container=${CIRCLE_PROJECT_REPONAME},tag=${CIRCLE_SHA1}'
+
+      # - cmd_ecs_deploy:
+      #   description: Deploys a new task definition to ECS
+      #   steps:
+      #     - aws-cli/setup:
+      #         aws-access-key-id: ACCESS_KEY_ID
+      #         aws-region: AWS_REGION
+      #     - aws-ecs/update-service:
+      #         family: ecs-service-1
+      #         cluster-name: ecs-cluster-1
+      #         container-image-name-updates: 'container=${CIRCLE_PROJECT_REPONAME},tag=${CIRCLE_SHA1}'
 
 
 
