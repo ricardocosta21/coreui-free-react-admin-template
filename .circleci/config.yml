@@ -14,7 +14,7 @@ jobs:
       - aws-ecs/update-service:
           family: ecs-service-1
           cluster-name: ecs-cluster-1
-          container-image-name-updates: 'container=ecs-service-1,tag=stable'
+          container-image-name-updates: 'container=ecs-service-1,tag=${CIRCLE_SHA1}'
 workflows:
   deploy:
     jobs:
