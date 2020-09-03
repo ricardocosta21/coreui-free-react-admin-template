@@ -1,5 +1,3 @@
-
-
 version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@1.0.0
@@ -8,24 +6,8 @@ orbs:
 workflows:
   build-and-deploy:
     jobs:
-      # - aws-ecr/build-and-push-image:
-      #     account-url: AWS_ECR_ACCOUNT_URL_ENV_VAR_NAME
-      #     aws-access-key-id: ACCESS_KEY_ID_ENV_VAR_NAME
-      #     aws-secret-access-key: SECRET_ACCESS_KEY_ENV_VAR_NAME
-      #     repo: supermarketclient
-      #     region: AWS_REGION_ENV_VAR_NAME
-      #     tag: 'latest'
-
-      # - aws-ecs/deploy-service-update:
-      #     # requires:
-      #     #   - aws-ecr/build-and-push-image
-      #     aws-access-key-id: ACCESS_KEY_ID_ENV_VAR_NAME
-      #     aws-secret-access-key: SECRET_ACCESS_KEY_ENV_VAR_NAME
-      #     family: "ecs-service-1"
-      #     cluster-name: "ecs-cluster-1"
-      #     container-image-name-updates: "container=ecs-service-1,tag=2"
-      - cmd_ecs_verify_deployment:
-        description: "Verifies the deployed updated service"
+      - cmd_ecs_verify_deployment: null
+        description: Verifies the deployed updated service
         steps:
           - aws-cli/setup:
               aws-access-key-id: ACCESS_KEY_ID
@@ -43,9 +25,8 @@ workflows:
               family: ecs-service-1
               cluster-name: ecs-cluster-1
               task-definition-arn: '${TASK_DEFINITION_ARN}'
-    
-      - cmd_ecs_deploy:
-        description: "Deploys a new task definition to ECS"
+      - cmd_ecs_deploy: null
+        description: Deploys a new task definition to ECS
         steps:
           - aws-cli/setup:
               aws-access-key-id: ACCESS_KEY_ID
@@ -55,6 +36,35 @@ workflows:
               cluster-name: ecs-cluster-1
               container-image-name-updates: 'container=${CIRCLE_PROJECT_REPONAME},tag=${CIRCLE_SHA1}'
 
+
+
+
+
+
+# version: 2.1
+# orbs:
+#   aws-cli: circleci/aws-cli@1.0.0
+#   aws-ecr: circleci/aws-ecr@6.12.2
+#   aws-ecs: circleci/aws-ecs@1.1.0
+# workflows:
+#   build-and-deploy:
+#     jobs:
+      # - aws-ecr/build-and-push-image:
+      #     account-url: AWS_ECR_ACCOUNT_URL_ENV_VAR_NAME
+      #     aws-access-key-id: ACCESS_KEY_ID_ENV_VAR_NAME
+      #     aws-secret-access-key: SECRET_ACCESS_KEY_ENV_VAR_NAME
+      #     repo: supermarketclient
+      #     region: AWS_REGION_ENV_VAR_NAME
+      #     tag: 'latest'
+
+      # - aws-ecs/deploy-service-update:
+      #     # requires:
+      #     #   - aws-ecr/build-and-push-image
+      #     aws-access-key-id: ACCESS_KEY_ID_ENV_VAR_NAME
+      #     aws-secret-access-key: SECRET_ACCESS_KEY_ENV_VAR_NAME
+      #     family: "ecs-service-1"
+      #     cluster-name: "ecs-cluster-1"
+      #     container-image-name-updates: "container=ecs-service-1,tag=2"
 
 
 #
