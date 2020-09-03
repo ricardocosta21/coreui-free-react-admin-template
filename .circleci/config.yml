@@ -6,7 +6,7 @@ orbs:
 workflows:
   build-and-deploy:
     jobs:
-      - cmd_ecs_verify_deployment: null
+      - cmd_ecs_verify_deployment:
         description: Verifies the deployed updated service
         steps:
           - aws-cli/setup:
@@ -25,7 +25,7 @@ workflows:
               family: ecs-service-1
               cluster-name: ecs-cluster-1
               task-definition-arn: '${TASK_DEFINITION_ARN}'
-      - cmd_ecs_deploy: null
+      - cmd_ecs_deploy:
         description: Deploys a new task definition to ECS
         steps:
           - aws-cli/setup:
