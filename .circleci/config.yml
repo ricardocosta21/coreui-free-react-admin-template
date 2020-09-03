@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
-  aws-cli: circleci/aws-cli@1.0.0 
-  aws-ecs: circleci/aws-ecs@1.3.0
+  aws-cli: circleci/aws-cli@0.1.4
+  aws-ecs: circleci/aws-ecs@0.0.10
 jobs:
   update-tag:
     docker:
@@ -12,9 +12,9 @@ jobs:
           aws-access-key-id: $AWS_ACCESS_KEY_ID
           aws-region: $AWS_REGION
       - aws-ecs/update-service:
-          family: 'ecs-service-1'
-          cluster-name: 'ecs-cluster-1'
-          container-image-name-updates: 'container=$ecs-service-1,tag=stable'
+          family: ecs-service-1
+          cluster-name: ecs-cluster-1
+          container-image-name-updates: 'container=ecs-service-1,tag=stable'
 workflows:
   deploy:
     jobs:
