@@ -31,8 +31,8 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               CLUSTER='ecs-cluster-1'
-              FAMILY='test-app'
-              DOCKER_IMAGE='test-app'
+              FAMILY='ecs-task-1'
+              DOCKER_IMAGE='supermarketclient'
               TASK='ecs-task-1'
               SERVICE='ecs-service-1'
               # Login to AWS
