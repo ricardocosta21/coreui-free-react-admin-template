@@ -21,7 +21,7 @@ class Dashboard extends Component {
             textAlign: "center",
           }}
         >
-          <h3>Hello 2</h3>
+          <h3>Hello 3</h3>
           <h1 style={{ textTransform: "capitalize" }}>
             {" "}
             {profile.displayName}
