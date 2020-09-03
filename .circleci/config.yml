@@ -16,6 +16,7 @@ workflows:
       #     tag: 'latest'
       
       - aws-ecs/update-task-definition-from-json:
+          working_directory: .
           task-definition-json: ecs-task-def.json
 
       - aws-ecs/deploy-service-update:
