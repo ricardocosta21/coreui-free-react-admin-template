@@ -1,4 +1,5 @@
 {
+  "fileLocation": ["relative", "${workspaceRoot}\\webservices"],
   "ipcMode": null,
   "executionRoleArn": "arn:aws:iam::367495629778:role/ecsTaskExecutionRole",
   "containerDefinitions": [
