@@ -44,8 +44,8 @@ jobs:
               # Create task for docker deploy
               task_template='[
                 {
-                  "ipcMode": null,
-                  "executionRoleArn": "arn:aws:iam::367495629778:role/ecsTaskExecutionRole",
+                  
+                  "executionRoleArn": arn:aws:iam::367495629778:role/ecsTaskExecutionRole,
                   "containerDefinitions": [
                     {
                       "dnsSearchDomains": null,
