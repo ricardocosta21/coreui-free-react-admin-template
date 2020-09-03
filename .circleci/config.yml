@@ -146,8 +146,8 @@ jobs:
                   "compatibilities": [
                     "EC2"
                   ],
-                  "taskDefinitionArn": "arn:aws:ecs:us-east-2:367495629778:task-definition/ecs-task-1:3",
-                  "family": "ecs-task-1",
+                  
+                  
                   "requiresAttributes": [
                     {
                       "targetId": null,
@@ -168,17 +168,9 @@ jobs:
                       "name": "ecs.capability.execution-role-ecr-pull"
                     }
                   ],
-                  "pidMode": null,
-                  "requiresCompatibilities": [
-                    "EC2"
-                  ],
-                  "networkMode": null,
                   "cpu": null,
-                  "revision": 3,
-                  "status": "ACTIVE",
-                  "inferenceAccelerators": null,
                   "proxyConfiguration": null,
-                  "volumes": []
+                  
                 }
               ]'
               echo "$task_template"
