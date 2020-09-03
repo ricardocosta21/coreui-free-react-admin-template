@@ -23,7 +23,6 @@ steps:
   - run:
       name: Update task definition and service in ECS
       command: |
-      
       containers=$(printf '[
           {
             "ipcMode": null,
