@@ -7,18 +7,18 @@ orbs:
 workflows:
   build-and-deploy:
     jobs:
-      - aws-ecr/build-and-push-image:
-          account-url: AWS_ECR_ACCOUNT_URL_ENV_VAR_NAME
-          aws-access-key-id: ACCESS_KEY_ID
-          aws-secret-access-key: SECRET_ACCESS_KEY
-          repo: supermarketclient
-          region: AWS_REGION
-          tag: 'latest'
+      # - aws-ecr/build-and-push-image:
+      #     account-url: AWS_ECR_ACCOUNT_URL_ENV_VAR_NAME
+      #     aws-access-key-id: ACCESS_KEY_ID
+      #     aws-secret-access-key: SECRET_ACCESS_KEY
+      #     repo: supermarketclient
+      #     region: AWS_REGION
+      #     tag: 'latest'
       - aws-ecs/deploy-service-update:
-          requires:
-            - aws-ecr/build-and-push-image # only run this job once aws-ecr/build-and-push-image has completed
-          family: ecs-service-1"
-          cluster-name: ecs-cluster-1"
+          # requires:
+          #   - aws-ecr/build-and-push-image # only run this job once aws-ecr/build-and-push-image has completed
+          family: ecs-service-1
+          cluster-name: ecs-cluster-1
           container-image-name-updates: "container=ecs-service-1,tag=${CIRCLE_SHA1}"
 
 
