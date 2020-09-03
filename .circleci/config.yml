@@ -1,213 +1,28 @@
-version: 2
-jobs:
-  build:
-    working_directory: /app
-    docker:
-      - image: docker:17.05.0-ce-git
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --no-cache py-pip=9.0.0-r1
-            pip install awscli==1.11.76
-      # - run:
-      #     name: Build application Docker image
-      #     command: |
-      #       docker build -t app .
-      # If we had
-      #- run:
-      #    name: Run mongo db
-      #    command: |
-      #      docker run --name mongo_test -d mongo
-      #- run:
-      #    name: Run tests
-      #    command: |
-      #      docker run -a STDOUT -it -p 4100:3000 --link mongo_test:db --name test_app app gulp test
-      #      #docker exec -t test_app gulp test
-      - deploy:
-          name: Push application Docker image
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              CLUSTER='ecs-cluster-1'
-              FAMILY='ecs-task-1'
-              DOCKER_IMAGE='supermarketclient'
-              TASK='ecs-task-1'
-              SERVICE='ecs-service-1'
-              # Login to AWS
-              aws configure set region $AWS_REGION
-              $(aws ecr get-login)
-              # Tag and push docker image
-              # docker tag app $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$DOCKER_IMAGE:latest
-              # docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$DOCKER_IMAGE:latest
-              # Create task for docker deploy
-              task_template='[
-                {
-                  
-                  
-                  "containerDefinitions": [
-                    {
-                      "dnsSearchDomains": null,
-                      "environmentFiles": null,
-                      "logConfiguration": null,
-                      "entryPoint": null,
-                      "portMappings": [
-                        {
-                          "hostPort": 8888,
-                          "protocol": "tcp",
-                          "containerPort": 80
-                        }
-                      ],
-                      "command": null,
-                      "linuxParameters": null,
-                      "cpu": 250,
-                      "environment": [],
-                      "resourceRequirements": null,
-                      "ulimits": null,
-                      "dnsServers": null,
-                      "mountPoints": [],
-                      "workingDirectory": null,
-                      "secrets": null,
-                      "dockerSecurityOptions": null,
-                      "memory": 250,
-                      "memoryReservation": null,
-                      "volumesFrom": [],
-                      "stopTimeout": null,
-                      "image": "367495629778.dkr.ecr.us-east-2.amazonaws.com/supermarketapi:latest",
-                      "startTimeout": null,
-                      "firelensConfiguration": null,
-                      "dependsOn": null,
-                      "disableNetworking": null,
-                      "interactive": null,
-                      "healthCheck": null,
-                      "essential": true,
-                      "links": null,
-                      "hostname": null,
-                      "extraHosts": null,
-                      "pseudoTerminal": null,
-                      "user": null,
-                      "readonlyRootFilesystem": null,
-                      "dockerLabels": null,
-                      "systemControls": null,
-                      "privileged": null,
-                      "name": "supermarketapi"
-                    },
-                    {
-                      "dnsSearchDomains": null,
-                      "environmentFiles": null,
-                      "logConfiguration": null,
-                      "entryPoint": null,
-                      "portMappings": [
-                        {
-                          "hostPort": 80,
-                          "protocol": "tcp",
-                          "containerPort": 80
-                        }
-                      ],
-                      "command": null,
-                      "linuxParameters": null,
-                      "cpu": 700,
-                      "environment": [],
-                      "resourceRequirements": null,
-                      "ulimits": null,
-                      "dnsServers": null,
-                      "mountPoints": [],
-                      "workingDirectory": null,
-                      "secrets": null,
-                      "dockerSecurityOptions": null,
-                      "memory": 700,
-                      "memoryReservation": null,
-                      "volumesFrom": [],
-                      "stopTimeout": null,
-                      "image": "367495629778.dkr.ecr.us-east-2.amazonaws.com/supermarketclient:latest",
-                      "startTimeout": null,
-                      "firelensConfiguration": null,
-                      "dependsOn": null,
-                      "disableNetworking": null,
-                      "interactive": null,
-                      "healthCheck": null,
-                      "essential": true,
-                      "links": null,
-                      "hostname": null,
-                      "extraHosts": null,
-                      "pseudoTerminal": null,
-                      "user": null,
-                      "readonlyRootFilesystem": null,
-                      "dockerLabels": null,
-                      "systemControls": null,
-                      "privileged": null,
-                      "name": "supermarketclient"
-                    }
-                  ],
-                  "placementConstraints": [],
-                  "memory": null,
-                  "taskRoleArn": "arn:aws:iam::367495629778:role/ecsTaskExecutionRole",
-                  "compatibilities": [
-                    "EC2"
-                  ],
-                  
-                  
-                  "requiresAttributes": [
-                    {
-                      "targetId": null,
-                      "targetType": null,
-                      "value": null,
-                      "name": "com.amazonaws.ecs.capability.ecr-auth"
-                    },
-                    {
-                      "targetId": null,
-                      "targetType": null,
-                      "value": null,
-                      "name": "com.amazonaws.ecs.capability.task-iam-role"
-                    },
-                    {
-                      "targetId": null,
-                      "targetType": null,
-                      "value": null,
-                      "name": "ecs.capability.execution-role-ecr-pull"
-                    }
-                  ],
-                  "cpu": null,
-                  "proxyConfiguration": null,
-                  
-                }
-              ]'
-              echo "$task_template"
-              task_def=$(printf "$task_template" $TASK $AWS_ACCOUNT_ID $AWS_REGION $TASK latest)
-              # Register task definition
-              json=$(aws ecs register-task-definition --container-definitions "$task_def" --family "$FAMILY")
-              # Grab revision # using regular bash and grep
-              revision=$(echo "$json" | grep -o '"revision": [0-9]*' | grep -Eo '[0-9]+')
-              # Deploy revision
-              aws ecs update-service --cluster "$CLUSTER" --service "$SERVICE" --task-definition "$TASK":"$revision"
-              return 0
-            fi
 
-# version: 2.1
-# orbs:
-#   # aws-cli: circleci/aws-cli@1.0.0 
-#   aws-ecr: circleci/aws-ecr@6.12.2 
-#   aws-ecs: circleci/aws-ecs@1.1.0
-# workflows:
-#   build-and-deploy:
-#     jobs:
-#       # - aws-ecr/build-and-push-image:
-#       #     account-url: AWS_ECR_ACCOUNT_URL
-#       #     aws-access-key-id: ACCESS_KEY_ID
-#       #     aws-secret-access-key: SECRET_ACCESS_KEY
-#       #     repo: supermarketclient
-#       #     region: AWS_REGION
-#       #     tag: latest
+version: 2.1
+orbs:
+  # aws-cli: circleci/aws-cli@1.0.0 
+  aws-ecr: circleci/aws-ecr@6.12.2 
+  aws-ecs: circleci/aws-ecs@1.1.0
+workflows:
+  build-and-deploy:
+    jobs:
+      # - aws-ecr/build-and-push-image:
+      #     account-url: AWS_ECR_ACCOUNT_URL
+      #     aws-access-key-id: ACCESS_KEY_ID
+      #     aws-secret-access-key: SECRET_ACCESS_KEY
+      #     repo: supermarketclient
+      #     region: AWS_REGION
+      #     tag: latest
 
-#       - aws-ecs/deploy-service-update:
-#           # requires:
-#           #   - aws-ecr/build-and-push-image
-#           aws-access-key-id: ACCESS_KEY_ID
-#           aws-secret-access-key: SECRET_ACCESS_KEY
-#           family: ecs-service-1
-#           cluster-name: ecs-cluster-1
-#           container-image-name-updates: 'container=${AWS_RESOURCE_NAME_PREFIX}-service,tag=${CIRCLE_SHA1}'
+      - aws-ecs/deploy-service-update:
+          # requires:
+          #   - aws-ecr/build-and-push-image
+          aws-access-key-id: ACCESS_KEY_ID
+          aws-secret-access-key: SECRET_ACCESS_KEY
+          family: ecs-task-1
+          cluster-name: ecs-cluster-1
+          container-image-name-updates: 'container=ecs-service-1,tag=latest'
 
 
 #
