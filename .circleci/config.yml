@@ -30,8 +30,9 @@ workflows:
       - update-tag
 
       - aws-ecs/deploy-service-update:
-          # requires:
-          #   - aws-ecr/build-and-push-image
+          requires:
+            # - aws-ecr/build-and-push-image
+            - update-tag
           aws-access-key-id: ACCESS_KEY_ID
           aws-secret-access-key: SECRET_ACCESS_KEY
           family: ecs-task-1
