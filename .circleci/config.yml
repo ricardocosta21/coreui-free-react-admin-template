@@ -4,7 +4,7 @@ orbs:
   aws-ecr: circleci/aws-ecr@6.12.2
   # aws-ecs: circleci/aws-ecs@1.1.0
   aws-ecs-orb: sonicu/aws-ecs-orb@0.0.3
-  
+
 workflows:
   build-and-deploy:
     jobs:
@@ -12,7 +12,7 @@ workflows:
       #     account-url: AWS_ECR_ACCOUNT_URL_ENV_VAR_NAME
       #     aws-access-key-id: ACCESS_KEY_ID
       #     aws-secret-access-key: SECRET_ACCESS_KEY
-      #     repo: supermarketclient
+      #     repo: supermarketclient 
       #     region: AWS_REGION
       #     tag: 'latest'
       - aws-ecs/deploy-service-update:
