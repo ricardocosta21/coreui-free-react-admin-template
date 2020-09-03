@@ -27,7 +27,7 @@ workflows:
       #     repo: supermarketclient
       #     region: AWS_REGION 
       #     tag: latest 
-      - update-tag: null
+      - update-tag:
 
       - aws-ecs/deploy-service-update:
           # requires:
