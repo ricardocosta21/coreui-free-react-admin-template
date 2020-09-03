@@ -2,9 +2,7 @@ version: 2.1
 
 orbs:
   aws-ecr: circleci/aws-ecr@6.12.2
-  # aws-ecs: circleci/aws-ecs@1.1.0
-  aws-ecs-orb: sonicu/aws-ecs-orb@0.0.3
-
+  aws-ecs: circleci/aws-ecs@1.1.0
 workflows:
   build-and-deploy:
     jobs:
@@ -18,11 +16,12 @@ workflows:
       - aws-ecs/deploy-service-update:
           # requires:
           #   - aws-ecr/build-and-push-image # only run this job once aws-ecr/build-and-push-image has completed
-          aws-access-key-id: ACCESS_KEY_ID
-          aws-secret-access-key: SECRET_ACCESS_KEY
+          # aws-access-key-id: ACCESS_KEY_ID
+          # aws-secret-access-key: SECRET_ACCESS_KEY
+          aws-region: AWS_REGION
           family: ecs-service-1
           cluster-name: ecs-cluster-1
-          container-image-name-updates: "container=ecs-service-1,tag=${CIRCLE_SHA1}"
+          container-image-name-updates: "container=ecs-service-1,tag=latest"
 
 
 # version: 2.1
