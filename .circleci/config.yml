@@ -18,7 +18,6 @@ workflows:
           #   - aws-ecr/build-and-push-image # only run this job once aws-ecr/build-and-push-image has completed
           # aws-access-key-id: ACCESS_KEY_ID
           # aws-secret-access-key: SECRET_ACCESS_KEY  
-          aws-region: AWS_REGION
           family: ecs-service-1
           cluster-name: ecs-cluster-1
           container-image-name-updates: "container=ecs-service-1,tag=latest"
