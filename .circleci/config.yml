@@ -14,9 +14,9 @@ jobs:
           aws-access-key-id: ACCESS_KEY_ID
           aws-region: AWS_REGION
       - aws-ecs/update-service:
-          family: ecs-service-1
+          family: ecs-task-1
           cluster-name: ecs-cluster-1
-          container-image-name-updates: 'container=ecs-service-1,tag=latest'
+          container-image-name-updates: 'container=ecs-task-1,tag=latest'
 workflows:
   build-and-deploy:
     jobs:
