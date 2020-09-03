@@ -1,62 +1,22 @@
-docker:
-    - image: circleci/python:3.6.1
-
-steps:
-    - checkout
-    - setup_remote_docker
-
-    - run:
-        name: Install AWScli
-        command: pip install awscli --upgrade --user
-
-    # - run:
-    #     name: Build Docker image
-    #     command: docker build -t $CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1 .
-
-    # - run:
-    #     name: Push Docker image to ECR
-    #     command: |
-    #     eval $(python -m awscli ecr get-login --region us-west-2)
-    #     docker tag $CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1 $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1
-    #     docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1
-
-    - run:
-        name: Update task definition and service in ECS
-        command: |
-        
-        containers=$(printf '[
-            {
-            "name": "web",
-            "image": "%s.dkr.ecr.%s.amazonaws.com/%s:%s",
-            "portMappings": [
-                {
-                "protocol": "tcp",
-                "containerPort": 5000,
-                "hostPort": 0
-                }
-            ],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                "awslogs-region": "%s",
-                "awslogs-stream-prefix": "ecs",
-                "awslogs-group": "/ecs/%s"
-                }
-            },
-            "memory": 128,
-            "essential": true
-            }
-        ]' $AWS_ACCOUNT_ID $AWS_REGION $CIRCLE_PROJECT_REPONAME $CIRCLE_SHA1 $AWS_REGION $AWS_ECS_TASK_NAME)
-
-        echo "$containers"
-
-        task_definition=$(python -m awscli ecs register-task-definition --container-definitions "$containers" --family $AWS_ECS_TASK_NAME --region $AWS_REGION)
-
-        revision=$(echo $task_definition | jq '.["taskDefinition"]["revision"]')
-
-        python -m awscli ecs update-service --cluster "$AWS_ECS_CLUSTER" --service "$AWS_ECS_SERVICE" --task-definition "$AWS_ECS_TASK_NAME":"$revision" --region $AWS_REGION
-
-
+version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@6.5.0
+  aws-ecs: circleci/aws-ecs@0.0.10
+workflows:
+  build-and-deploy:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ECR_ACCOUNT_URL
+          repo: '${MY_APP_PREFIX}'
+          region: AWS_REGION
+          tag: '${CIRCLE_SHA1}'
+      - aws-ecs/deploy-service-update:
+          requires:
+            - aws-ecr/build-and-push-image
+          family: '${MY_APP_PREFIX}-service'
+          cluster-name: '${MY_APP_PREFIX}-cluster'
+          container-image-name-updates: 'container=${MY_APP_PREFIX}-service,tag=${CIRCLE_SHA1}'
+          
 # version: 2.1
 # orbs:
 #   # aws-cli: circleci/aws-cli@1.0.0 
