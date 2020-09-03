@@ -9,7 +9,7 @@ workflows:
           aws-region: AWS_DEFAULT_REGION
           family: ecs-service-1
           cluster-name: ecs-cluster-1
-          container-image-name-updates: 'container=ecs-service-1,tag=${CIRCLE_SHA1}'
+          container-image-name-updates: 'container=f85e092b30043e64af51153907f84aff25d7a8ffa8241eaea32c4715b762ffb4,tag=${CIRCLE_SHA1}'
 
 # version: 2.1
 
