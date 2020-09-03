@@ -14,7 +14,7 @@ jobs:
       - aws-ecs/update-service:
           family: 'ecs-service-1'
           cluster-name: 'ecs-cluster-1'
-          container-image-name-updates: 'container=${MY_APP_PREFIX}-service,tag=stable'
+          container-image-name-updates: 'container=$ecs-service-1,tag=stable'
 workflows:
   deploy:
     jobs:
@@ -24,7 +24,7 @@ workflows:
 # version: 2.1
 # orbs:
 #   # aws-cli: circleci/aws-cli@1.0.0 
-#   aws-ecr: circleci/aws-ecr@6.12.2
+#   aws-ecr: circleci/aws-ecr@6.12.2 
 #   aws-ecs: circleci/aws-ecs@1.1.0
 # workflows:
 #   build-and-deploy:
