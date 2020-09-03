@@ -7,9 +7,9 @@ workflows:
     jobs:
       - aws-ecs/deploy-service-update:
           aws-region: AWS_DEFAULT_REGION
-          family: '${MY_APP_PREFIX}-service'
-          cluster-name: '${MY_APP_PREFIX}-cluster'
-          container-image-name-updates: 'container=${MY_APP_PREFIX}-service,tag=${CIRCLE_SHA1}'
+          family: ecs-service-1
+          cluster-name: ecs-cluster-1
+          container-image-name-updates: 'container=ecs-service-1,tag=${CIRCLE_SHA1}'
 
 # version: 2.1
 
