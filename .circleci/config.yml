@@ -10,7 +10,7 @@ workflows:
       # - aws-ecr/build-and-push-image:
       #     account-url: AWS_ECR_ACCOUNT_URL
       #     aws-access-key-id: ACCESS_KEY_ID
-      #     aws-secret-access-key: SECRET_ACCESS_KEY
+      #     aws-secret-access-key: SECRET_ACCESS_KEY 
       #     repo: supermarketclient
       #     region: AWS_REGION
       #     tag: latest 
