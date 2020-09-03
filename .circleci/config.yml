@@ -19,8 +19,9 @@ workflows:
           task-definition-json: ecs-task-def.json
 
       - aws-ecs/deploy-service-update:
-          # requires:
+          requires:
           #   - aws-ecr/build-and-push-image # only run this job once aws-ecr/build-and-push-image has completed
+            - aws-ecs/update-task-definition-from-json
           # aws-access-key-id: ACCESS_KEY_ID
           # aws-secret-access-key: SECRET_ACCESS_KEY  
           family: 'ecs-service-1'
