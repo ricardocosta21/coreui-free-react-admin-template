@@ -5,7 +5,6 @@ orbs:
 workflows:
   build-and-deploy:
     jobs:
-      - aws-cli/install
       - aws-cli/configure:
           aws-access-key-id: $AWS_ACCESS_KEY_ID
           aws-region: $AWS_REGION
