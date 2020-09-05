@@ -1,9 +1,11 @@
 //local
 //const apiConnection = "https://localhost:5001/api/";
 //ec2 instance
-//const apiConnection = "http://ec2-3-19-26-38.us-east-2.compute.amazonaws.com:8888/api/"
+const apiConnection = "http://ec2-3-19-26-38.us-east-2.compute.amazonaws.com:8888/api/"
+
+
 //ecs instance
-const apiConnection = "http://ec2-3-16-50-28.us-east-2.compute.amazonaws.com:8888/api/"
+//const apiConnection = "http://ec2-3-16-50-28.us-east-2.compute.amazonaws.com:8888/api/"
 
 // CATEGORIES
 //Get
@@ -29,7 +31,6 @@ export function handleGetCategoriesByClientUID(auth) {
     return fetch(apiConnection + "categories/" + auth.uid)
       .then((response) => response.json())
       .then((json) => {
-        // console.log("Came here Actions" + json);
         dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
       });
   };
@@ -157,6 +158,8 @@ export function handleClearProducts() {
 // Post
 export function handlePostProducts(product, auth) {
   return function (dispatch) {
+        // console.log("prod added: " + JSON.stringify(product.quantity));
+
     return fetch(apiConnection + "products", {
       method: "POST",
       headers: {
@@ -167,6 +170,7 @@ export function handlePostProducts(product, auth) {
         name: product.name,
         clientUID: auth.uid,
         price: product.price,
+        quantity: product.quantity,
         categoryId: product.categoryId,
       }),
     }).then(() => {
@@ -182,6 +186,7 @@ export function handlePostProducts(product, auth) {
 // Delete
 export function handleDeleteProducts(product, auth) {
   return function (dispatch) {
+    var quantity = 1;
     return fetch(apiConnection + "products", {
       method: "DELETE",
       headers: {
@@ -193,6 +198,7 @@ export function handleDeleteProducts(product, auth) {
         name: product.name,
         clientUID: auth.uid,
         price: product.price,
+        quantity: quantity,
         categoryId: product.categoryId,
       }),
     }).then(() => {
@@ -229,7 +235,6 @@ export function handleGetBasketProductsForUser(auth) {
 // Add Product to Cart
 export function handleAddToCart(product, auth) {
   return function (dispatch) {
-    // console.log(auth.uid);
     return fetch(apiConnection + "basket", {
       method: "POST",
       headers: {
@@ -241,8 +246,30 @@ export function handleAddToCart(product, auth) {
         name: product.name,
         clientUID: auth.uid,
         price: product.price,
+        quantity: product.quantity,
         categoryId: product.categoryId,
       }),
+    }).then(() => {
+      return fetch(apiConnection + "basket?clientUID=" + auth.uid)
+        .then((response) => response.json())
+        .then((json) => {
+          dispatch({ type: "GET_BASKET_PRODUCTS_SUCCESS", payload: json });
+        });
+    });
+  };
+}
+
+
+
+// Decrement
+export function handleDecrementBasketProduct(productId, auth) {
+  return function (dispatch) {
+    return fetch(apiConnection + "basket?id=" + productId, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
     }).then(() => {
       return fetch(apiConnection + "basket?clientUID=" + auth.uid)
         .then((response) => response.json())

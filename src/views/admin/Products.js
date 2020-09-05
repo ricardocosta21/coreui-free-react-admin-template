@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   handleGetProductsWithId,
-  handlePostProducts,
+  // handlePostProducts,
   handleDeleteProducts,
 } from "../../actions/apiActions";
 
@@ -108,9 +108,8 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps(dispatch) {
   return {
     getProducts: (category, auth) => dispatch(handleGetProductsWithId(category, auth)),
-    handlePost: (product, auth) => dispatch(handlePostProducts(product, auth)),
-    deleteProducts: (product, auth) =>
-      dispatch(handleDeleteProducts(product, auth)),
+    // handlePost: (product, auth) => dispatch(handlePostProducts(product, auth)),
+    deleteProducts: (product, auth) => dispatch(handleDeleteProducts(product, auth)),
   };
 }
 

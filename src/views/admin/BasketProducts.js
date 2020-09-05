@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-  handlePostProducts,
+  // handlePostProducts,
+  handleDecrementBasketProduct,
   handleDeleteBasketProduct,
   handleGetBasketProductsForUser,
 } from "../../actions/apiActions";
@@ -19,7 +20,7 @@ import {
   CListGroupItem,
 } from "@coreui/react";
 
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaMinus } from 'react-icons/fa';
 
 export class BasketProducts extends Component {
   constructor(props) {
@@ -48,22 +49,41 @@ export class BasketProducts extends Component {
               {basketProducts.map((basketProduct) => (
                 <div key={basketProduct.id}>
                   <CFormGroup row>
-                    <CCol xs="12" md="10">
+                    <CCol xs="12" md="9">
                       <CListGroupItem>
                         <CRow>
                           <CCol>{basketProduct.name}</CCol>
                           <CCol>
                             {"£"}
                             {basketProduct.price}
-                          </CCol>
+                          </CCol>  
+                          <CCol>{basketProduct.quantity}</CCol>
                         </CRow>
                       </CListGroupItem>
+                        <CButton
+                        style={{
+                          position: "absolute",
+                          top: "6%",
+                          left: "97%",
+                          padding: "8.5px 12px",
+                        }}
+                        color="danger"
+                        type="submit"
+                        onClick={() => {
+                          this.props.handleDecrement(
+                            basketProduct.id,
+                            auth
+                          );
+                        }}
+                      >
+                        <FaMinus/>
+                      </CButton>
                       <CButton
                         style={{
                           position: "absolute",
-                          top: "0%",
-                          left: "98%",
-                          padding: "10.5px 16px",
+                          top: "6%",
+                          left: "112%",
+                          padding: "8.5px 12px",
                         }}
                         color="danger"
                         type="submit"
@@ -105,12 +125,10 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    //getProducts: () => dispatch(handleGetProducts()),
-    getBasketProducts: (category) =>
-      dispatch(handleGetBasketProductsForUser(category)),
-    handlePost: (product, auth) => dispatch(handlePostProducts(product, auth)),
-    deleteBasketProducts: (bProductId, auth) =>
-      dispatch(handleDeleteBasketProduct(bProductId, auth)),
+    getBasketProducts: (category) => dispatch(handleGetBasketProductsForUser(category)),
+    // handlePost: (product, auth) => dispatch(handlePostProducts(product, auth)),
+    handleDecrement: (bProductId, auth) => dispatch(handleDecrementBasketProduct(bProductId, auth)),
+    deleteBasketProducts: (bProductId, auth) => dispatch(handleDeleteBasketProduct(bProductId, auth)),
   };
 }
 

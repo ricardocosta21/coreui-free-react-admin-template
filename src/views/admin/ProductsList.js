@@ -72,7 +72,7 @@ export class ProductsList extends Component {
                           position: "absolute",
                           top: "0%",
                           left: "98%",
-                          padding: "10.5px 16px",
+                          padding: "11.5px 16px",
                         }}
                         color="success"
                         type="submit"

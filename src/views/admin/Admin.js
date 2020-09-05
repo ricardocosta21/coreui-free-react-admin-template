@@ -83,9 +83,9 @@ class Admin extends Component {
     var product = {
       name: this.state.productName,
       price: this.state.productPrice,
+      quantity: 1,
       categoryId: this.state.selectedCategoryId,
     };
-    // console.log("product! uid: " + JSON.stringify(clientUID));
     this.props.handlePostPro(product, auth);
   };
 

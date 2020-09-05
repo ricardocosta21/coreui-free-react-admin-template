@@ -9,6 +9,8 @@ import CardSection from "./CardSection";
 
 import { handleGetBasketProductsForUser } from "../../actions/apiActions";
 
+//const apiConnection = "https://localhost:5001/api/";
+
 //ecs
 const apiConnection = "http://ec2-3-16-50-28.us-east-2.compute.amazonaws.com:8888/api/"
 
