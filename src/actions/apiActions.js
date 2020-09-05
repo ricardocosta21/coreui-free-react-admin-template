@@ -10,7 +10,7 @@ const apiConnection = "http://ec2-3-16-50-28.us-east-2.compute.amazonaws.com:888
 //   return function (dispatch) {
 //     return fetch(apiConnection + "categories")
 //       .then((response) => response.json())
-//       .then((json) => {
+//       .then((json) => { 
 //         //   console.log("Came here Actions");
 //         // console.log("GET_CATEGORIES_SUCCESS: " + JSON.stringify({json}));
 //         dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
