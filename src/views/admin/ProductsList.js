@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  handleAddToCart,
-} from "../../actions/apiActions";
+import { handleAddToCart } from "../../actions/apiActions";
 
 import {
   CButton,
@@ -15,7 +13,7 @@ import {
   CListGroup,
   CListGroupItem,
 } from "@coreui/react";
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus } from "react-icons/fa";
 
 export class ProductsList extends Component {
   constructor(props) {
@@ -59,8 +57,20 @@ export class ProductsList extends Component {
                         // active={this.state.activeTab === product.id}
                       >
                         <CRow>
-                          <CCol>{product.name}</CCol>
-                          <CCol>
+                          <CCol
+                            style={{
+                              textAlign: "left",
+                              marginLeft: "10%",
+                            }}
+                          >
+                            {product.name}
+                          </CCol>
+                          <CCol
+                            style={{
+                              textAlign: "right",
+                              marginRight: "10%",
+                            }}
+                          >
                             {"£"}
                             {product.price}
                           </CCol>
@@ -80,7 +90,7 @@ export class ProductsList extends Component {
                           this.props.addToCart(product, auth);
                         }}
                       >
-                        <FaPlus/>
+                        <FaPlus />
                       </CButton>
                     </CCol>
                   </CFormGroup>

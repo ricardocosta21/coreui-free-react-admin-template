@@ -20,7 +20,7 @@ import {
   CListGroupItem,
 } from "@coreui/react";
 
-import { FaTrash, FaMinus } from 'react-icons/fa';
+import { FaTrash, FaMinus } from "react-icons/fa";
 
 export class BasketProducts extends Component {
   constructor(props) {
@@ -52,37 +52,52 @@ export class BasketProducts extends Component {
                     <CCol xs="12" md="9">
                       <CListGroupItem>
                         <CRow>
-                          <CCol>{basketProduct.name}</CCol>
-                          <CCol>
+                          <CCol
+                            style={{
+                              textAlign: "left",
+                               marginLeft: "10%",
+                            }}
+                          >
+                            {basketProduct.name}
+                          </CCol>
+                          <CCol
+                            style={{
+                              textAlign: "center",
+                            }}
+                          >
                             {"£"}
                             {basketProduct.price}
-                          </CCol>  
-                          <CCol>{basketProduct.quantity}</CCol>
+                          </CCol>
+                          <CCol
+                            style={{
+                              textAlign: "right",
+                               marginRight: "10%",
+                            }}
+                          >
+                            {basketProduct.quantity}
+                          </CCol>
                         </CRow>
                       </CListGroupItem>
-                        <CButton
+                      <CButton
                         style={{
                           position: "absolute",
                           top: "6%",
-                          left: "97%",
+                          marginLeft: "97%",
                           padding: "8.5px 12px",
                         }}
                         color="danger"
                         type="submit"
                         onClick={() => {
-                          this.props.handleDecrement(
-                            basketProduct.id,
-                            auth
-                          );
+                          this.props.handleDecrement(basketProduct.id, auth);
                         }}
                       >
-                        <FaMinus/>
+                        <FaMinus />
                       </CButton>
                       <CButton
                         style={{
                           position: "absolute",
                           top: "6%",
-                          left: "112%",
+                          marginLeft: "112%",
                           padding: "8.5px 12px",
                         }}
                         color="danger"
@@ -94,7 +109,7 @@ export class BasketProducts extends Component {
                           );
                         }}
                       >
-                        <FaTrash/>
+                        <FaTrash />
                       </CButton>
                     </CCol>
                   </CFormGroup>
@@ -125,10 +140,13 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getBasketProducts: (category) => dispatch(handleGetBasketProductsForUser(category)),
+    getBasketProducts: (category) =>
+      dispatch(handleGetBasketProductsForUser(category)),
     // handlePost: (product, auth) => dispatch(handlePostProducts(product, auth)),
-    handleDecrement: (bProductId, auth) => dispatch(handleDecrementBasketProduct(bProductId, auth)),
-    deleteBasketProducts: (bProductId, auth) => dispatch(handleDeleteBasketProduct(bProductId, auth)),
+    handleDecrement: (bProductId, auth) =>
+      dispatch(handleDecrementBasketProduct(bProductId, auth)),
+    deleteBasketProducts: (bProductId, auth) =>
+      dispatch(handleDeleteBasketProduct(bProductId, auth)),
   };
 }
 

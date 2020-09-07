@@ -61,7 +61,10 @@ export class CategoriesList extends Component {
                         }}
                         action
                         active={this.state.activeTab === category.id}
-                      >
+                      style={{
+                              textAlign: "center",
+                               
+                            }}>
                         {category.name}
                       </CListGroupItem>
                     </CCol>

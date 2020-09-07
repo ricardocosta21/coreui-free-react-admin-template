@@ -24,7 +24,7 @@ export class BasketProductsCheckout extends Component {
   calculateTotalPrice = (basketProducts) => {
     var totalPrice = 0;
     for (const product of basketProducts) {
-      totalPrice += parseInt(product.price);
+      totalPrice += parseInt(product.price) * product.quantity;
     }
     return totalPrice;
   };
@@ -48,9 +48,10 @@ export class BasketProductsCheckout extends Component {
                     <CCol xs="12" md="14">
                       <CRow>
                         <CCol>{basketProduct.name}</CCol>
+                         <CCol>{"x"}{basketProduct.quantity}{" (£"}{basketProduct.price}{")"}</CCol>
                         <CCol>
                           {"£"}
-                          {basketProduct.price}
+                          {basketProduct.price * basketProduct.quantity}
                         </CCol>
                       </CRow>
                     </CCol>

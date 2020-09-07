@@ -50,6 +50,9 @@ export class Products extends Component {
                   <CFormGroup row>
                     <CCol xs="12" md="10">
                       <CListGroupItem
+                      style={{
+                              textAlign: "center",
+                            }}
                         onClick={() => {
                           if (product.id === this.state.activeTab) {
                             this.setState({ activeTab: "" });
