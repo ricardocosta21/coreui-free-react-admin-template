@@ -2,7 +2,7 @@
 //const apiConnection = "https://localhost:5001/api/";
 
 //ecs instance
-const apiConnection = "http://ec2-18-224-73-198.us-east-2.compute.amazonaws.com:8888/api/"
+const apiConnection = "http://ec2-18-191-181-130.us-east-2.compute.amazonaws.com:8888/api/"
 
 // CATEGORIES
 //Get
