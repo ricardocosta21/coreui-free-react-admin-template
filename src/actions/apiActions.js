@@ -19,6 +19,7 @@ const apiConnection = process.env.REACT_APP_ECS_ENDPOINT;
 //   };
 // }
 
+
 //Get
 export function handleGetCategoriesByClientUID(auth) {
   return function (dispatch) {
