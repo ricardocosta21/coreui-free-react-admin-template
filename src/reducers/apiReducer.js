@@ -23,6 +23,10 @@ const apiReducer = (state = initState, { type, payload }) => {
       // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({payload}));
       return { ...state, basketProducts: payload, hasError: "" }; // spread out any state,
 
+    case "GET_BASKET_PRODUCTS_ERROR":
+      // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({payload}));
+      return { ...state, basketProducts: [], hasError: "" }; // spread out any state,
+
     case "POST_SUCCESS":
       console.log("post success");
       return {

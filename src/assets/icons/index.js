@@ -4,6 +4,8 @@ import { logoNegative } from './logo-negative'
 import { dashboard, admin, ccard  } from './plus'
 import { IconName } from "react-icons/fa";
 
+//add here icons
+
 // import {
 //   cibSkype,
 //   cibFacebook,

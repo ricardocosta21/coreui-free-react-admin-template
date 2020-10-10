@@ -9,10 +9,12 @@ import CardSection from "./CardSection";
 
 import { handleGetBasketProductsForUser } from "../../actions/apiActions";
 
-//const apiConnection = "https://localhost:5001/api/";
+// const apiConnection = process.env.REACT_APP_ECS_ENDPOINT_LOCAL;
+
+const apiConnection = process.env.REACT_APP_ECS_ENDPOINT;
 
 //ecs
-const apiConnection = "http://ec2-18-191-181-130.us-east-2.compute.amazonaws.com:8888/api/"
+//const apiConnection = "http://ec2-18-191-181-130.us-east-2.compute.amazonaws.com:8888/api/"
 
 export class CheckoutForm extends Component {
   constructor(props) {
@@ -101,7 +103,7 @@ export class CheckoutForm extends Component {
   }
 
   async componentDidMount() {
-    await this.props.getBasketProducts(this.props.auth);
+    this.props.getBasketProducts(this.props.auth);
     // Create PaymentIntent as soon as the page loads
 
     await window

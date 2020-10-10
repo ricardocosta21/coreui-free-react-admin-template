@@ -1,8 +1,9 @@
 //local
-//const apiConnection = "https://localhost:5001/api/";
+//const apiConnection = process.env.REACT_APP_ECS_ENDPOINT_LOCAL;
+const apiConnection = process.env.REACT_APP_ECS_ENDPOINT;
 
 //ecs instance
-const apiConnection = "http://ec2-18-191-181-130.us-east-2.compute.amazonaws.com:8888/api/"
+//const apiConnection = "http://ec2-18-191-181-130.us-east-2.compute.amazonaws.com:8888/api/"
 
 // CATEGORIES
 //Get
@@ -10,7 +11,7 @@ const apiConnection = "http://ec2-18-191-181-130.us-east-2.compute.amazonaws.com
 //   return function (dispatch) {
 //     return fetch(apiConnection + "categories")
 //       .then((response) => response.json())
-//       .then((json) => { 
+//       .then((json) => {
 //         //   console.log("Came here Actions");
 //         // console.log("GET_CATEGORIES_SUCCESS: " + JSON.stringify({json}));
 //         dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
@@ -33,7 +34,6 @@ export function handleGetCategoriesByClientUID(auth) {
   };
 }
 
-
 // Post
 export function handlePostCategories(category, auth) {
   return function (dispatch) {
@@ -47,14 +47,13 @@ export function handlePostCategories(category, auth) {
         clientUID: auth.uid,
         name: category.name,
       }),
-    })
-      .then(() => {
-        return fetch(apiConnection + "categories/" + auth.uid)
-          .then((response) => response.json())
-          .then((json) => {
-            dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
-          });
-      });
+    }).then(() => {
+      return fetch(apiConnection + "categories/" + auth.uid)
+        .then((response) => response.json())
+        .then((json) => {
+          dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
+        });
+    });
   };
 }
 
@@ -72,20 +71,28 @@ export function handleDeleteCategories(category, auth) {
         name: category.name,
         clientUID: auth.uid,
       }),
-    }).then(() => {
-      return fetch(apiConnection + "categories/" + auth.uid)
-        .then((response) => response.json())
-        .then((json) => {
-          dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
-        });
-     }).then(() => {
-      return fetch(apiConnection + "products?categoryId=" + category.id + "&clientUID=" + auth.uid)
-      .then((response) => response.json())
-      .then((json) => {
-        // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
-        dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
+    })
+      .then(() => {
+        return fetch(apiConnection + "categories/" + auth.uid)
+          .then((response) => response.json())
+          .then((json) => {
+            dispatch({ type: "GET_CATEGORIES_SUCCESS", payload: json });
+          });
+      })
+      .then(() => {
+        return fetch(
+          apiConnection +
+            "products?categoryId=" +
+            category.id +
+            "&clientUID=" +
+            auth.uid
+        )
+          .then((response) => response.json())
+          .then((json) => {
+            // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
+            dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
+          });
       });
-    });
   };
 }
 
@@ -130,12 +137,17 @@ export function handleDeleteCategories(category, auth) {
 export function handleGetProductsWithId(category, auth) {
   return function (dispatch) {
     if (category == null) {
-      
       dispatch({ type: "GET_PRODUCTS_ERROR", payload: [] });
       return;
     }
     // console.log("LIKE WHAAAT?!" + JSON.stringify({category}));
-    return fetch(apiConnection + "products?categoryId=" + category.id + "&clientUID=" + auth.uid)
+    return fetch(
+      apiConnection +
+        "products?categoryId=" +
+        category.id +
+        "&clientUID=" +
+        auth.uid
+    )
       .then((response) => response.json())
       .then((json) => {
         // console.log("GET_PRODUCTS_SUCCESS: " + JSON.stringify({json}));
@@ -155,7 +167,7 @@ export function handleClearProducts() {
 // Post
 export function handlePostProducts(product, auth) {
   return function (dispatch) {
-        // console.log("prod added: " + JSON.stringify(product.quantity));
+    // console.log("prod added: " + JSON.stringify(product.quantity));
 
     return fetch(apiConnection + "products", {
       method: "POST",
@@ -171,7 +183,13 @@ export function handlePostProducts(product, auth) {
         categoryId: product.categoryId,
       }),
     }).then(() => {
-      return fetch(apiConnection + "products?categoryId=" + product.categoryId + "&clientUID=" + auth.uid)
+      return fetch(
+        apiConnection +
+          "products?categoryId=" +
+          product.categoryId +
+          "&clientUID=" +
+          auth.uid
+      )
         .then((response) => response.json())
         .then((json) => {
           dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
@@ -199,7 +217,13 @@ export function handleDeleteProducts(product, auth) {
         categoryId: product.categoryId,
       }),
     }).then(() => {
-      return fetch(apiConnection + "products?categoryId=" + product.categoryId + "&clientUID=" + auth.uid)
+      return fetch(
+        apiConnection +
+          "products?categoryId=" +
+          product.categoryId +
+          "&clientUID=" +
+          auth.uid
+      )
         .then((response) => response.json())
         .then((json) => {
           dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
@@ -207,10 +231,6 @@ export function handleDeleteProducts(product, auth) {
     });
   };
 }
-
-
-
-
 
 // Basket Products
 // here
@@ -226,6 +246,14 @@ export function handleGetBasketProductsForUser(auth) {
       .then((json) => {
         dispatch({ type: "GET_BASKET_PRODUCTS_SUCCESS", payload: json });
       });
+  };
+}
+
+//Get with auth.UID
+export function handleClearBasketProducts() {
+  return function (dispatch) {
+    dispatch({ type: "GET_ERROR", payload: [] });
+    return;
   };
 }
 
@@ -255,8 +283,6 @@ export function handleAddToCart(product, auth) {
     });
   };
 }
-
-
 
 // Decrement
 export function handleDecrementBasketProduct(productId, auth) {
@@ -296,30 +322,20 @@ export function handleDeleteBasketProduct(productId, auth) {
   };
 }
 
-// // Add Product to Cart
-// export function handleAddToCart(product, auth) {
-//   return function (dispatch) {
-//     console.log(auth.uid);
-//     return fetch(apiConnection + "basket", {
-//       method: "POST",
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({
-//         id: Number(product.id),
-//         name: product.name,
-//         clientUID: auth.uid,
-//         price: product.price,
-//         categoryId: product.categoryId,
-//       }),
-//     })
-//       .then(() => {
-//         return fetch(apiConnection + "basket?categoryId=" + product.categoryId)
-//           .then((response) => response.json())
-//           .then((json) => {
-//             dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: json });
-//           });
-//       });
-//   };
-// }
+export function handleDeleteAllBasketProduct(auth) {
+  return function (dispatch) {
+    return fetch(apiConnection + "basket/deleteAll?clientUID=" + auth.uid, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }).then(() => {
+      return fetch(apiConnection + "basket?clientUID=" + auth.uid)
+        .then((response) => response.json())
+        .then((json) => {
+          dispatch({ type: "GET_BASKET_PRODUCTS_SUCCESS", payload: json });
+        });
+    });
+  };
+}

@@ -4,8 +4,15 @@ import { compose } from "redux";
 // import CreateProject from "../../containers/CreateProject";
 import { Redirect } from "react-router-dom";
 
+import {
+  handleDeleteAllBasketProduct,
+} from "../../actions/apiActions";
+
 class PaymentSuccessful extends Component {
   componentDidMount() {
+
+    this.props.deleteAllBasketProducts(this.props.auth);
+
     setTimeout(function () {
       window.location.href = "#";
     }, 5000);
@@ -53,4 +60,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default compose(connect(mapStateToProps))(PaymentSuccessful);
+function mapDispatchToProps(dispatch) {
+  return {
+     deleteAllBasketProducts: (auth) =>
+     dispatch(handleDeleteAllBasketProduct(auth)),
+  };
+}
+
+export default compose(connect(mapStateToProps, mapDispatchToProps))(PaymentSuccessful);

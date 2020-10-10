@@ -1,5 +1,6 @@
 const initState = {
   authError: null,
+  basketProducts: [],
 };
 
 const authReducer = (state = initState, action) => {
@@ -17,8 +18,9 @@ const authReducer = (state = initState, action) => {
         authError: null,
       };
     case "SIGNOUT_SUCCESS":
-      console.log("signout success");
-      return state;
+      return {
+        ...state,
+      };
 
     case "SIGNUP_SUCCESS":
       console.log("signup success");

@@ -7,6 +7,7 @@ import {
   handleGetProductsWithId,
   handleGetBasketProductsForUser,
   handleClearProducts,
+  handleClearBasketProducts,
 } from "../../actions/apiActions.js";
 
 import {
@@ -68,7 +69,7 @@ class Stripe extends Component {
     }
   };
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     this.props.getCategories(this.props.auth);
 
     this.props.clearProducts();
@@ -127,6 +128,7 @@ function mapDispatchToProps(dispatch) {
     getCategories: (auth) => dispatch(handleGetCategoriesByClientUID(auth)),
     getProducts: (category, auth) => dispatch(handleGetProductsWithId(category, auth)),
     clearProducts: () => dispatch(handleClearProducts()),
+    clearBasketProducts: () => dispatch(handleClearBasketProducts()),
     getBasketProducts: (auth) => dispatch(handleGetBasketProductsForUser(auth)),
   };
 }

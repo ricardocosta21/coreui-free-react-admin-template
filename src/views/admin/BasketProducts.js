@@ -5,6 +5,7 @@ import {
   handleDecrementBasketProduct,
   handleDeleteBasketProduct,
   handleGetBasketProductsForUser,
+  handleDeleteAllBasketProduct,
 } from "../../actions/apiActions";
 
 import {
@@ -33,7 +34,10 @@ export class BasketProducts extends Component {
   //   sendProName = (productName) => {
   //     this.props.getProductName(productName);
   //   };
-  //   componentDidMount = (auth) => this.props.getBasketProducts(auth);
+
+  componentDidMount = () => {
+    //this.props.getBasketProducts(this.props.auth);
+  };
 
   render() {
     const { basketProducts, auth } = this.props;
@@ -55,7 +59,7 @@ export class BasketProducts extends Component {
                           <CCol
                             style={{
                               textAlign: "left",
-                               marginLeft: "10%",
+                              marginLeft: "10%",
                             }}
                           >
                             {basketProduct.name}
@@ -71,7 +75,7 @@ export class BasketProducts extends Component {
                           <CCol
                             style={{
                               textAlign: "right",
-                               marginRight: "10%",
+                              marginRight: "10%",
                             }}
                           >
                             {basketProduct.quantity}
@@ -147,6 +151,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(handleDecrementBasketProduct(bProductId, auth)),
     deleteBasketProducts: (bProductId, auth) =>
       dispatch(handleDeleteBasketProduct(bProductId, auth)),
+    deleteAllBasketProducts: (auth) =>
+      dispatch(handleDeleteAllBasketProduct(auth)),
   };
 }
 
