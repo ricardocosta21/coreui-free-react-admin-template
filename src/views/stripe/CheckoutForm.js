@@ -12,6 +12,7 @@ import { handleGetBasketProductsForUser } from "../../actions/apiActions";
 // const apiConnection = process.env.REACT_APP_ECS_ENDPOINT_LOCAL;
 const apiConnection = process.env.REACT_APP_ECS_ENDPOINT;
 
+
 export class CheckoutForm extends Component {
   constructor(props) {
     super(props);
