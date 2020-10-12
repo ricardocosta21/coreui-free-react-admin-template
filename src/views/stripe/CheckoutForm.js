@@ -10,11 +10,7 @@ import CardSection from "./CardSection";
 import { handleGetBasketProductsForUser } from "../../actions/apiActions";
 
 // const apiConnection = process.env.REACT_APP_ECS_ENDPOINT_LOCAL;
-
 const apiConnection = process.env.REACT_APP_ECS_ENDPOINT;
-
-//ecs
-//const apiConnection = "http://ec2-18-191-181-130.us-east-2.compute.amazonaws.com:8888/api/"
 
 export class CheckoutForm extends Component {
   constructor(props) {
@@ -130,12 +126,16 @@ export class CheckoutForm extends Component {
 
     return (
       <>
+    
+        
         <form
           id="payment-form"
           style={{ textAlign: "center" }}
           onSubmit={this.handleSubmit}
         >
           <CardElement id="card-element" onChange={this.handleChange} />
+
+          <p>Test card: 4242 4242 4242 4242</p>
 
           <CButton
             type="submit"
@@ -149,6 +149,7 @@ export class CheckoutForm extends Component {
               this.state.succeeded
             }
           >
+          
             {/* <button disabled={processing || disabled || succeeded} id="submit"> */}
             <span id="button-text">
               {this.state.processing ? "Processing" : "Pay Now"}

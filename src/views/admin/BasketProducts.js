@@ -28,21 +28,12 @@ export class BasketProducts extends Component {
     super(props);
     this.state = {
       activeTab: "",
+      hasBasketProducts: "",
     };
   }
 
-  //   sendProName = (productName) => {
-  //     this.props.getProductName(productName);
-  //   };
-
-  componentDidMount = () => {
-    //this.props.getBasketProducts(this.props.auth);
-  };
-
   render() {
     const { basketProducts, auth } = this.props;
-
-    if (basketProducts == null) return <div> Nothing to see here. </div>;
 
     return (
       <div>
@@ -123,7 +114,7 @@ export class BasketProducts extends Component {
           </CCardBody>
 
           <CCardFooter className="text-center">
-            <CButton href="#/checkout" type="submit" color="success">
+            <CButton disabled={basketProducts.length > 0 ? false : true} href="#/checkout" type="submit" color="success">
               Proceed to Checkout
             </CButton>
           </CCardFooter>
